@@ -1,9 +1,9 @@
 
 require('dotenv').config();
 
+var OWNER = String("@nablanavab");
+
 class BOT_INFO {
-    static OWNER = String("@nablanavab")
-    
     static API_ID = Number(process.env.API_ID);
     static API_HASH = String(process.env.API_HASH);
     static API_TOKEN = String(process.env.API_TOKEN);
