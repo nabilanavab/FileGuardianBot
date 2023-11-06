@@ -1,0 +1,22 @@
+
+
+
+const config = require("../config")
+const { TelegramClient } = require("telegram");
+const { StringSession } = require("telegram/sessions");
+
+(async () => {
+  
+    const client = new TelegramClient(
+        new StringSession(""),
+        config.BOT_INFO.API_ID,
+        config.BOT_INFO.API_HASH,
+    );
+  
+    await client.start({
+        botAuthToken: config.BOT_INFO.API_TOKEN,
+    });
+
+    console.log(client.session.save());
+
+})();
