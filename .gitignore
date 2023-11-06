@@ -1,0 +1,10 @@
+# Ignore the node_modules directory
+node_modules/
+
+# Ignore all files with extensions .pdf, .mp3, .mp4
+*.pdf
+*.mp3
+*.mp4
+
+# Ignore the .env file
+.env
