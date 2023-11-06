@@ -1,2 +1,2 @@
 
-const client = require("./bot/bot")
+const client = require("./bott/bot/bot")

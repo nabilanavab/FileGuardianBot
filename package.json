@@ -1,0 +1,27 @@
+{
+  "name": "file_share_bot_telegram",
+  "version": "1.0.0",
+  "description": "Introducing our File Share Bot, a versatile tool that simplifies the process of sharing text, images, GIFs, stickers, and other content. This bot provides you with the ability to generate unique, specific URLs for your shared files, ensuring easy access and sharing with others. What sets our bot apart is the added layer of security – you can set your shared content as password-protected, giving you complete control over who can access your shared files. Whether you're sharing important documents, creative media, or just snippets of text, our File Share Bot makes it efficient, secure, and user-friendly.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node fileShareBot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/nabilanavab/fileShareBot"
+  },
+  "keywords": [
+    "file",
+    "share",
+    "bot",
+    "telegram",
+    "telegram",
+    "bot",
+    "nabilanavab",
+    "nabil",
+    "a",
+    "navab"
+  ],
+  "author": "nabilanavab",
+  "license": "ISC"
+}
