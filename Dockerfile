@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as the base image
-FROM node:19-bullseye
+FROM node:21-alpine3.17
 
 # Create and set the working directory in the container
 WORKDIR /fileShareBot
