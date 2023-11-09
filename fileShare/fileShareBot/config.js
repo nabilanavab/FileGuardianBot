@@ -14,4 +14,16 @@ class CHANNEL_INFO {
     static REQUEST_SUPPORT = Number(process.env.REQUEST_SUPPORT);
 }
 
+mandatoryVariables = ['API_ID', 'API_HASH', 'API_TOKEN'];
+
+const missingVariables = mandatoryVariables.filter(
+    (variable) => !process.env[variable]
+);
+
+if (!missingVariables.length === 0) {
+  console.error(`Missing mandatory variables: ${missingVariables.join(', ')}`);
+  process.exit(1);
+}
+
+
 module.exports = { BOT_INFO, CHANNEL_INFO };
