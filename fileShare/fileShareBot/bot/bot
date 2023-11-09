@@ -14,7 +14,7 @@ const { StringSession } = require("telegram/sessions");
         // https://github.com/gram-js/gramjs/issues/83
         { useWSS : true } 
     );
-  
+
     await client.start({
         botAuthToken: config.BOT_INFO.API_TOKEN,
     });
@@ -22,3 +22,4 @@ const { StringSession } = require("telegram/sessions");
     console.log(client.session.save());
 
 })();
+

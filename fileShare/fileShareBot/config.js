@@ -14,16 +14,17 @@ class CHANNEL_INFO {
     static REQUEST_SUPPORT = Number(process.env.REQUEST_SUPPORT);
 }
 
+// checks if all the mandatory variables are there
 mandatoryVariables = ['API_ID', 'API_HASH', 'API_TOKEN'];
 
 const missingVariables = mandatoryVariables.filter(
     (variable) => !process.env[variable]
 );
 
-if (!missingVariables.length === 0) {
-  console.error(`Missing mandatory variables: ${missingVariables.join(', ')}`);
-  process.exit(1);
+if (!(missingVariables.length === 0)) {
+    console.error(`Missing mandatory variables: ${missingVariables.join(', ')}`);
+    process.exit(1);
 }
+// and stops program execution if all mandatory variables are not there
 
-
-module.exports = { BOT_INFO, CHANNEL_INFO };
+module.exports = { BOT_INFO, CHANNEL_INFO};
