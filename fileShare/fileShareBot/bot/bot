@@ -11,7 +11,7 @@ const { StringSession } = require("telegram/sessions");
         new StringSession(""),
         config.BOT_INFO.API_ID,
         config.BOT_INFO.API_HASH,
-        { useWSS : true }
+        { useWSS : true } 
     );
   
     await client.start({
