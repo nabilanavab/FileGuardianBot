@@ -15,8 +15,12 @@ const { StringSession } = require("telegram/sessions");
         { useWSS : true } 
     );
 
+    await client.start({
+        botAuthToken: config.BOT_INFO.API_TOKEN,
+    });
+
     client.addEventHandler(async (update) => {
-        const chatID = Number(update.message);
+        const chatID = Number(update.message.chatID);
          
         if (update.message.message.startsWith("/start")) {
           client.sendMessage(chatID, {
@@ -24,10 +28,6 @@ const { StringSession } = require("telegram/sessions");
          }); 
         }
      });
-
-    await client.start({
-        botAuthToken: config.BOT_INFO.API_TOKEN,
-    });
 
     console.log(client.session.save());
 
