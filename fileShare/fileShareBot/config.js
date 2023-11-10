@@ -1,6 +1,9 @@
 
 require('dotenv').config();
 
+
+
+
 var OWNER = String("@nablanavab");
 
 class BOT_INFO {
@@ -13,6 +16,10 @@ class CHANNEL_INFO {
     static FORCE_SUB = Number(process.env.FORCE_SUB);
     static REQUEST_SUPPORT = Number(process.env.REQUEST_SUPPORT);
 }
+
+
+
+
 
 // checks if all the mandatory variables are there
 mandatoryVariables = ['API_ID', 'API_HASH', 'API_TOKEN'];

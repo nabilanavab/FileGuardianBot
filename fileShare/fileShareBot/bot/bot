@@ -15,6 +15,16 @@ const { StringSession } = require("telegram/sessions");
         { useWSS : true } 
     );
 
+    client.addEventHandler(async (update) => {
+        const chatID = Number(update.message);
+         
+        if (update.message.message.startsWith("/start")) {
+          client.sendMessage(chatID, {
+           message: "Welcome to my Telegram bot!",
+         }); 
+        }
+     });
+
     await client.start({
         botAuthToken: config.BOT_INFO.API_TOKEN,
     });
