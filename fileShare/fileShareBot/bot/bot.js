@@ -19,14 +19,8 @@ var { StringSession } = require("telegram/sessions");
         botAuthToken: config.BOT_INFO.API_TOKEN,
     });
 
-    client.addEventHandler((update) => {
-        console.log("Received new Update");
-        console.log(update);
-    });
-    // client.addEventHandler();
-
     console.log(client)
-    // loader.moduleLoader(client);
+    loader.moduleLoader(client);
     console.log(client.session.save());
 
 })();
