@@ -28,7 +28,7 @@ function moduleLoader(){
             console.log(`-> Some Error when importing from ${modulePath}`);
             console.error("-> An error occurred:", error.message);
             console.error("-> Stack trace:", error.stack);
-            
+
             const indexToRemove = filesToLoad.indexOf(modulePath);
             
             if (indexToRemove !== -1) {
@@ -40,7 +40,5 @@ function moduleLoader(){
     console.log(`loaded ${filesToLoad.join(', ')}`);
     return true;
 }
-
-moduleLoader();
 
 module.exports = { moduleLoader }

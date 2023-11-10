@@ -1,4 +1,6 @@
 
+const client = require("./bot/bot")
+
 client.addEventHandler(async (update) => {
     const chatID = Number(update.message.chatID);
      
