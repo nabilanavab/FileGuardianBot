@@ -1,16 +1,10 @@
 
 
-const {Api} = require("telegram");
-
 module.exports = function(client){
     client.addEventHandler((update) => {
-            const chatID = Number(update.message.chatID);
-            if (update.message.message.startsWith("/start")) {
-                client.sendMessage(chatID, {
-                    message: "Welcome to my Telegram bot!",
-                });
-            }
+        if (update && update.message && update.message.message){
+            console.log("Received new Update");
+            console.log(update.message.message);
         }
-    );
+    });
 }
-

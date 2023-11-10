@@ -2,10 +2,8 @@
 const file_name = __dirname
 const author = "@nabilanavab"
 
-const { triggerAsyncId } = require('async_hooks');
 const fs = require('fs');
 const path = require('path');
-const { client } = require('telegram');
 
 
 // List all JavaScript files in the directory and its subdirectories
@@ -38,8 +36,7 @@ function moduleLoader(client){
             }
         }
     }
-
     console.log(`loaded ${filesToLoad.join(', ')}`);
 }
 
-module.exports = { moduleLoader }
+module.exports = moduleLoader;

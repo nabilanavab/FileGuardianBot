@@ -19,8 +19,7 @@ var { StringSession } = require("telegram/sessions");
         botAuthToken: config.BOT_INFO.API_TOKEN,
     });
 
-    console.log(client)
-    loader.moduleLoader(client);
+    loader(client);
     console.log(client.session.save());
 
 })();
