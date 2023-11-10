@@ -18,9 +18,6 @@ class CHANNEL_INFO {
 }
 
 
-
-
-
 // checks if all the mandatory variables are there
 mandatoryVariables = ['API_ID', 'API_HASH', 'API_TOKEN'];
 
