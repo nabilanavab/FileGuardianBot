@@ -1,6 +1,5 @@
 
 
-
 const config = require("../config")
 const loader = require("./loader")
 var { TelegramClient } = require("telegram");
