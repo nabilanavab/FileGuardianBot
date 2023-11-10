@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-root = "./plugins"
+const root = path.join(__dirname, 'plugins');
 
 // List all JavaScript files in the directory and its subdirectories
 const filesToLoad = [];

@@ -2,6 +2,7 @@
 
 
 const config = require("../config")
+const loader = require("./loader")
 const { TelegramClient } = require("telegram");
 const { StringSession } = require("telegram/sessions");
 
