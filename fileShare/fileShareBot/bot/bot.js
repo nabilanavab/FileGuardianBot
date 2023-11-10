@@ -22,4 +22,3 @@ const { StringSession } = require("telegram/sessions");
     console.log(client.session.save());
 
 })();
-
