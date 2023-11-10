@@ -1,13 +1,13 @@
 
+const file_name = __dirname
+const author = "@nabilanavab"
 
 const { triggerAsyncId } = require('async_hooks');
 const fs = require('fs');
 const path = require('path');
 
 
-
 // List all JavaScript files in the directory and its subdirectories
-
 function moduleLoader(){
     const root = path.join(__dirname, 'plugins');
     const filesToLoad = [];
@@ -24,8 +24,11 @@ function moduleLoader(){
     for (const modulePath of filesToLoad){
         try {
             const module = require(modulePath);
-        } catch {
-            console.log(`Some Error when importing from ${modulePath}`);
+        } catch (error) {
+            console.log(`-> Some Error when importing from ${modulePath}`);
+            console.error("-> An error occurred:", error.message);
+            console.error("-> Stack trace:", error.stack);
+            
             const indexToRemove = filesToLoad.indexOf(modulePath);
             
             if (indexToRemove !== -1) {
@@ -35,8 +38,9 @@ function moduleLoader(){
     }
 
     console.log(`loaded ${filesToLoad.join(', ')}`);
-
     return true;
 }
+
+moduleLoader();
 
 module.exports = { moduleLoader }
