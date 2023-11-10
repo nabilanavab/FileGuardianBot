@@ -6,7 +6,7 @@ const path = require('path');
 root = "./plugins"
 
 // List all JavaScript files in the directory and its subdirectories
-const modules = [];
+const filesToLoad = [];
 
 function walkSync(dir) {
     fs.readdirSync(dir).forEach((file) => {
@@ -14,20 +14,25 @@ function walkSync(dir) {
         if (fs.statSync(filePath).isDirectory()) {
             walkSync(filePath);
         } else if (file.endsWith('.js')) {
-            modules.push(filePath);
+            filesToLoad.push(filePath);
         }
     });
 }
 walkSync(root);
 
-// Load and inspect modules
-for (const modulePath of modules) {
+// Load filesToLoad
+for (const modulePath of filesToLoad) {
     try {
         const module = require(modulePath);
     } catch (error) {
         console.log(`Some Error when importing from ${modulePath}`);
-        
+
+        const indexToRemove = filesToLoad.indexOf(modulePath);
+        if (indexToRemove !== -1) {
+            filesToLoad.splice(indexToRemove, 1);
+        }
     }
 }
+console.log(`loaded ${filesToLoad.join(', ')}`);
 
-console.log(`loaded ${modulePath.join(', ')}`);
+module.exports = { filesToLoad }
