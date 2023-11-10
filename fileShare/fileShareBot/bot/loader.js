@@ -25,9 +25,9 @@ function moduleLoader(client){
     for (const modulePath of filesToLoad){
         try {
             const loadedModule = require(modulePath);
-            loadedModule(client)
+            loadedModule(client);
         } catch (error) {
-            console.log(`-> Some Error when importing from ${modulePath}`);
+            console.error(`-> Some Error when importing from ${modulePath}`);
             console.error("-> An error occurred:", error.message);
             console.error("-> Stack trace:", error.stack);
 
@@ -40,7 +40,6 @@ function moduleLoader(client){
     }
 
     console.log(`loaded ${filesToLoad.join(', ')}`);
-    return true;
 }
 
 module.exports = { moduleLoader }
