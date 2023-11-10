@@ -5,10 +5,11 @@ const author = "@nabilanavab"
 const { triggerAsyncId } = require('async_hooks');
 const fs = require('fs');
 const path = require('path');
+const { client } = require('telegram');
 
 
 // List all JavaScript files in the directory and its subdirectories
-function moduleLoader(){
+function moduleLoader(client){
     const root = path.join(__dirname, 'plugins');
     const filesToLoad = [];
 
@@ -23,7 +24,8 @@ function moduleLoader(){
 
     for (const modulePath of filesToLoad){
         try {
-            const module = require(modulePath);
+            const loadedModule = require(modulePath);
+            loadedModule(client)
         } catch (error) {
             console.log(`-> Some Error when importing from ${modulePath}`);
             console.error("-> An error occurred:", error.message);

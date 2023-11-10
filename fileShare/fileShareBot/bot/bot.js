@@ -18,7 +18,7 @@ client.start({
     botAuthToken: config.BOT_INFO.API_TOKEN,
 });
 
-loader.moduleLoader();
+loader.moduleLoader(client);
 
 console.log(client.session.save());
 
