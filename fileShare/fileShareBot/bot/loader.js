@@ -18,6 +18,16 @@ function walkSync(dir) {
         }
     });
 }
-
 walkSync(root);
 
+// Load and inspect modules
+for (const modulePath of modules) {
+    try {
+        const module = require(modulePath);
+    } catch (error) {
+        console.log(`Some Error when importing from ${modulePath}`);
+        
+    }
+}
+
+console.log(`loaded ${modulePath.join(', ')}`);
