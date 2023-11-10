@@ -19,16 +19,6 @@ const { StringSession } = require("telegram/sessions");
         botAuthToken: config.BOT_INFO.API_TOKEN,
     });
 
-    client.addEventHandler(async (update) => {
-        const chatID = Number(update.message.chatID);
-         
-        if (update.message.message.startsWith("/start")) {
-          client.sendMessage(chatID, {
-           message: "Welcome to my Telegram bot!",
-         }); 
-        }
-     });
-
     console.log(client.session.save());
 
 })();
