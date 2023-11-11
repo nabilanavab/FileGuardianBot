@@ -3,7 +3,7 @@ require('dotenv').config();
 let lang_data = require('./bot/lang/data');
 
 
-var OWNER = String("@nablanavab");
+global.OWNER = String("@nablanavab");
 
 class BOT_INFO {
     static API_ID = Number(process.env.API_ID);
