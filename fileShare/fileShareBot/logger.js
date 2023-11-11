@@ -23,10 +23,8 @@ const logger = createLogger({
 // Function to add a log file (if enabled)
 let file_name = LOG_FILE.LOG_FILE.FILE_NAME
 if (file_name){
-  logger.add(new transports.File({file_name}));
-}
-
-module.exports = {
-    logger
+    logger.add(new transports.File({filename: `${file_name}`}));
 };
+
+module.exports = logger;
 

@@ -4,6 +4,7 @@ const author = "@nabilanavab"
 
 const fs = require('fs');
 const path = require('path');
+const logger = require('../logger');
 
 
 // List all JavaScript files in the directory and its subdirectories
@@ -23,7 +24,7 @@ function moduleLoader(client){
     for (const modulePath of filesToLoad){
         try {
             const loadedModule = require(modulePath);
-            loadedModule(client);
+            loadedModule(client, logger);
         } catch (error) {
             console.error(`-> Some Error when importing from ${modulePath}`);
             console.error("-> An error occurred:", error.message);

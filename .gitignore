@@ -6,5 +6,8 @@ node_modules/
 *.mp3
 *.mp4
 
+# Ignore .log files
+*.log
+
 # Ignore the .env file
 .env
