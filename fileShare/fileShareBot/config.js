@@ -1,5 +1,7 @@
 
 require('dotenv').config();
+let lang_data = require('lang/data');
+
 
 var OWNER = String("@nablanavab");
 
@@ -11,7 +13,8 @@ class BOT_INFO {
 
 class LANG_INFO {
     static DEFAULT_LANG = String(process.env.DEFAULT_LANG) ?? "eng";
-    static MULTIPLE_LANG = process.env.ENABLE_FEATURE === 'false' ? false : true;
+    static MULTIPLE_LANG = process.env.MULTIPLE_LANG === 'false' ? false : true;
+    static ENABLED_LANG = this.MULTIPLE_LANG === fasle ? this.DEFAULT_LANG : lang_data.enabledLang;
 }
 
 class CHANNEL_INFO {
@@ -32,5 +35,8 @@ if (!(missingVariables.length === 0)) {
     process.exit(1);
 }
 // and stops program execution if all mandatory variables are not there
+
+// consol.log language info..
+console.log(`currently supported languages: ${ENABLED_LANG}`);
 
 module.exports = { BOT_INFO, CHANNEL_INFO};
