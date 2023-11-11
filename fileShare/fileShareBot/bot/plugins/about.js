@@ -12,8 +12,8 @@ module.exports = function(client){
             client.sendMessage(update.message.chatId, {
                 message: "About this Telegram bot!",
                 buttons: client.buildReplyMarkup(
-                        Button.url("button", "t.me/nabilanavab")
-                    ),
+                    Button.url("button", "t.me/nabilanavab")
+                ),
             });
 
         }

@@ -2,6 +2,8 @@
 global.exit_success = 0;  // return 0: in success
 global.exit_failure = 1;  // return 1: in failure
 
+
+
 /**
  * This function Helps to prevent flood wait errors for all the messages.
  *
@@ -19,14 +21,3 @@ global.exit_failure = 1;  // return 1: in failure
  * @example
  * messageSendHandler(client, chatID, message, haveButton, button)
  */
-
-function messageSendHandler(
-    bot=false, client=false, chatID=false, username=false,
-    message=false, buttonType=false, button=false, no_webpage=false,
-    reply_to_msg_id=false, delete_reply_to_message=false
-) {
-    console.log(`${chatID} -- WORKING..`);
-}
-
-
-module.exports = { messageSendHandler };
