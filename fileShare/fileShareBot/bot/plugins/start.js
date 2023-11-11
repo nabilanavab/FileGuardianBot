@@ -8,7 +8,7 @@ module.exports = function(client){
         if (update && update.message && update.message.message && 
                         update.message.message.startsWith("/start")){
             
-            sendMessage(
+            sendMessage.messageSendHandler(
                 client=client, chatId=update.message.chatId,
                 message=`${update.message.message}`,
             );
