@@ -9,14 +9,17 @@ module.exports = function(client){
         if (update && update.message && update.message.message && 
                         update.message.message.startsWith("/start")){
             
-            logger.log('info', `${update.message.message.chatId}: bot started`)
-            const markup = client.buildReplyMarkup(Button.inline("Start")); 
-            client.sendMessage(update.message.chatId, {
-                message: "Welcome to my Telegram bot!",
-                buttons: markup,
-                // replyMarkup: 
-            });
-            return 0;
+            logger.log('info', `${__dirname} : ${update.message.message} from ${update.message.chatId}`);
+            try {
+                client.sendMessage(update.message.chatId, {
+                    message: "Welcome to my Telegram bot!",
+                    buttons: client.buildReplyMarkup(Button.inline("Start")),
+                });
+                return 0;
+            } catch (error) {
+                logger.log('error', `${__dirname} : ${error}`)
+            }
+
         }
     });
 }
