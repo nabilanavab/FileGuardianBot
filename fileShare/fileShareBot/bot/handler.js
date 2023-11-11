@@ -1,6 +1,6 @@
 
-global.exit_success = 0;
-global.exit_failure = 1;
+global.exit_success = 0;  // return 0: in success
+global.exit_failure = 1;  // return 1: in failure
 
 /**
  * This function Helps to prevent flood wait errors for all the messages.
