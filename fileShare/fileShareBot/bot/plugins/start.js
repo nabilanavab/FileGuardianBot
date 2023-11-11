@@ -1,25 +1,17 @@
 
 
 const { Button } = require("telegram/tl/custom/button");
-const logger = require("../../logger");
-
+const sendMessage = require("../handler")
 
 module.exports = function(client){
     client.addEventHandler((update) => {
         if (update && update.message && update.message.message && 
                         update.message.message.startsWith("/start")){
             
-            logger.log('info', `${__dirname} : ${update.message.message} from ${update.message.chatId}`);
-            try {
-                client.sendMessage(update.message.chatId, {
-                    message: "Welcome to my Telegram bot!",
-                    buttons: client.buildReplyMarkup(Button.inline("Start")),
-                });
-                return 0;
-            } catch (error) {
-                logger.log('error', `${__dirname} : ${error}`)
-            }
-
+            sendMessage(
+                client=client, chatId=update.message.chatId,
+                message=`${update.message.message}`,
+            );
         }
     });
 }

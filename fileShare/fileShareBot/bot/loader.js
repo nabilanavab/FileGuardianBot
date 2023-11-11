@@ -38,7 +38,7 @@ function moduleLoader(client){
     }
 
     // print completely loaded files 
-    console.log("loaded..\n" + filesToLoad.map(
+    console.log("loaded : " + filesToLoad.map(
         file => file.split('/').pop()).join(', ')
     );
 }

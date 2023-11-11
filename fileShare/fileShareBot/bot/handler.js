@@ -21,9 +21,12 @@ global.exit_failure = 1;  // return 1: in failure
  */
 
 function messageSendHandler(
-    client, chatID, username=false,
-    message, buttonType=false, button=false, no_webpage=false, reply_to_msg_id=false,
-    delete_reply_to_message=false
+    bot=false, client=false, chatID=false, username=false,
+    message=false, buttonType=false, button=false, no_webpage=false,
+    reply_to_msg_id=false, delete_reply_to_message=false
 ) {
     console.log(`${chatID} -- WORKING..`);
 }
+
+
+module.exports = { messageSendHandler };
