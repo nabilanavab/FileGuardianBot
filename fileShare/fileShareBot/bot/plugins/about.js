@@ -7,11 +7,11 @@ module.exports = function(client){
         if (update && update.message && update.message.message && 
                         update.message.message.toLowerCase() == "/about"){
             
-            const markup = client.buildReplyMarkup(Button.inline("about")); 
             client.sendMessage(update.message.chatId, {
                 message: "About this Telegram bot!",
-                buttons: markup,
-                // replyMarkup: 
+                buttons: client.buildReplyMarkup(
+                        Button.url("button", "t.me/nabilanavab")
+                    ),
             });
 
         }

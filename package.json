@@ -1,27 +1,27 @@
 {
-  "name": "file_share_bot_telegram",
+  "name": "file_share_bot",
   "version": "1.0.0",
-  "description": "Introducing our File Share Bot, a versatile tool that simplifies the process of sharing text, images, GIFs, stickers, and other content. This bot provides you with the ability to generate unique, specific URLs for your shared files, ensuring easy access and sharing with others. What sets our bot apart is the added layer of security – you can set your shared content as password-protected, giving you complete control over who can access your shared files. Whether you're sharing important documents, creative media, or just snippets of text, our File Share Bot makes it efficient, secure, and user-friendly.",
+  "description": "File Share Bot: A versatile Telegram bot that simplifies file sharing. It effortlessly converts various file types, including text, documents, images, and GIFs, into shareable URLs. Additionally, it offers the option to add password protection to your shared content, ensuring enhanced privacy and security for your files and messages.",
   "main": "index.js",
   "scripts": {
     "test": "node fileShareBot"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/nabilanavab/fileShareBot"
+    "url": "git+https://github.com/github.com/nabilanavab.git"
   },
   "keywords": [
-    "file",
-    "share",
-    "bot",
-    "telegram",
-    "telegram",
-    "bot",
+    "nabil a navab",
     "nabilanavab",
-    "nabil a navab"
+    "fileShareBot",
+    "telegramBot"
   ],
   "author": "nabilanavab",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/github.com/nabilanavab/issues"
+  },
+  "homepage": "https://github.com/github.com/nabilanavab#readme",
   "dependencies": {
     "dotenv": "^16.3.1",
     "telegram": "^2.19.10"

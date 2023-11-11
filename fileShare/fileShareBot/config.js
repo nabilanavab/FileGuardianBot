@@ -1,15 +1,17 @@
 
 require('dotenv').config();
 
-
-
-
 var OWNER = String("@nablanavab");
 
 class BOT_INFO {
     static API_ID = Number(process.env.API_ID);
     static API_HASH = String(process.env.API_HASH);
     static API_TOKEN = String(process.env.API_TOKEN);
+}
+
+class LANG_INFO {
+    static DEFAULT_LANG = String(process.env.DEFAULT_LANG) ?? "eng";
+    static MULTIPLE_LANG = process.env.ENABLE_FEATURE === 'false' ? false : true;
 }
 
 class CHANNEL_INFO {
