@@ -20,6 +20,7 @@ class LANG_INFO {
 }
 
 class LOG_FILE {
+    static CONSOLE_LOG = process.env.CONSOLE_LOG === 'true' ? true : false;
     static FILE_NAME = (
         process.env.LOG_FILE &&
         process.env.LOG_FILE.toLowerCase().endsWith('.log')

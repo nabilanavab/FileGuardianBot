@@ -20,6 +20,6 @@ var { StringSession } = require("telegram/sessions");
     });
 
     loader(client);
-    console.log(client.session.save());
+    client.session.save();
 
 })();

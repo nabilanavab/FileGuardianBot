@@ -1,8 +1,10 @@
 
 
 const { Button } = require("telegram/tl/custom/button");
+const logger = require("../../logger");
 
-module.exports = function(client, logger){
+
+module.exports = function(client){
     client.addEventHandler((update) => {
         if (update && update.message && update.message.message && 
                         update.message.message.startsWith("/start")){
