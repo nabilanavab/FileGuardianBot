@@ -36,7 +36,10 @@ function moduleLoader(client){
             }
         }
     }
-    console.log(`loaded ${filesToLoad.join(', ')}`);
+    
+    console.log("loaded..\n" + filesToLoad.map(
+        file => file.split('/').pop()).join(', ')
+    );
 }
 
 module.exports = moduleLoader;
