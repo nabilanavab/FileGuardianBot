@@ -2,13 +2,15 @@
 
 const config = require("../../config")
 const fs = require('fs');
-const langFloder = './languages';
+const path = require('path');
 const logger = require("../../logger");
-const data = require("data");
+const data = require("./data");
 
 
 
-fs.readdir(folderPath, (err, files) => {
+const langFolder = path.join(__dirname, 'languages');
+
+fs.readdir(langFolder, (err, files) => {
 
     // supportedLang: save all langs name in languages folder
     // eg: supportedLang = ["eng", "mal", "hnd","arb"]
@@ -18,15 +20,16 @@ fs.readdir(folderPath, (err, files) => {
         process.exit(1);
     }
 
+    let supportedLang = []
     if (!config.LANG_INFO.MULTIPLE_LANG){
-        const supportedLang = config.LANG_INFO.DEFAULT_LANG
+        supportedLang.push(config.LANG_INFO.DEFAULT_LANG);
         return supportedLang;
     } else {
-        const supportedLang = files.filter((fileName) => {
+        supportedLang = files.filter((fileName) => {
             // Get the language code from the file name
             const langCode = fileName.split('.')[0];
             // Filter only supported languages
-            return langSupport[langCode] !== undefined;
+            return supportedLang[langCode] !== undefined;
         });
     }
     
