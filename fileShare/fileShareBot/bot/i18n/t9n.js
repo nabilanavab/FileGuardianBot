@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 constlogger = require("../../logger");
+const button_trans = require("./ba10")
 
 
 // language folder: with {lang_name}.json
@@ -36,6 +37,8 @@ fs.readdir(folderPath, (err, files) => {
 });
 
 
+const maxClmnForButton = 2;
+
 /**
 * This function Helps to prevent flood wait errors for all the messages.
 *
@@ -53,12 +56,9 @@ fs.readdir(folderPath, (err, files) => {
 * translate(chatID, message, button)
 */
 
-const maxClmnForButton = 2;
-
-
 async function translate(
     text=null, button=null, asString=false,
-    order=maxClmnForButton, langCode=null
+    order=button_trans.maxClmnForButton, langCode=null
 ) {
     let rtnText = text;
     let rtnButton = button;
@@ -76,11 +76,13 @@ async function translate(
     if (asString) return [rtnText, rtnButton];
 
     try {
-        if (button !== null) rtnButton = await createButton({ btn: rtnButton, order });
+        if (button !== null) rtnButton = await createButton(
+            { btn: rtnButton, order }
+        );
     } catch (error) {
         logger.log("error", `🚫 ${__dirname}: ${error}`);
     }
-    
+
     return [rtnText, rtnButton];
 }
 
