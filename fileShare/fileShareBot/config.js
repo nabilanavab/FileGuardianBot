@@ -12,7 +12,7 @@ class BOT_INFO {
 }
 
 class LANG_INFO {
-    static DEFAULT_LANG = String(process.env.DEFAULT_LANG) ?? "eng";
+    static DEFAULT_LANG = String(process.env.DEFAULT_LANG) === undefined || "eng";
     static MULTIPLE_LANG = process.env.MULTIPLE_LANG === 'false' ? false : true;
     static ENABLED_LANG = (
         this.MULTIPLE_LANG === false ? this.DEFAULT_LANG : lang_data.enabledLang
