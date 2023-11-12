@@ -1,6 +1,6 @@
 
 require('dotenv').config();
-let lang_data = require('./bot/lang/data');
+let lang_data = require('./bot/i18n/data');
 
 
 global.OWNER = String("@nablanavab");
