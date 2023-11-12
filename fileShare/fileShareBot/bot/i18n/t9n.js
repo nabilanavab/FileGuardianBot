@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-constlogger = require("../../logger");
+const logger = require("../../logger");
 const button_trans = require("./ba10")
 
 
