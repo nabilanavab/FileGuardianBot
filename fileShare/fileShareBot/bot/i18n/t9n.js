@@ -7,12 +7,16 @@ const button_trans = require("./ba10")
 
 
 // language folder: with {lang_name}.json
-const folderPath = './languages';
+const langFolder = path.join(__dirname, 'languages');
 
 
-// loads all file to this file with lang_name 
-// as Parsed JSON
-fs.readdir(folderPath, (err, files) => {
+// loads all file to this file with lang_name as Parsed JSON
+fs.readdir(langFolder, (err, files) => {
+
+    if (err) {
+        logger.log('error', `Error reading folder: ${err}`);
+        process.exit(1);
+    }
 
     // Iterate through the list of files
     files.forEach((fileName) => {
