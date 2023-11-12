@@ -9,7 +9,7 @@ const userLang = {
 }
 
 const enabledLang = {
-    "eng" : ["english", "ENglish"],
+    eng : ["english", "ENglish"],
 }
 
 module.exports = {
