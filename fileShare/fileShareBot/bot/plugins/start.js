@@ -16,19 +16,19 @@ module.exports = async function(client){
             logger.log('info', `/start: by ${update.message.chatId}`)
             try {
                 lang_code = getLang(update.message.chatId);
-                text, button = translate ({
+                let [text, button] = translate ({
                     text: "[start][message]",
                     button: "[start][button][withChannel]",
                     langCode: lang_code
                 });
-                logger.log("info", `${text}/${button}`)
+                console.log(`${text}/${button}`);
                 client.sendMessage(update.message.chatId, {
                     message: text,
                     buttons: client.buildReplyMarkup(buttons),
                 });
                 return 0;
             } catch (error) {
-                logger.log("FloodWaitError:", error);
+                logger.log('error', `Error: ${error}`);
                 if (error instanceof errors.FloodWaitError) {
                     // Handle FloodWaitError
                     // module.exports(client);

@@ -9,35 +9,32 @@ const button_trans = require("./ba10")
 // language folder: with {lang_name}.json
 const langFolder = path.join(__dirname, 'languages');
 
+const localeData = {};
 
-// loads all file to this file with lang_name as Parsed JSON
 fs.readdir(langFolder, (err, files) => {
+  if (err) {
+    console.error('Error reading folder:', err);
+    process.exit(1);
+  }
 
-    if (err) {
-        logger.log('error', `Error reading folder: ${err}`);
-        process.exit(1);
+  // Iterate through the list of files
+  files.forEach((fileName) => {
+    if (fileName.endsWith('.json')) {
+      const filePath = path.join(langFolder, fileName);
+      const langCode = path.basename(filePath, '.json');
+
+      // Read and parse each JSON file
+      try {
+        const data = fs.readFileSync(filePath, 'utf8');
+        const jsonData = JSON.parse(data);
+        localeData[langCode] = jsonData; // Store the data with the language code as the key
+        console.log(`Loaded JSON from ${fileName} with language code ${langCode}`);
+      } catch (parseError) {
+        console.error(`Error parsing JSON from ${fileName}:`, parseError);
+      }
     }
-
-    // Iterate through the list of files
-    files.forEach((fileName) => {
-        if (fileName.endsWith('.json')) {
-            const filePath = path.join(langFolder, fileName);
-
-            // Read and parse each JSON file
-            fs.readFile(filePath, 'utf8', (readErr, data) => {
-                if (readErr) {
-                    logger.log("error", `Error reading JSON file ${fileName}: ${readErr}`);
-                } else {
-                try {
-                    const jsonData = JSON.parse(data);
-                    logger.log("error", `Parsed JSON from ${fileName}: ${jsonData}`);
-                } catch (parseError) {
-                    logger.log("error", `Error parsing JSON from ${fileName}: ${parseError}`);
-                }
-                }
-            });
-        }
-    });
+  });
+  console.log('All JSON files loaded:', localeData);
 });
 
 
@@ -68,13 +65,6 @@ async function translate(
     try {
         if (text !== null) rtnText = langCode[text];
         if (button !== null) rtnButton = langCode[text];
-        //
-        //
-        //delete this
-        //
-        //
-        //
-        console.log(text);
     } catch (error) {
         logger.log("error", `❌❌ can't find ${text} : ${error}`);
         if (text !== null) rtnText = eng[button];
