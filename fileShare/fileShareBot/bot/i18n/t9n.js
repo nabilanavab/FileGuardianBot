@@ -68,6 +68,13 @@ async function translate(
     try {
         if (text !== null) rtnText = langCode[text];
         if (button !== null) rtnButton = langCode[text];
+        //
+        //
+        //delete this
+        //
+        //
+        //
+        console.log(text);
     } catch (error) {
         logger.log("error", `❌❌ can't find ${text} : ${error}`);
         if (text !== null) rtnText = eng[button];

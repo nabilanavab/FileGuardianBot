@@ -5,14 +5,15 @@ const logger = require("../../logger");
 const getLang = require("../i18n/utils");
 const translate = require("../i18n/t9n");
 const { buttons } = require("telegram/client");
+var { errors } = require("telegram");
 
 
-module.exports = function(client){
+module.exports = async function(client){
     client.addEventHandler((update) => {
         if (update && update.message && update.message.message && 
                         update.message.message.startsWith("/start")){
             
-            logger.log('info', `${__dirname} : ${update.message.message.chatId}`)
+            logger.log('info', `/start: by ${update.message.chatId}`)
             try {
                 lang_code = getLang(update.message.chatId);
                 text, button = translate ({
@@ -20,14 +21,18 @@ module.exports = function(client){
                     button: "[start][button][withChannel]",
                     langCode: lang_code
                 });
+                logger.log("info", `${text}/${button}`)
                 client.sendMessage(update.message.chatId, {
                     message: text,
                     buttons: client.buildReplyMarkup(buttons),
                 });
                 return 0;
             } catch (error) {
-                logger.log('error', `${__dirname} : ${error}`)
-                this.function(client);
+                if (error instanceof errors.FloodWaitError) {
+                    // Handle FloodWaitError
+                    logger.log("FloodWaitError:", error);
+                    // module.exports(client);
+                }
             }
         }
     });

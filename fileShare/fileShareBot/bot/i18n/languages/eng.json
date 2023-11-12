@@ -5,18 +5,18 @@
         "message" : "👋 Welcome to the FileShare Bot! 📁\n\nWith FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.\n\nTo get started, simply send the file you want to share",
         "button" : {
             "withChannel" : {
-                "🌍 LANGUAGE 🌍" : "--language",
-                "📚 HELP 📚" : "--help",
+                "🌍 LANGUAGE 🌍" : "-$language",
+                "📚 HELP 📚" : "-$help",
                 "🔊 CHANNEL 🔊" : "{}",
                 "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
-                "🚶‍♀️ CLOSE 🚶‍♀️" : "--close"
+                "🚶‍♀️ CLOSE 🚶‍♀️" : "-$close"
             },
             "withOutChannel" : {
-                "🌍 LANGUAGE 🌍" : "--language",
-                "📚 HELP 📚" : "--help|1",
+                "🌍 LANGUAGE 🌍" : "-$language",
+                "📚 HELP 📚" : "-$help|1",
                 "🌟 SOURCE " : "https://github.com/nabilanavab",
                 "CODE 🌟" : "https://github.com/nabilanavab",
-                "🚶‍♀️ CLOSE 🚶‍♀️" : "--close"
+                "🚶‍♀️ CLOSE 🚶‍♀️" : "-$close"
             }
         }
     },
@@ -26,18 +26,18 @@
             "message" : "first page of help message",
             "button" : {
                 "withChannel" : {
-                    "🌍 LANGUAGE 🌍" : "-language",
-                    "📚 HELP 📚" : "-help",
+                    "🌍 LANGUAGE 🌍" : "-$language",
+                    "📚 HELP 📚" : "-$help",
                     "🔊 CHANNEL 🔊" : "",
                     "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
-                    "🚶‍♀️ CLOSE 🚶‍♀️" : "-close"
+                    "🚶‍♀️ CLOSE 🚶‍♀️" : "-$close"
                 },
                 "withOutChannel" : {
-                    "🌍 LANGUAGE 🌍" : "-language",
-                    "📚 HELP 📚" : "-help|1",
+                    "🌍 LANGUAGE 🌍" : "-$language",
+                    "📚 HELP 📚" : "-$help|1",
                     "🌟 SOURCE " : "https://github.com/nabilanavab",                    
                     " CODE 🌟" : "https://github.com/nabilanavab",
-                    "🚶‍♀️ CLOSE 🚶‍♀️" : "-close"
+                    "🚶‍♀️ CLOSE 🚶‍♀️" : "-$close"
                 }
             }
         },
