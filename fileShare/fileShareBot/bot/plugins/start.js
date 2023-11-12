@@ -28,9 +28,9 @@ module.exports = async function(client){
                 });
                 return 0;
             } catch (error) {
+                logger.log("FloodWaitError:", error);
                 if (error instanceof errors.FloodWaitError) {
                     // Handle FloodWaitError
-                    logger.log("FloodWaitError:", error);
                     // module.exports(client);
                 }
             }
