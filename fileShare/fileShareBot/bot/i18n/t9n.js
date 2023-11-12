@@ -84,7 +84,4 @@ async function translate(
     return [rtnText, rtnButton];
 }
 
-
-
-
 module.exports = translate;

@@ -44,3 +44,5 @@ async function getLang(userID){
         return config.LANG_INFO.DEFAULT_LANG;
     }
 }
+
+module.exports = getLang;
