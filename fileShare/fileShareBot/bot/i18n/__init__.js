@@ -18,4 +18,10 @@
  *     - utils.js:
  *         - Provides utilities to determine a user's language,
  *           (e.g: "eng") based on user settings.
+ *     -ba10.js:
+ *         - helps to create batton (i mean fun..)
+ *         - convert dict to button
+ *     - t9n.js:
+ *         - translation (athilum funn ann udashiche..)
+ *         - helps to translate text, button
  */

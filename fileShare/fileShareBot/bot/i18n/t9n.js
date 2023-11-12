@@ -37,8 +37,6 @@ fs.readdir(folderPath, (err, files) => {
 });
 
 
-const maxClmnForButton = 2;
-
 /**
 * This function Helps to prevent flood wait errors for all the messages.
 *

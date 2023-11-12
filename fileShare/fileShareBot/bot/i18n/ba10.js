@@ -6,22 +6,24 @@ const { Button } = require("telegram/tl/custom/button");
 const maxClmnForButton = 2;
 const elements = ["http://", "https://"]
 
+
 /**
- * This function converts a dictionary into buttons. Depending on the dictionary's values,
- * it determines the type of buttons needed.
+ * This function converts a dictionary into buttons. Depending on the
+ * dictionary's values, it determines the type of buttons needed.
  * 
- * @param {object} button - An object containing button values.
- * @param {number} [order=maxClmnForButton] - The maximum number of button columns (default: 2).
+ * @param {object} button                   - An object containing button values.
+ * @param {number} [order=maxClmnForButton] - The maximum number of button columns 
+ *                                            (default: 2).
  * 
  * @returns {object} - Returns an object.
  */
 
 
-function createButton(button, order=maxClmnForButton){
-    let return_button = [];
+async function createButton(button, order=maxClmnForButton){
+    let temp_button = [];
 
     if(Object.keys(dictionary).length <= 0){
-        return return_button;
+        return temp_button;
     };
 
     for (const key in button) {
@@ -34,22 +36,36 @@ function createButton(button, order=maxClmnForButton){
         }
 
         if (type="url") {
-            return_button.push(
+            temp_button.push(
                 Button.url(text=key, url=button[key])
             )
         } else if (type="callback") {
-            return_button.push(
+            temp_button.push(
                 Button.inline(text=key, data=button[key])
             )
         } else if (type=""){
-            return_button.push(
+            temp_button.push(
                 Button.inline(text=key, data=value)
             )
         }
 
     };
 
-    return return_button
+    if (order === maxClmnForButton) {
+        const keyboard = [];
+        for (let i = 0; i < button.length; i += maxClmnForButton) {
+            keyboard.push(button.slice(i, i + maxClmnForButton));
+        }
+    } else {
+        const newOrder = order.toString().split('').map(Number);
+        const buttonIterator = button[Symbol.iterator]();
+    
+        const keyboard = newOrder.map(elem => Array.from(
+            { length: elem }, () => buttonIterator.next().value)
+        );
+    }    
+
+    return keyboard
 }
 
 module.exports = {
