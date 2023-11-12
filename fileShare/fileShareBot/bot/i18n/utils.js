@@ -5,7 +5,6 @@ const fs = require('fs');
 const langFloder = './languages';
 const logger = require("../../logger")
 const data = require("data")
-const yaml = require('js-yaml');
 
 
 

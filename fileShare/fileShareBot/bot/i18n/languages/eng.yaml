@@ -1,7 +1,0 @@
-start_message: "Welcome to my Telegram bot!"
-start_button: "this is a button"
-
-home:
-    start: start_message
-    button:
-        start_button: "heyThere"
