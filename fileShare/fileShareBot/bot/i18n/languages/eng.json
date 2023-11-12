@@ -1,4 +1,59 @@
 {
-    "start_message" : "welcome to my new bot",
-    "start_button" : "this is a button"
+    "start" : {
+        "comment" : "welcome message: {button.withOutChannel} if force sub. else its easy to leave the channel :)",
+        "photo" : "https://te.legra.ph/file/8dfa3760df91a218a629c.jpg",
+        "message" : "👋 Welcome to the FileShare Bot! 📁\n\nWith FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.\n\nTo get started, simply send the file you want to share",
+        "button" : {
+            "withChannel" : {
+                "🌍 LANGUAGE 🌍" : "--language",
+                "📚 HELP 📚" : "--help",
+                "🔊 CHANNEL 🔊" : "{}",
+                "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
+                "🚶‍♀️ CLOSE 🚶‍♀️" : "--close"
+            },
+            "withOutChannel" : {
+                "🌍 LANGUAGE 🌍" : "--language",
+                "📚 HELP 📚" : "--help|1",
+                "🌟 SOURCE " : "https://github.com/nabilanavab",
+                "CODE 🌟" : "https://github.com/nabilanavab",
+                "🚶‍♀️ CLOSE 🚶‍♀️" : "--close"
+            }
+        }
+    },
+    "help" : {
+        "comment" : "just some help messages",
+        "0" : {
+            "message" : "first page of help message",
+            "button" : {
+                "withChannel" : {
+                    "🌍 LANGUAGE 🌍" : "-language",
+                    "📚 HELP 📚" : "-help",
+                    "🔊 CHANNEL 🔊" : "",
+                    "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
+                    "🚶‍♀️ CLOSE 🚶‍♀️" : "-close"
+                },
+                "withOutChannel" : {
+                    "🌍 LANGUAGE 🌍" : "-language",
+                    "📚 HELP 📚" : "-help|1",
+                    "🌟 SOURCE " : "https://github.com/nabilanavab",                    
+                    " CODE 🌟" : "https://github.com/nabilanavab",
+                    "🚶‍♀️ CLOSE 🚶‍♀️" : "-close"
+                }
+            }
+        },
+        "1" : {
+            "message" : "first page of help message",
+            "button" : {
+                "🔙 back" : "-help|0",
+                "Next ➡️" : "-help|2"
+            }
+        },
+        "2" : {
+            "message" : "second page of help message",
+            "button" : {
+                "🔙 back" : "-help|1",
+                "Next ➡️" : "-help|0"
+            }
+        }
+    }
 }

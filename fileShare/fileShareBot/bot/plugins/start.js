@@ -2,7 +2,9 @@
 
 const { Button } = require("telegram/tl/custom/button");
 const logger = require("../../logger");
-const getLang = require("../i18n/utils")
+const getLang = require("../i18n/utils");
+const translate = require("../i18n/t9n");
+const { buttons } = require("telegram/client");
 
 
 module.exports = function(client){
@@ -13,17 +15,20 @@ module.exports = function(client){
             logger.log('info', `${__dirname} : ${update.message.message.chatId}`)
             try {
                 lang_code = getLang(update.message.chatId);
-                console.log(lang_code);
+                text, button = translate ({
+                    text: "[start][message]",
+                    button: "[start][button][withChannel]",
+                    langCode: lang_code
+                });
                 client.sendMessage(update.message.chatId, {
-                    message: "Welcome to my Telegram bot!",
-                    buttons: client.buildReplyMarkup(Button.inline("Start")),
+                    message: text,
+                    buttons: client.buildReplyMarkup(buttons),
                 });
                 return 0;
             } catch (error) {
                 logger.log('error', `${__dirname} : ${error}`)
                 this.function(client);
             }
-
         }
     });
 }
