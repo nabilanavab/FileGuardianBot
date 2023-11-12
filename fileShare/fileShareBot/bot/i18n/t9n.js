@@ -21,7 +21,7 @@ fs.readdir(langFolder, (err, files) => {
     // Iterate through the list of files
     files.forEach((fileName) => {
         if (fileName.endsWith('.json')) {
-            const filePath = path.join(folderPath, fileName);
+            const filePath = path.join(langFolder, fileName);
 
             // Read and parse each JSON file
             fs.readFile(filePath, 'utf8', (readErr, data) => {
