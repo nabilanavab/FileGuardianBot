@@ -3,7 +3,7 @@
 const config = require("../config");
 const loader = require("./loader")
 let logger = require("../logger")
-var { TelegramClient } = require("telegram");
+var { TelegramClient, errors } = require("telegram");
 var { StringSession } = require("telegram/sessions");
 
 
@@ -16,16 +16,19 @@ var { StringSession } = require("telegram/sessions");
         { useWSS : true } 
     );
 
-    while (true) {
+    function auth() {
         try {
             client.start({
                 botAuthToken: config.BOT_INFO.API_TOKEN,
             });
-            break;
         } catch (error) {
-            logger.log(`Error During Login: ${error}`);
+            if (error instanceof errors.FloodWaitError) {
+                logger.log(`Error During Login: ${error}`);
+                auth();
+            }
         }
     }
+    auth();
 
     // loads all files from plugins
     loader(client);

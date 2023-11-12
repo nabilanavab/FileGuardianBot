@@ -5,7 +5,7 @@
 // when they'll come to the rescue in your coding adventures! 🚀
 
 const userLang = {
-    531733867: "eng",
+    // 531733867: "eng",
 }
 
 const enabledLang = {
