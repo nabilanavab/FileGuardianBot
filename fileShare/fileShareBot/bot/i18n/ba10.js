@@ -16,7 +16,7 @@ const elements = ["http://", "https://"]
  * @returns {object} - Returns an object.
  */
 
-global.createButton = async function(
+createButton = async function(
     { button, order=maxClmnForButton }
 ){
     let temp_button = [];
