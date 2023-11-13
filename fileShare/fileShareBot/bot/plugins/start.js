@@ -20,10 +20,12 @@ module.exports = async function(client){
                     button: 'start.button.withChannel',
                     langCode: lang_code,
                 });
-                client.sendMessage(update.message.chatId, {
-                    message: text,
-                    buttons: client.buildReplyMarkup(buttons),
-                });
+                console.log(text);
+                console.log(button);
+                // client.sendMessage(update.message.chatId, {
+                //     message: text,
+                //     buttons: client.buildReplyMarkup(buttons),
+                // });
                 return 0;
             } catch (error) {
                 if (error instanceof errors.FloodWaitError) {

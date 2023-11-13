@@ -117,6 +117,7 @@ async function translate({
         logger.log("error", `🚫 ${__dirname}: ${error}`);
     }
 
+    console.log(rtnButton);
     return [rtnText, rtnButton];
 }
 

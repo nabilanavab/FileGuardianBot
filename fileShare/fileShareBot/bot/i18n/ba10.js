@@ -2,10 +2,8 @@
 
 const { Button } = require("telegram/tl/custom/button");
 
-
 const maxClmnForButton = 2;
 const elements = ["http://", "https://"]
-
 
 /**
  * This function converts a dictionary into buttons. Depending on the
@@ -17,7 +15,6 @@ const elements = ["http://", "https://"]
  * 
  * @returns {object} - Returns an object.
  */
-
 
 async function createButton(
     { button, order=maxClmnForButton }
@@ -54,26 +51,24 @@ async function createButton(
         }
     };
 
-    console.log(temp_button);
-
     const keyboard = [];
     if (order === maxClmnForButton) {
-        console.log("ith");
-        for (let i = 0; i < button.length; i += maxClmnForButton) {
-            keyboard.push(button.slice(i, i + maxClmnForButton));
+        for (let i = 0; i < temp_button.length; i += maxClmnForButton) {
+          keyboard.push(temp_button.slice(i, i + maxClmnForButton));
         }
-    } else {
-        console.log('2 alla');
-
+      } else {
         const newOrder = order.toString().split("").map(Number);
-        const buttonIterator = button[Symbol.iterator]();
-        
-        keyboard = newOrder.map(
-            elem => Array.from({ length: elem }, () => buttonIterator.next().value)
-        );
-    };
+        const buttonIterator = temp_button[Symbol.iterator]();
+      
+        keyboard = newOrder.map(elem => Array.from({ length: elem }, () => {
+          const subArray = [];
+          for (let i = 0; i < elem; i++) {
+            subArray.push(buttonIterator.next().value);
+          }
+          return subArray;
+        }));
+      }
 
-    console.log(keyboard);
     return keyboard ? keyboard : null;
 }
 
