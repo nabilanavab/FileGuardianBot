@@ -70,52 +70,39 @@ async function translate({
             let keys = text.split('.');
             rtnText = langMsg;
             keys.forEach(key => {
-                if (rtnText && rtnText[key]) {
-                    rtnText = rtnText[key];
-                } else {
-                    rtnText = undefined;
-                }
+                if (rtnText && rtnText[key]) { rtnText = rtnText[key];
+                } else { rtnText = undefined;}
             })
         }
         if (button){
             let keys = button.split('.');
             rtnButton = langMsg;
             keys.forEach(key => {
-                if (rtnButton && rtnButton[key]) {
-                    rtnButton = rtnButton[key];
-                } else {
-                    rtnButton = undefined;
-                }
+                if (rtnButton && rtnButton[key]) { rtnButton = rtnButton[key];
+                } else { rtnButton = undefined; }
             })
         }
     } catch (error) {
         logger.log("error", `❌❌ can't find ${text} : ${error}`);
         langMsg = localeData["eng"];
         if (text !== false){
-            console.log(rtnText);
             keys = rtnText.split('.');
             rtnText = langMsg;
             keys.forEach(key => {
-                if (rtnText && rtnText[key]) {
-                    rtnText = rtnText[key];
-                } else {
-                    rtnText = undefined;
-                }
+                if (rtnText && rtnText[key]) { rtnText = rtnText[key];
+                } else { rtnText = undefined; }
             })
         }
         if (button !== false){
-            keys = rtnText.split('.');
-            rtnText = langMsg;
+            keys = rtnButton.split('.');
+            rtnButton = langMsg;
             keys.forEach(key => {
-                if (rtnButton && rtnButton[key]) {
-                    rtnButton = rtnButton[key];
-                } else {
-                    rtnButton = undefined;
-                }
+                if (rtnButton && rtnButton[key]) { rtnButton = rtnButton[key];
+                } else { rtnButton = undefined; }
             })
         }
     }
-
+    
     console.log(`${rtnButton}: ${rtnText}`)
     // Return button as a String
     if (asString) return [rtnText, rtnButton];
