@@ -4,7 +4,7 @@
     "id" : "update.message.userId",
     "name" : "update.message.firstname",
     "username" : "update.message.username",
-    "viewProfile" : "tg//{}",
+    "viewProfile" : "tg//{update.message.userId}",
     "data" : [
         {
             "index" : 1,
