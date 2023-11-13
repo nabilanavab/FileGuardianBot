@@ -1,10 +1,8 @@
 
 
-const { Button } = require("telegram/tl/custom/button");
 const logger = require("../../logger");
 const getLang = require("../i18n/utils");
 const translate = require("../i18n/t9n");
-const { buttons } = require("telegram/client");
 var { errors } = require("telegram");
 var { CHANNEL_INFO } = require("../../config")
 
@@ -12,7 +10,7 @@ var { CHANNEL_INFO } = require("../../config")
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
         if (update && update.message && update.message.message && 
-                        update.message.message.startsWith("/start")){
+                        update.message.message.toLowerCase().startsWith("/start")){
 
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
@@ -46,9 +44,14 @@ module.exports = async function(client){
                 }
                 return 0;
             } catch (error) {
+                // just for edu. purpose not needed in /start
                 if (error instanceof errors.FloodWaitError) {
-                    logger.log("error", `Error in ?start: ${error}`);
-                    module.exports(client);
+                    logger.log(
+                        "error", `Error ${error.errorMessage} in ?start: ${error.seconds}`
+                    );
+                    setTimeout(
+                        module.exports(client), error.seconds
+                    )
                 } else {
                     logger.log("error", `Error in ?start: ${error}`);
                 }

@@ -44,7 +44,7 @@ class LOG_FILE {
 class CHANNEL_INFO {
     static FORCE_SUB = Number(process.env.FORCE_SUB) ? Number(process.env.FORCE_SUB) : 0;
     static WELCOME_PIC = String(process.env.WELCOME_PIC);
-    static REQUEST_SUPPORT = Number(process.env.REQUEST_SUPPORT);
+    static REQUEST_SUPPORT = String(process.env.REQUEST_SUPPORT);
 }
 
 class SOURCE_INFO {
