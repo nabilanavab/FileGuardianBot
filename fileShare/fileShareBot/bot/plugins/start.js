@@ -13,6 +13,7 @@ module.exports = async function(client){
     client.addEventHandler(async (update) => {
         if (update && update.message && update.message.message && 
                         update.message.message.startsWith("/start")){
+
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
                 let lang_code = await getLang(update.message.chatId);

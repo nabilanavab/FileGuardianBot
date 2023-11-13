@@ -1,0 +1,46 @@
+{
+    "comment" : "this is just a demo.json file only to show how it works [and this line will not be there]",
+    "url" : "https://telegram.dog/{botname}?start={encrypted_code}",
+    "id" : "update.message.userId",
+    "name" : "update.message.firstname",
+    "username" : "update.message.username",
+    "viewProfile" : "tg//{}",
+    "data" : [
+        {
+            "index" : 1,
+            "media" : "text",
+            "message_id" : "update.message.message_id"
+        }, {
+            "index" : 2,
+            "media" : "document",
+            "message_id" : "update.message.message_id"
+        }, {
+            "index" : 3,
+            "media" : "audio",
+            "message_id" : "update.message.message_id"
+        }, {
+            "index" : 4,
+            "media" : "voice",
+            "message_id" : "update.message.message_id"
+        }, {
+            "index" : 5,
+            "media" : "photo",
+            "message_id" : "update.message.message_id"
+        }, {
+            "index" : 6,
+            "media" : "sticker",
+            "message_id" : "update.message.message_id"
+        }, {
+            "index" : 7,
+            "media" : "video", 
+            "message_id" : "update.message.message_id"
+        }, {
+            "index" : 8,
+            "media" : "telescope",
+            "message_id" : "update.message.message_id"
+        }
+    ],
+    "protected" : true,
+    "forward" : false,
+    "accessable" : true
+}
