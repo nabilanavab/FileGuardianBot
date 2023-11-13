@@ -15,17 +15,18 @@ module.exports = async function(client){
             
             try {
                 let lang_code = await getLang(update.message.chatId);
-                let { text, button } = await translate({
+                let translated = await translate({
                     text: 'start.message',
                     button: 'start.button.withChannel',
                     langCode: lang_code,
                 });
-                console.log(text);
-                console.log(button);
-                // client.sendMessage(update.message.chatId, {
-                //     message: text,
-                //     buttons: client.buildReplyMarkup(buttons),
-                // });
+                console.log(translated.button);
+                client.sendMessage(update.message.chatId, {
+                    message: translated.text,
+                    buttons: client.buildReplyMarkup(
+                        translated.button
+                    ),
+                });
                 return 0;
             } catch (error) {
                 if (error instanceof errors.FloodWaitError) {

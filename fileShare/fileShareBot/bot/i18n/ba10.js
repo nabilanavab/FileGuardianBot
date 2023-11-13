@@ -36,15 +36,15 @@ async function createButton(
             type="query"; value=value.slice(1);
         }
 
-        if (type="url") {
+        if (type==="url") {
             temp_button.push(
                 Button.url(text=key, url=value)
             )
-        } else if (type="callback") {
+        } else if (type==="callback") {
             temp_button.push(
                 Button.inline(text=key, data=value===0?undefined:value)
             )
-        } else if (type="query"){
+        } else if (type==="query"){
             temp_button.push(
                 Button.switchInline(text=key, query=value)
             )
