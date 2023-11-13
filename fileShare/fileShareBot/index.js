@@ -12,7 +12,7 @@
  * file sharing. We encourage you to explore, find errors, and contribute by making pull requests.
  * Your input and contributions are highly valued!
  * 
- * مَا شَاءَ ٱللَّٰهُ
+ *  مَا شَاءَ ٱللَّٰهُ
  * 
  */
 
