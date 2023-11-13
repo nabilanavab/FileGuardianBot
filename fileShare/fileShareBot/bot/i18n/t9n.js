@@ -56,7 +56,7 @@ try {
 * translate(chatID, message, button)
 */
 
-async function translate({
+global.translate = async function({
     text=null, button=null, langCode=null, 
     asString=false, order=button_trans.maxClmnForButton
 }) {

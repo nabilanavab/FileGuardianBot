@@ -11,10 +11,9 @@ let supportedLang = []
 const langFolder = path.join(__dirname, 'languages');
 
 fs.readdir(langFolder, (err, files) => {
-
     // supportedLang: save all langs name in languages folder
     // eg: supportedLang = ["eng", "mal", "hnd","arb"]
-
+    
     if (err) {
         logger.log('error', `Error reading folder: ${err}`);
         process.exit(1);
@@ -33,13 +32,11 @@ fs.readdir(langFolder, (err, files) => {
             (langCode) => langCode !== null
         );
     }
-    
     console.log('Supported Languages:', supportedLang);
-
 });
 
 
-async function getLang(userID){
+global.getLang = async function(userID){
 
     // try to get lang code from data.useLang (default : default_lang_code)
     var userLang = data.userLang[userID] === undefined ? config.LANG_INFO.DEFAULT_LANG : data.userLang[userID];

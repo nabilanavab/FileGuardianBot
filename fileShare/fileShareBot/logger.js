@@ -58,6 +58,7 @@ if(LOG_FILE.LOG_FILE.CONSOLE_LOG){
 module.exports = logger;
 
 /**
+ * 
  * @license
  * FileShareBot is open-source software distributed under the MIT License.
  * Please see the LICENSE: file for more details.

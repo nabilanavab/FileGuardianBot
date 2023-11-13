@@ -1,9 +1,7 @@
 
-
+require('./globalFunction.js');
 const { Button } = require("telegram/tl/custom/button");
 const logger = require("../../logger");
-const getLang = require("../i18n/utils");
-const translate = require("../i18n/t9n");
 const { buttons } = require("telegram/client");
 var { errors } = require("telegram");
 
