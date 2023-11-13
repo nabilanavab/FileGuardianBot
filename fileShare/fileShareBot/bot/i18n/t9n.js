@@ -70,12 +70,12 @@ async function translate(
     let rtnText = text;
     let rtnButton = button;
 
-    let languageMessages = localeData[language];
+    let langMsg = localeData[langCode];
 
     try {
         if (text !== null){
             let keys = text.split('.');
-            rtnText = languageMessages;
+            rtnText = langMsg;
             keys.forEach(key => {
                 if (rtnText && rtnText[key]) {
                     rtnText = rtnText[key];
@@ -86,7 +86,7 @@ async function translate(
         }
         if (button !== null){
             let keys = button.split('.');
-            rtnButton = languageMessages;
+            rtnButton = langMsg;
             keys.forEach(key => {
                 if (rtnButton && rtnButton[key]) {
                     rtnButton = rtnButton[key];
@@ -100,7 +100,7 @@ async function translate(
         langCode = "eng";
         if (text !== null){
             let keys = text.split('.');
-            rtnText = languageMessages;
+            rtnText = langMsg;
             keys.forEach(key => {
                 if (rtnText && rtnText[key]) {
                     rtnText = rtnText[key];
@@ -111,7 +111,7 @@ async function translate(
         }
         if (button !== null){
             let keys = button.split('.');
-            rtnButton = languageMessages;
+            rtnButton = langMsg;
             keys.forEach(key => {
                 if (rtnButton && rtnButton[key]) {
                     rtnButton = rtnButton[key];
