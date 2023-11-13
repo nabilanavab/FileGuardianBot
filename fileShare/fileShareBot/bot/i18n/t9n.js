@@ -67,73 +67,76 @@ async function translate(
     text=null, button=null, asString=false,
     order=button_trans.maxClmnForButton, langCode=null
 ) {
-    let rtnText = text;
-    let rtnButton = button;
+    logger.log("error", text);
+    logger.log("error", button);
+    // let rtnText = text;
+    // let rtnButton = button;
 
-    let langMsg = localeData[langCode];
+    // let langMsg = localeData[langCode];
 
-    try {
-        if (text !== null){
-            let keys = text.split('.');
-            rtnText = langMsg;
-            keys.forEach(key => {
-                if (rtnText && rtnText[key]) {
-                    rtnText = rtnText[key];
-                } else {
-                    rtnText = undefined;
-                }
-            })
-        }
-        if (button !== null){
-            let keys = button.split('.');
-            rtnButton = langMsg;
-            keys.forEach(key => {
-                if (rtnButton && rtnButton[key]) {
-                    rtnButton = rtnButton[key];
-                } else {
-                    rtnButton = undefined;
-                }
-            })
-        }
-    } catch (error) {
-        logger.log("error", `❌❌ can't find ${text} : ${error}`);
-        langCode = "eng";
-        if (text !== null){
-            let keys = text.split('.');
-            rtnText = langMsg;
-            keys.forEach(key => {
-                if (rtnText && rtnText[key]) {
-                    rtnText = rtnText[key];
-                } else {
-                    rtnText = undefined;
-                }
-            })
-        }
-        if (button !== null){
-            let keys = button.split('.');
-            rtnButton = langMsg;
-            keys.forEach(key => {
-                if (rtnButton && rtnButton[key]) {
-                    rtnButton = rtnButton[key];
-                } else {
-                    rtnButton = undefined;
-                }
-            })
-        }
-    }
+    // try {
+    //     if (text !== null){
+    //         let keys = text.split('.');
+    //         rtnText = langMsg;
+    //         keys.forEach(key => {
+    //             if (rtnText && rtnText[key]) {
+    //                 rtnText = rtnText[key];
+    //             } else {
+    //                 rtnText = undefined;
+    //             }
+    //         })
+    //     }
+    //     if (button !== null){
+    //         let keys = button.split('.');
+    //         rtnButton = langMsg;
+    //         keys.forEach(key => {
+    //             if (rtnButton && rtnButton[key]) {
+    //                 rtnButton = rtnButton[key];
+    //             } else {
+    //                 rtnButton = undefined;
+    //             }
+    //         })
+    //     }
+    // } catch (error) {
+    //     logger.log("error", `❌❌ can't find ${text} : ${error}`);
+    //     langMsg = localeData["eng"];
+    //     if (text !== null){
+    //         console.log(rtnText);
+    //         keys = rtnText.split('.');
+    //         rtnText = langMsg;
+    //         keys.forEach(key => {
+    //             if (rtnText && rtnText[key]) {
+    //                 rtnText = rtnText[key];
+    //             } else {
+    //                 rtnText = undefined;
+    //             }
+    //         })
+    //     }
+    //     if (button !== null){
+    //         keys = rtnText.split('.');
+    //         rtnText = langMsg;
+    //         keys.forEach(key => {
+    //             if (rtnButton && rtnButton[key]) {
+    //                 rtnButton = rtnButton[key];
+    //             } else {
+    //                 rtnButton = undefined;
+    //             }
+    //         })
+    //     }
+    // }
 
-    // Return button as a String
-    if (asString) return [rtnText, rtnButton];
+    // // Return button as a String
+    // if (asString) return [rtnText, rtnButton];
 
-    try {
-        if (button !== null) rtnButton = await createButton(
-            { button: rtnButton }
-        );
-    } catch (error) {
-        logger.log("error", `🚫 ${__dirname}: ${error}`);
-    }
+    // try {
+    //     if (button !== null) rtnButton = await createButton(
+    //         { button: rtnButton }
+    //     );
+    // } catch (error) {
+    //     logger.log("error", `🚫 ${__dirname}: ${error}`);
+    // }
 
-    return [rtnText, rtnButton];
+    // return [rtnText, rtnButton];
 }
 
 module.exports = translate;

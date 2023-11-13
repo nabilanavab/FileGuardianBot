@@ -16,9 +16,10 @@ module.exports = async function(client){
             logger.log('info', `/start: by ${update.message.chatId}`)
             try {
                 lang_code = getLang(update.message.chatId);
+                console.log(lang_code);
                 let [text, button] = translate ({
-                    text: "[start][message]",
-                    button: "[start][button][withChannel]",
+                    text: "start.message",
+                    button: "start.button.withChannel",
                     langCode: lang_code
                 });
                 console.log(`${text}/${button}`);

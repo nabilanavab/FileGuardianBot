@@ -42,7 +42,7 @@ fs.readdir(langFolder, (err, files) => {
 async function getLang(userID){
 
     // try to get lang code from data.useLang (default : default_lang_code)
-    var userLang = data.userLang[userID] === undefined || config.LANG_INFO.DEFAULT_LANG;
+    var userLang = data.userLang[userID] === undefined ? config.LANG_INFO.DEFAULT_LANG : data.userLang[userID];
 
     if (supportedLang.includes(userLang) !== -1){
         return userLang;
