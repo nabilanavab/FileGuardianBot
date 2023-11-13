@@ -32,6 +32,11 @@ class CHANNEL_INFO {
     static REQUEST_SUPPORT = Number(process.env.REQUEST_SUPPORT);
 }
 
+class SOURCE_INFO {
+    static SOURCE_CODE = "https://github.com/nabilanavab";
+    static OWNER_GITHUB = "https://github.com/nabilanavab";
+    static OWNER_TELEGRAM = "https://telegram.dog/nabilanavab";
+}
 
 // checks if all the mandatory variables are there
 mandatoryVariables = ['API_ID', 'API_HASH', 'API_TOKEN'];
