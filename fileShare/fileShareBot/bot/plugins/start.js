@@ -13,7 +13,7 @@ module.exports = async function(client){
     client.addEventHandler(async (update) => {
         if (update && update.message && update.message.message && 
                         update.message.message.startsWith("/start")){
-            
+            logger.log('info', `user ${update.message.chatId} started bot`)
             try {
                 let lang_code = await getLang(update.message.chatId);
                 let translated = await translate({
@@ -45,10 +45,10 @@ module.exports = async function(client){
                 return 0;
             } catch (error) {
                 if (error instanceof errors.FloodWaitError) {
-                    console.log(error);
+                    logger.log("error", `Error in ?start: ${error}`);
                     module.exports(client);
                 } else {
-                    console.log("error");
+                    logger.log("error", `Error in ?start: ${error}`);
                 }
             }
         }
