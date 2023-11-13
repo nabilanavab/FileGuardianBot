@@ -7,7 +7,7 @@
             "withChannel" : {
                 "🌍 LANGUAGE 🌍" : "-$language",
                 "📚 HELP 📚" : "-$help",
-                "🔊 CHANNEL 🔊" : "{}",
+                "🔊 CHANNEL 🔊" : "https://github.com/nabilanavab",
                 "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
                 "🚶‍♀️ CLOSE 🚶‍♀️" : "-$close"
             },
