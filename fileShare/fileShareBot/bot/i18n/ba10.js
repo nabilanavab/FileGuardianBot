@@ -29,6 +29,7 @@ async function createButton(
     };
 
     for (const key in button) {
+        console.log(key);
         // console.log(key, button[key]);
         let type="callback", value=button[key];
         if (elements.some(element => value.startsWith(element))){
@@ -52,22 +53,21 @@ async function createButton(
                 Button.switchInline(text=key, query=value)
             )
         }
-
     };
 
-    if (order === maxClmnForButton) {
-        const keyboard = [];
-        for (let i = 0; i < button.length; i += maxClmnForButton) {
-            keyboard.push(button.slice(i, i + maxClmnForButton));
-        }
+    const keyboard = [];
+    if (order === deBUTTON_SPLIT) {
+        for (let i = 0; i < button.length; i += deBUTTON_SPLIT) {
+                keyboard.push(button.slice(i, i + deBUTTON_SPLIT));
+            }
     } else {
-        const newOrder = order.toString().split('').map(Number);
+        const newOrder = order.toString().split("").map(Number);
         const buttonIterator = button[Symbol.iterator]();
-    
-        const keyboard = newOrder.map(elem => Array.from(
-            { length: elem }, () => buttonIterator.next().value)
+        
+        keyboard = newOrder.map(
+            elem => Array.from({ length: elem }, () => buttonIterator.next().value)
         );
-    }    
+    }
 
     return keyboard
 }

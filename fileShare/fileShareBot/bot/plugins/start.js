@@ -13,7 +13,6 @@ module.exports = async function(client){
         if (update && update.message && update.message.message && 
                         update.message.message.startsWith("/start")){
             
-            logger.log('info', `/start: by ${update.message.chatId}`)
             try {
                 let lang_code = await getLang(update.message.chatId);
                 let { text, button } = await translate({
@@ -27,7 +26,6 @@ module.exports = async function(client){
                 });
                 return 0;
             } catch (error) {
-                logger.log('error', `Error: ${error}`);
                 if (error instanceof errors.FloodWaitError) {
                     // Handle FloodWaitError
                     // module.exports(client);

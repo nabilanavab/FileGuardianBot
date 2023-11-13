@@ -60,42 +60,46 @@ async function translate({
     text=null, button=null, langCode=null, 
     asString=false, order=button_trans.maxClmnForButton
 }) {
-    let rtnText = text;
-    let rtnButton = button;
-
+    let rtnText, rtnButton = null;
     let langMsg = localeData[langCode];
 
-    try {
-        if (text){
+    if (text) {
+        try {
             let keys = text.split('.');
             rtnText = langMsg;
             keys.forEach(key => {
-                if (rtnText && rtnText[key]) { rtnText = rtnText[key];
-                } else { rtnText = undefined;}
+                if (rtnText && rtnText[key]) {
+                    rtnText = rtnText[key];
+                } else {
+                    rtnText = undefined;
+                }
+            })
+        } catch (error) {
+            logger.log("error", `❌❌ can't find ${text} : ${error}`);
+            rtnText = localeData["eng"];
+            keys.forEach(key => {
+                if (rtnText && rtnText[key]) {
+                    rtnText = rtnText[key];
+                } else {
+                    rtnText = undefined;
+                }
             })
         }
-        if (button){
+    }
+    if (button){
+        try {
             let keys = button.split('.');
             rtnButton = langMsg;
             keys.forEach(key => {
-                if (rtnButton && rtnButton[key]) { rtnButton = rtnButton[key];
-                } else { rtnButton = undefined; }
+                if (rtnButton && rtnButton[key]) {
+                    rtnButton = rtnButton[key];
+                } else {
+                    rtnButton = undefined;
+                }
             })
-        }
-    } catch (error) {
-        logger.log("error", `❌❌ can't find ${text} : ${error}`);
-        langMsg = localeData["eng"];
-        if (text !== false){
-            keys = rtnText.split('.');
-            rtnText = langMsg;
-            keys.forEach(key => {
-                if (rtnText && rtnText[key]) { rtnText = rtnText[key];
-                } else { rtnText = undefined; }
-            })
-        }
-        if (button !== false){
-            keys = rtnButton.split('.');
-            rtnButton = langMsg;
+        } catch (error) {
+            logger.log("error", `❌❌ can't find ${button} : ${error}`);
+            rtnButton = localeData["eng"];
             keys.forEach(key => {
                 if (rtnButton && rtnButton[key]) { rtnButton = rtnButton[key];
                 } else { rtnButton = undefined; }
@@ -103,14 +107,12 @@ async function translate({
         }
     }
     
-    console.log(`${rtnButton}: ${rtnText}`)
-    // Return button as a String
     if (asString) return [rtnText, rtnButton];
 
     try {
-        if (button !== false) rtnButton = await createButton(
-            { button: rtnButton }
-        );
+        rtnButton = button ? await createButton(
+            { button: rtnButton, order: order }
+        ) : rtnButton;
     } catch (error) {
         logger.log("error", `🚫 ${__dirname}: ${error}`);
     }
