@@ -17,16 +17,18 @@ module.exports = async function(client){
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
                 let lang_code = await getLang(update.message.chatId);
+                console.log(CHANNEL_INFO.FORCE_SUB);
                 let translated = await translate({
                     text: 'start.message',
-                    button: CHANNEL_INFO.FORCE_SUB 
+                    button: CHANNEL_INFO.FORCE_SUB
                         ? 'start.button.withChannel'
                         : 'start.button.withOutChannel',
                     langCode: lang_code,
+                    order: CHANNEL_INFO.FORCE_SUB
+                        ? "221" : "211", 
                 });
 
                 if (!CHANNEL_INFO.WELCOME_PIC){
-                    console.log(CHANNEL_INFO.WELCOME_PIC);
                     await client.sendMessage(update.message.chatId, {
                         message: translated.text,
                         buttons: client.buildReplyMarkup(
@@ -34,7 +36,6 @@ module.exports = async function(client){
                         ),
                     });
                 } else {
-                    console.log(CHANNEL_INFO.WELCOME_PIC);
                     await client.sendMessage(update.message.chatId, {
                         message: translated.text,
                         file: CHANNEL_INFO.WELCOME_PIC,

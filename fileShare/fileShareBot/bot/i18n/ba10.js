@@ -51,27 +51,29 @@ createButton = async function(
         }
     };
 
-    const keyboard = [];
+    let keyboard = [];
+
     if (order === maxClmnForButton) {
         for (let i = 0; i < temp_button.length; i += maxClmnForButton) {
-          keyboard.push(temp_button.slice(i, i + maxClmnForButton));
+            keyboard.push(temp_button.slice(i, i + maxClmnForButton));
         }
-      } else {
-        const newOrder = order.toString().split("").map(Number);
-        const buttonIterator = temp_button[Symbol.iterator]();
-      
-        keyboard = newOrder.map(elem => Array.from({ length: elem }, () => {
-          const subArray = [];
-          for (let i = 0; i < elem; i++) {
-            subArray.push(buttonIterator.next().value);
-          }
-          return subArray;
-        }));
-      }
+    } else {
+        let newOrder = order.toString().split("").map(Number);
+        let buttonIterator = temp_button[Symbol.iterator]();
+
+        keyboard = newOrder.map(elem => {
+            let subArray = [];
+
+            for (let i = 0; i < elem; i++) {
+                subArray.push(buttonIterator.next().value);
+            }
+
+            return subArray;
+        });
+    }
 
     return keyboard ? keyboard : null;
-}
-
+    }
 module.exports = {
     maxClmnForButton, createButton
 }
