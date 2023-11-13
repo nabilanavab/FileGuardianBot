@@ -20,11 +20,11 @@ const elements = ["http://", "https://"]
 
 
 async function createButton(
-    {button, order=maxClmnForButton}
+    { button, order=maxClmnForButton }
 ){
     let temp_button = [];
 
-    if(Object.keys(dictionary).length <= 0){
+    if(Object.keys(button).length <= 0){
         return temp_button;
     };
 

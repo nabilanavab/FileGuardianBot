@@ -9,17 +9,17 @@ var { errors } = require("telegram");
 
 
 module.exports = async function(client){
-    client.addEventHandler((update) => {
+    client.addEventHandler(async (update) => {
         if (update && update.message && update.message.message && 
                         update.message.message.startsWith("/start")){
             
             logger.log('info', `/start: by ${update.message.chatId}`)
             try {
-                lang_code = getLang(update.message.chatId);
-                let { text, button } = translate({
+                let lang_code = await getLang(update.message.chatId);
+                let { text, button } = await translate({
                     text: 'start.message',
                     button: 'start.button.withChannel',
-                    langCode: lang_code
+                    langCode: lang_code,
                 });
                 client.sendMessage(update.message.chatId, {
                     message: text,

@@ -1,9 +1,9 @@
 
-
 const fs = require('fs');
 const path = require('path');
 const logger = require("../../logger");
 const button_trans = require("./ba10");
+const { createButton } = require("../i18n/ba10")
 
 
 const langFolder = path.join(__dirname, 'languages');
@@ -19,32 +19,25 @@ try {
     );
 
     jsonFiles.forEach(file => {
-
         const languageCode = path.basename(file, '.json');
         const filePath = path.join(langFolder, file);
 
         try {
-
-            // try below line or current running
-            // localeData[languageCode] = require(filePath);
-            const data = fs.readFileSync(filePath, 'utf8');
-            const jsonData = JSON.parse(data);
-            localeData[languageCode] = jsonData;
-
+            localeData[languageCode] = require(filePath);
+            // const data = fs.readFileSync(filePath, 'utf8');
+            // const jsonData = JSON.parse(data);
+            // localeData[languageCode] = jsonData;
         } catch (parseError) {
             logger.log(
-                `Error parsing JSON from ${file}: ${parseError.message}`
-            );
+                'error', `Error parsing JSON from ${file}: ${parseError.message}`
+            )
         }
     });
 
-    logger.log('All JSON files loaded:', localeData);
-
 } catch (readDirError) {
-    logger.error('Error reading folder:', readDirError.message);
+    logger.error("error", `Error reading folder: ${readDirError.message}`);
     process.exit(1);
 }
-
 
 /**
 * This function Helps to prevent flood wait errors for all the messages.
@@ -123,6 +116,7 @@ async function translate({
         }
     }
 
+    console.log(`${rtnButton}: ${rtnText}`)
     // Return button as a String
     if (asString) return [rtnText, rtnButton];
 
