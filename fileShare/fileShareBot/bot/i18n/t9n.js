@@ -3,39 +3,47 @@
 const fs = require('fs');
 const path = require('path');
 const logger = require("../../logger");
-const button_trans = require("./ba10")
+const button_trans = require("./ba10");
 
 
-// language folder: with {lang_name}.json
 const langFolder = path.join(__dirname, 'languages');
-
 const localeData = {};
 
-fs.readdir(langFolder, (err, files) => {
-  if (err) {
-    console.error('Error reading folder:', err);
+try {
+    // Read all files in the directory
+    const files = fs.readdirSync(langFolder);
+
+    // Filter files to include only JSON files
+    const jsonFiles = files.filter(
+        file => path.extname(file).toLowerCase() === '.json'
+    );
+
+    jsonFiles.forEach(file => {
+
+        const languageCode = path.basename(file, '.json');
+        const filePath = path.join(langFolder, file);
+
+        try {
+
+            // try below line or current running
+            // localeData[languageCode] = require(filePath);
+            const data = fs.readFileSync(filePath, 'utf8');
+            const jsonData = JSON.parse(data);
+            localeData[languageCode] = jsonData;
+
+        } catch (parseError) {
+            logger.log(
+                `Error parsing JSON from ${file}: ${parseError.message}`
+            );
+        }
+    });
+
+    logger.log('All JSON files loaded:', localeData);
+
+} catch (readDirError) {
+    logger.error('Error reading folder:', readDirError.message);
     process.exit(1);
-  }
-
-  // Iterate through the list of files
-  files.forEach((fileName) => {
-    if (fileName.endsWith('.json')) {
-      const filePath = path.join(langFolder, fileName);
-      const langCode = path.basename(filePath, '.json');
-
-      // Read and parse each JSON file
-      try {
-        const data = fs.readFileSync(filePath, 'utf8');
-        const jsonData = JSON.parse(data);
-        localeData[langCode] = jsonData; // Store the data with the language code as the key
-        console.log(`Loaded JSON from ${fileName} with language code ${langCode}`);
-      } catch (parseError) {
-        console.error(`Error parsing JSON from ${fileName}:`, parseError);
-      }
-    }
-  });
-  console.log('All JSON files loaded:', localeData);
-});
+}
 
 
 /**
@@ -62,13 +70,56 @@ async function translate(
     let rtnText = text;
     let rtnButton = button;
 
+    let languageMessages = localeData[language];
+
     try {
-        if (text !== null) rtnText = langCode[text];
-        if (button !== null) rtnButton = langCode[text];
+        if (text !== null){
+            let keys = text.split('.');
+            rtnText = languageMessages;
+            keys.forEach(key => {
+                if (rtnText && rtnText[key]) {
+                    rtnText = rtnText[key];
+                } else {
+                    rtnText = undefined;
+                }
+            })
+        }
+        if (button !== null){
+            let keys = button.split('.');
+            rtnButton = languageMessages;
+            keys.forEach(key => {
+                if (rtnButton && rtnButton[key]) {
+                    rtnButton = rtnButton[key];
+                } else {
+                    rtnButton = undefined;
+                }
+            })
+        }
     } catch (error) {
         logger.log("error", `❌❌ can't find ${text} : ${error}`);
-        if (text !== null) rtnText = eng[button];
-        if (button !== null) rtnButton = eng[button];
+        langCode = "eng";
+        if (text !== null){
+            let keys = text.split('.');
+            rtnText = languageMessages;
+            keys.forEach(key => {
+                if (rtnText && rtnText[key]) {
+                    rtnText = rtnText[key];
+                } else {
+                    rtnText = undefined;
+                }
+            })
+        }
+        if (button !== null){
+            let keys = button.split('.');
+            rtnButton = languageMessages;
+            keys.forEach(key => {
+                if (rtnButton && rtnButton[key]) {
+                    rtnButton = rtnButton[key];
+                } else {
+                    rtnButton = undefined;
+                }
+            })
+        }
     }
 
     // Return button as a String
