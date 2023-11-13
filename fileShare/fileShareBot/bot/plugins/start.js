@@ -18,7 +18,9 @@ module.exports = async function(client){
                 let lang_code = await getLang(update.message.chatId);
                 let translated = await translate({
                     text: 'start.message',
-                    button: 'start.button.withChannel',
+                    button: CHANNEL_INFO.FORCE_SUB 
+                        ? 'start.button.withChannel'
+                        : 'start.button.withOutChannel',
                     langCode: lang_code,
                 });
 
@@ -43,8 +45,10 @@ module.exports = async function(client){
                 return 0;
             } catch (error) {
                 if (error instanceof errors.FloodWaitError) {
-                    // Handle FloodWaitError
-                    // module.exports(client);
+                    console.log(error);
+                    module.exports(client);
+                } else {
+                    console.log("error");
                 }
             }
         }
