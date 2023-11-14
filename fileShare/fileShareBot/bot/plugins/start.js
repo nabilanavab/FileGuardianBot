@@ -15,7 +15,6 @@ module.exports = async function(client){
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
                 let lang_code = await getLang(update.message.chatId);
-                console.log(CHANNEL_INFO.FORCE_SUB);
                 let translated = await translate({
                     text: 'start.message',
                     button: CHANNEL_INFO.FORCE_SUB

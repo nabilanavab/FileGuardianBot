@@ -13,6 +13,7 @@
  * 
  */
 
+
 require('dotenv').config();
 let lang_data = require('./bot/i18n/data');
 
@@ -39,7 +40,7 @@ class LOG_FILE {
         process.env.LOG_FILE &&
         process.env.LOG_FILE.toLowerCase().endsWith('.log')
     ) ? process.env.LOG_FILE.toLowerCase() : false;
-    static LOG_CHANNEL = String(process.env.LOG_CHANNEL);
+    static LOG_CHANNEL = Number(process.env.LOG_CHANNEL);
 }
 
 class CHANNEL_INFO {
@@ -52,6 +53,10 @@ class SOURCE_INFO {
     static SOURCE_CODE = "https://github.com/nabilanavab";
     static OWNER_GITHUB = "https://github.com/nabilanavab";
     static OWNER_TELEGRAM = "https://telegram.dog/nabilanavab";
+}
+
+class DATABASE {
+    static URI = String(process.env.URI)
 }
 
 // checks if all the mandatory variables are there
@@ -75,7 +80,8 @@ console.log(`log file : ${LOG_FILE.FILE_NAME}`)
 
 
 module.exports = {
-    BOT_INFO, LANG_INFO, LOG_FILE, CHANNEL_INFO
+    BOT_INFO, LANG_INFO, LOG_FILE,
+    CHANNEL_INFO, DATABASE
 };
 
 /**
