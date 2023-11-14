@@ -38,7 +38,8 @@ class LOG_FILE {
     static FILE_NAME = (
         process.env.LOG_FILE &&
         process.env.LOG_FILE.toLowerCase().endsWith('.log')
-     ) ? process.env.LOG_FILE.toLowerCase() : false;
+    ) ? process.env.LOG_FILE.toLowerCase() : false;
+    static LOG_CHANNEL = String(process.env.LOG_CHANNEL);
 }
 
 class CHANNEL_INFO {
@@ -54,7 +55,7 @@ class SOURCE_INFO {
 }
 
 // checks if all the mandatory variables are there
-mandatoryVariables = ['API_ID', 'API_HASH', 'API_TOKEN'];
+mandatoryVariables = ['API_ID', 'API_HASH', 'API_TOKEN', "LOG_CHANNEL"];
 
 const missingVariables = mandatoryVariables.filter(
     (variable) => !process.env[variable]
