@@ -56,7 +56,7 @@ class SOURCE_INFO {
 }
 
 class DATABASE {
-    static URI = String(process.env.URI)
+    static MONGODB_URI = String(process.env.URI)
 }
 
 // checks if all the mandatory variables are there
