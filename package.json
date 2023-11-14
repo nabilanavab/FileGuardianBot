@@ -24,6 +24,7 @@
   "homepage": "https://github.com/github.com/nabilanavab#readme",
   "dependencies": {
     "dotenv": "^16.3.1",
+    "moment": "^2.29.4",
     "mongodb": "^6.2.0",
     "telegram": "^2.19.10",
     "winston": "^3.11.0"

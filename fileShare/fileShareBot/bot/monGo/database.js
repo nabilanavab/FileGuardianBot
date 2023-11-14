@@ -11,8 +11,6 @@ class Database {
     constructor(uri, databaseName) {
         this.client = new MongoClient(
             uri, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
                 serverApi: {
                     version: ServerApiVersion.v1,
                     strict: true,
@@ -36,23 +34,17 @@ class Database {
 }
 
 
-if (DATABASE.URI) {
-    const database = new Database(
-        {
-            uri: DATABASE.URI,
-            databaseName: OWNER
-        }
-    );
+if (DATABASE.MONGODB_URI) {
+    const database = new Database(DATABASE.MONGODB_URI, OWNER);
     (async () => {
         try {
             await database.connect();
-    
         } catch (error) {
-            DATABASE.URI = null
+            DATABASE.MONGODB_URI = null;
         }
     })();
-} else {
-    const database = null;
+
+    module.exports = database;
 }
 
-module.exports = database;
+

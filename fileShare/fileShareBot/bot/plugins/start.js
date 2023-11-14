@@ -4,17 +4,29 @@ const logger = require("../../logger");
 const getLang = require("../i18n/utils");
 const translate = require("../i18n/t9n");
 var { errors } = require("telegram/errors");
-var { CHANNEL_INFO } = require("../../config")
+const { DATABASE } = require("../../config");
+var { CHANNEL_INFO } = require("../../config");
+const { coreDbFunctions } = require("../monGo/core");
 
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
-        if (update && update.message && update.message.message && 
-                        update.message.message.toLowerCase().startsWith("/start")){
+        if (update && update.message && update.message.message &&
+                    update.message.message.toLowerCase().startsWith("/start")){
 
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
                 let lang_code = await getLang(update.message.chatId);
+                if (DATABASE.MONGODB_URI) {
+                    let userData = await coreDbFunctions.isUserExist({
+                        userID : update.message.chatId.value,
+                        elseAdd : {
+                            // "name" : username, slly many cany be added
+                            // check isUserExist only (only minor update needed)
+                            "lang" : lang_code
+                        }
+                    });
+                }
                 let translated = await translate({
                     text: 'start.message',
                     button: CHANNEL_INFO.FORCE_SUB
@@ -43,6 +55,7 @@ module.exports = async function(client){
                 }
                 return 0;
             } catch (error) {
+                console.log(error);
                 // just for edu. purpose not needed in /start
                 if (error instanceof errors.FloodWaitError) {
                     logger.log(

@@ -3,37 +3,33 @@
 // This file contains basic or mandatory functions
 const { LANG_INFO } = require("../../config")
 const database = require("./database")
+const moment = require('moment');
 
-class coreFunctions{
+class coreDb {
+    async isUserExist({ userID, elseAdd = false }) {
+        let user = await database.client.db(database.databaseName).collection(
+                database.userCollection).findOne({ userID: parseInt(userID) });
 
-    async isUserExist({userID, elseAdd=false}){
-        //
-        // elseAdd contain info of user like
-        //    {
-        //        "name" : "user_name",
-        //        "lang" : "lang_code"
-        //    }
-        //
-        let user = await database.db(OWNER).collection('users').findOne(
-            { userID: parseInt(userID) }
-        );
-        if (!elseAdd){
+        if (!elseAdd) {
             return user;
             // use return !!user to send bool
-        } else {
+        } else if (!user) {
             let document = {
-                id: userID,
-                namE: elseAdd.name,
-                join_date: new Date().toISOString()
+                userID: userID,
+                join_date: moment(new Date()).format('DD:MMM:YYYY')
+            };
+
+            if (elseAdd.lang !== LANG_INFO.DEFAULT_LANG) {
+                document.lang = elseAdd.lang;
             }
-            if (elseAdd.langCode !== LANG_INFO.DEFAULT_LANG){
-                document.lang = elseAdd.lang
-            }
-            let user = await database.db(OWNER).collection('users').insertOne(document);
-            return user;
+
+            let newUser = await database.client.db(database.databaseName).collection(
+                    database.userCollection).insertOne(document);
+
+            return newUser;
         }
     }
-    
 }
 
-module.exports = coreFunctions;
+const coreDbFunctions = new coreDb();
+module.exports = { coreDbFunctions };

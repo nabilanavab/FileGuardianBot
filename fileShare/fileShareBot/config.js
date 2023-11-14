@@ -18,7 +18,7 @@ require('dotenv').config();
 let lang_data = require('./bot/i18n/data');
 
 
-global.OWNER = String("@nablanavab");
+global.OWNER = String("@nabilanavab");
 
 class BOT_INFO {
     static API_ID = Number(process.env.API_ID);
@@ -56,7 +56,7 @@ class SOURCE_INFO {
 }
 
 class DATABASE {
-    static MONGODB_URI = String(process.env.URI)
+    static MONGODB_URI = String(process.env.MONGODB_URI)
 }
 
 // checks if all the mandatory variables are there
