@@ -1,9 +1,6 @@
 
 
-const logger = require("../../logger");
-const getLang = require("../i18n/utils");
-const translate = require("../i18n/t9n");
-var { errors } = require("telegram/errors");
+let logger = require("../../logger");
 const { DATABASE } = require("../../config");
 var { CHANNEL_INFO } = require("../../config");
 const { coreDbFunctions } = require("../monGo/core");

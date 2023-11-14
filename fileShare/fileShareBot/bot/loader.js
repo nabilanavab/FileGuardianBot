@@ -6,22 +6,31 @@ const fs = require('fs');
 const path = require('path');
 
 
-const walkSync = (dir, filelist = []) => {
-    fs.readdirSync(dir).forEach((file) => {
+const walkSync = (dir, filelist = [], exclude = []) => {
+    const files = fs.readdirSync(dir);
+  
+    files.forEach((file) => {
       const filePath = path.join(dir, file);
-      if (fs.statSync(filePath).isDirectory()) {
-        walkSync(filePath, filelist);
-      } else if (file.endsWith('.js')) {
-        filelist.push(filePath);
+      const isDirectory = fs.statSync(filePath).isDirectory();
+  
+      if (exclude.includes(file)) {
+        // Exclude specified files or folders
+        return;
       }
+  
+      isDirectory
+        ? walkSync(filePath, filelist, exclude)
+        : filelist.push(filePath);
     });
+  
     return filelist;
   };
   
-  // Now you can use the `walkSync` function within your `moduleLoader` function.
+
+  const excludeList = ['localDB', 'excludeFile.js'];
   const moduleLoader = (client) => {
     const root = path.join(__dirname, 'plugins');
-    const filesToLoad = walkSync(root);
+    const filesToLoad = walkSync(root, [], excludeList);
   
     for (const modulePath of filesToLoad) {
       try {

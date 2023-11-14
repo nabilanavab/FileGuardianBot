@@ -9,8 +9,10 @@ const isBatch = [
     }
 ];
 
-
 isBatchUser = (userId) => {
     return isBatch.some((user) => user.id === userId);
 };
 
+module.exports = {
+    isBatch, isBatchUser
+};

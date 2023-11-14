@@ -1,8 +1,8 @@
 
 
 const config = require("../config");
-const loader = require("./loader")
-let logger = require("../logger")
+let logger = require("../logger");
+const loader = require("./loader");
 var { TelegramClient, errors } = require("telegram");
 var { StringSession } = require("telegram/sessions");
 
