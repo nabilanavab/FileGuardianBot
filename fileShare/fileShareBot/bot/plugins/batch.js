@@ -20,14 +20,14 @@ module.exports = async function(client){
                     )
                     await client.sendMessage(
                         update.message.chatId, {
-                            message: "creating new batch",
+                            message: "batch.new",
                             replyToMsgId: update.message
                         }
                     );
                 } else {
                     await client.sendMessage(
                         update.message.chatId, {
-                            message: "currently one batch process is going on",
+                            message: "batch.current",
                             replyToMsgId: update.message
                         }
                     );
