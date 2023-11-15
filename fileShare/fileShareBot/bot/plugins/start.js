@@ -9,6 +9,7 @@ const { coreDbFunctions } = require("../monGo/core");
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
         if (update && update.message && update.message.message &&
+                update.message.peerId.className === 'PeerUser' &&
                     update.message.message.toLowerCase().startsWith("/start")){
 
             logger.log('info', `user ${update.message.chatId} started bot`)
@@ -52,8 +53,6 @@ module.exports = async function(client){
                 }
                 return 0;
             } catch (error) {
-                console.log(error);
-                // just for edu. purpose not needed in /start
                 if (error instanceof errors.FloodWaitError) {
                     logger.log(
                         "error", `Error ${error.errorMessage} in ?start: ${error.seconds}`
