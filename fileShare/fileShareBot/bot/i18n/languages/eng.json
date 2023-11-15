@@ -58,5 +58,12 @@
     "batch" : {
         "new" : "A new batch is being created, and new messages will be added to the queue.",
         "current" : "A batch job is currently in progress."
+    },
+    "generate" : {
+        "message" : "now select which type of a link is generated",
+        "button" : {
+            "public" : "genPubicData",
+            "private" : "genPrivateData"
+        }
     }
 }

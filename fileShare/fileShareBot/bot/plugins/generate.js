@@ -13,11 +13,34 @@ module.exports = async function(client){
 
             logger.log('info', `user ${update.message.chatId} generating new link..`)
             try {
-                console.log(update);
+
+                // todo: if user in defGenValue [direct generate url]
+
+                let lang_code = await getLang(update.message.chatId);
+                let translated = await translate({
+                    text: "generate.message",
+                    button: "generate.button",
+                    langCode: lang_code,
+                    order: 11
+                });
+                await client.sendMessage(update.message.chatId, {
+                    message: translated.text,
+                    buttons: client.buildReplyMarkup(
+                        translated.button
+                    ),
+                });
             } catch (error) {
-                // this is just a comment 
-            }
+                if (error instanceof errors.FloodWaitError) {
+                    logger.log(
+                        "error", `Error ${error.errorMessage} in ?generate: ${error.seconds}`
+                    );
+                    setTimeout(
+                        module.exports(client), error.seconds
+                    )
+                } else {
+                    logger.log("error", `Error in ?generate: ${error}`);
+                }
             }
         }
-    )
-}
+    }
+)}

@@ -43,8 +43,17 @@ module.exports = async function(client){
                         }
                     );
                 }
-            } catch {
-                logger.log("error", `Error in ?batch: ${error}`);
+            } catch (error) {
+                if (error instanceof errors.FloodWaitError) {
+                    logger.log(
+                        "error", `Error ${error.errorMessage} in ?batch: ${error.seconds}`
+                    );
+                    setTimeout(
+                        module.exports(client), error.seconds
+                    )
+                } else {
+                    logger.log("error", `Error in ?batch: ${error}`);
+                }
             }
         }
     }
