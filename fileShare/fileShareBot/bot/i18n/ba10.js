@@ -30,7 +30,7 @@ createButton = async function(
         let type="callback", value=button[key];
         if (elements.some(element => value.startsWith(element))){
             // all links starts with http, https are treated as url
-            type="url"
+            type="url"; value=value;
         } else if (value.startsWith(":")){
             // startWith (:) will be treated as inline_query
             type="query"; value=value.slice(1);
@@ -41,6 +41,7 @@ createButton = async function(
                 Button.url(text=key, url=value)
             )
         } else if (type==="callback") {
+            value=Buffer.from(value.toString());
             temp_button.push(
                 Button.inline(text=key, data=value===0?undefined:value)
             )

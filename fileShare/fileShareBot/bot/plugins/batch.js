@@ -43,6 +43,7 @@ module.exports = async function(client){
                         }
                     );
                 }
+                return 0;
             } catch (error) {
                 if (error instanceof errors.FloodWaitError) {
                     logger.log(

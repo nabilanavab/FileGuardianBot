@@ -62,8 +62,8 @@
     "generate" : {
         "message" : "now select which type of a link is generated",
         "button" : {
-            "public" : "genPubicData",
-            "private" : "genPrivateData"
+            "public" : "genPubic",
+            "private" : "genPrivate"
         }
     }
 }

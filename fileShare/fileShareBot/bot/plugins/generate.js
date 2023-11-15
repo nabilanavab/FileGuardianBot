@@ -7,9 +7,11 @@ const {isBatchUser} = require("./localDB/batchData")
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
-        if (update && update.message &&
-                update.message.peerId.className === 'PeerUser' &&
-                    !isBatchUser(update.message.chatId.value)){
+        if (update && update.message && !( update.message.message && 
+                (update.message.message.toLowerCase().startsWith("/start") ||
+                 update.message.message.toLowerCase().startsWith("/batch"))) &&
+                    update.message.peerId.className === 'PeerUser' &&
+                        !isBatchUser(update.message.chatId.value)){
 
             logger.log('info', `user ${update.message.chatId} generating new link..`)
             try {
@@ -28,6 +30,7 @@ module.exports = async function(client){
                     buttons: client.buildReplyMarkup(
                         translated.button
                     ),
+                    replyTo : update.message.id
                 });
             } catch (error) {
                 if (error instanceof errors.FloodWaitError) {
