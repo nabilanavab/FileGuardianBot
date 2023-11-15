@@ -1,7 +1,7 @@
 
 
-
-let logger = require("../../logger");
+var { errors } = require("telegram");
+const logger = require("../../logger");
 const {isBatchUser} = require("./localDB/batchData")
 
 
@@ -16,7 +16,7 @@ module.exports = async function(client){
             logger.log('info', `user ${update.message.chatId} generating new link..`)
             try {
 
-                // todo: if user in defGenValue [direct generate url]
+                // todo: if user in defGenValue [private or public url]
 
                 let lang_code = await getLang(update.message.chatId);
                 let translated = await translate({

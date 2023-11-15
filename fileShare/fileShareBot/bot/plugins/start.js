@@ -4,6 +4,7 @@ let logger = require("../../logger");
 const { DATABASE } = require("../../config");
 var { CHANNEL_INFO } = require("../../config");
 const { coreDbFunctions } = require("../monGo/core");
+var { errors } = require("telegram");
 
 
 module.exports = async function(client){
@@ -65,6 +66,6 @@ module.exports = async function(client){
                 }
             }
         }
-    });
+    })
 }
 
