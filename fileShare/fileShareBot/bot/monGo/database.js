@@ -4,6 +4,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const { DATABASE } = require("../../config");
 const logger = require('../../logger');
 const { userLang } = require("../i18n/data")
+const { generateInfo } = require("../plugins/localDB/generData");
 
 
 // uri : "mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&w=majority";
@@ -33,6 +34,19 @@ class Database {
 
             result.forEach(user => {
                 userLang[user.userID] = user.lang;
+            });
+
+            result = await await this.client.db(this.databaseName).collection(
+                this.userCollection).find(
+                    { isProtected: { $exists: true }, addPassword: { $exists: true } }
+                ).toArray();
+
+            result.forEach(user => {
+                const userId = user.userId;
+                generateInfo[userId] = {
+                    isProtected: user.isProtected,
+                    addPassword: user.addPassword,
+                };
             });
 
         } catch (error) {

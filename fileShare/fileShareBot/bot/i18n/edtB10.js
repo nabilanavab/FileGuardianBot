@@ -3,7 +3,9 @@
 /**
  * 
  * Edits a dictionary based on provided conditions.
- *
+ * front : user INterface
+ * value : if you pass any single value then {} will be replaced by the value in key[value]
+ * 
  * @param {object} inDict - Input dictionary.
  * @param {any} [value=false] - Value used for formatting dictionary values.
  * @param {boolean} [front=false] - Flag indicating whether to change cb in UI.
