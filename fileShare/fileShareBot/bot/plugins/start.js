@@ -17,7 +17,7 @@ module.exports = async function(client){
             try {
                 let lang_code = await getLang(update.message.chatId);
                 if (DATABASE.MONGODB_URI) {
-                    let userData = await coreDbFunctions.isUserExist({
+                    await coreDbFunctions.isUserExist({
                         userID : update.message.chatId.value,
                         elseAdd : {
                             // "name" : username, slly many cany be added

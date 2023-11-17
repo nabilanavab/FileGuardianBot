@@ -13,12 +13,12 @@
  * 
  */
 
-
 require('dotenv').config();
 let lang_data = require('./bot/i18n/data');
 
-
 global.OWNER = String("@nabilanavab");
+global.unicornMagicNumber = false;
+global.sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 class BOT_INFO {
     static API_ID = Number(process.env.API_ID);

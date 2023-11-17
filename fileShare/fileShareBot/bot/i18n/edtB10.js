@@ -1,5 +1,7 @@
 
 
+const util = require('util');
+
 /**
  * 
  * Edits a dictionary based on provided conditions.
@@ -13,10 +15,9 @@
  * 
  */
 
-
-async function editDict(inDict, value = false, front = false) {
+async function editDict({inDict, value = false, front = false}) {
     let outDict = {};
-  
+
     if (front) {
         // Changes cb in UI
         for (const [i, j] of Object.entries(inDict)) {
@@ -28,24 +29,25 @@ async function editDict(inDict, value = false, front = false) {
     if (value && !Array.isArray(value)) {
         // Changes cb.data
         for (const [i, j] of Object.entries(inDict)) {
-            outDict[i] = j.format(value);
+            outDict[i] = util.format(j, value);
         }
     } else if (Array.isArray(value)) {
         if (value.length === 2) {
             for (const [i, j] of Object.entries(inDict)) {
-            outDict[i] = j.format(value[0], value[1]);
+                outDict[i] = util.format(
+                    j, value[0], value[1]
+                );
             }
         }
-
         if (value.length === 3) {
             for (const [i, j] of Object.entries(inDict)) {
-            outDict[i] = j.format(value[0], value[1], value[2]);
+                outDict[i] = util.format(
+                    j, value[0], value[1], value[2]
+                );
             }
         }
     }
-
     return outDict;
 }
-
 
 module.exports = editDict;

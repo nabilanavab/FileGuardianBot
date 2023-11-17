@@ -30,14 +30,18 @@ const walkSync = (dir, filelist = [], exclude = []) => {
 const excludeList = [
     'localDB', 'excludeFile.js', 'cryptoG', 'callBack'
 ];
-const moduleLoader = (client) => {
+const moduleLoader = async (client) => {
     const root = path.join(__dirname, 'plugins');
     const filesToLoad = walkSync(root, [], excludeList);
 
     for (const modulePath of filesToLoad) {
         try {
-            const loadedModule = require(modulePath);
-            loadedModule(client);
+            let loadedModule = require(modulePath);
+            let result = await loadedModule(client);
+            console.log(result);
+            if (result){
+                break;
+            }
         } catch (error) {
             console.error(`-> Some Error when importing from ${modulePath}`);
             console.error("-> An error occurred:", error.message);

@@ -41,13 +41,13 @@ class extrasDb {
             else delete generateInfo[userID][key];
             updateData = await database.client.db(database.databaseName).collection(
                 database.userCollection).updateOne(
-                    { userID: userID }, { $unset : { key : 1 } }
+                    { userID: userID }, { $unset : { [key] : 1 } }
                 );
         } else {
             generateInfo[userID][key] = value;
             updateData = await database.client.db(database.databaseName).collection(
                 database.userCollection).updateOne(
-                    { userID: userID }, { $set : { key : value } }
+                    { userID: userID }, { $set : { [key] : value } }
                 );
         }
     }

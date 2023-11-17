@@ -25,7 +25,7 @@
             "message" : "first page of help message",
             "button" : {
                 "withChannel" : {
-                    "🌍 LANGUAGE 🌍" : "-~language",
+                    "🌍 LANGUAGE 🌍" : "~language",
                     "📚 HELP 📚" : "~help",
                     "🔊 CHANNEL 🔊" : "https://github.com/nabilanavab",
                     "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
@@ -64,8 +64,8 @@
         "privLink" : "Generated Private Link..",
         "publLink" : "Generated Public Link..",
         "button" : {
-            "Share" : "https://t.me/share/url?{}",
-            "Open Url" : "{}"
+            "Share" : "https://t.me/share/url?url=%s",
+            "Open Url" : "%s"
         }
     }
 }

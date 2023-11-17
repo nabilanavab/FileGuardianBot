@@ -106,8 +106,11 @@ translate = async function({
             })
         }
     }
-    
-    if (asString) return [rtnText, rtnButton];
+    if (asString) {
+        return {
+            text: rtnText, button: rtnButton
+        };
+    }
 
     try {
         rtnButton = button ? await createButton(

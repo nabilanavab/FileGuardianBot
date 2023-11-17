@@ -5,6 +5,7 @@ let logger = require("../../logger");
 require("../i18n/utils").getLang;
 require("../i18n/t9n").translate;
 require("telegram/errors").errors;
+require("../i18n/edtB10").editDict;
 const {isBatch, isBatchUser} = require("./localDB/batchData")
 
 

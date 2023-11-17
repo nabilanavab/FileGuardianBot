@@ -1,11 +1,11 @@
 
-
 const config = require("../config");
 let logger = require("../logger");
 const loader = require("./loader");
-var { TelegramClient, errors } = require("telegram");
+var { TelegramClient, errors, client } = require("telegram");
 var { StringSession } = require("telegram/sessions");
 
+global.botInfo = null;
 
 (async () => {
     const client = new TelegramClient(
@@ -16,15 +16,20 @@ var { StringSession } = require("telegram/sessions");
         { useWSS : true } 
     );
 
-    function auth() {
+    async function auth() {
         try {
-            client.start({
+            await client.start({
                 botAuthToken: config.BOT_INFO.API_TOKEN,
             });
+
+            botInfo = await client.getMe();
         } catch (error) {
             if (error instanceof errors.FloodWaitError) {
                 logger.log(`Error During Login: ${error}`);
+                await sleep(error.seconds * 1000)
                 auth();
+            } else {
+                logger.log(`Error During Login: ${error}`);
             }
         }
     }

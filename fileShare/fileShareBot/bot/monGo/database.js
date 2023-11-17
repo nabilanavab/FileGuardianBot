@@ -27,27 +27,28 @@ class Database {
     async connect() {
         try {
             await this.client.connect();
-            logger.log('info', 'Connected to the database.');
 
-            const result = await this.client.db(this.databaseName).collection(
+            let result = await this.client.db(this.databaseName).collection(
                 this.userCollection).find({ lang: { $exists: true } }).toArray();
 
             result.forEach(user => {
                 userLang[user.userID] = user.lang;
             });
 
-            result = await await this.client.db(this.databaseName).collection(
+            result = await this.client.db(this.databaseName).collection(
                 this.userCollection).find(
                     { isProtected: { $exists: true }, addPassword: { $exists: true } }
                 ).toArray();
 
             result.forEach(user => {
-                const userId = user.userId;
+                let userId = user.userId;
                 generateInfo[userId] = {
                     isProtected: user.isProtected,
                     addPassword: user.addPassword,
                 };
             });
+
+            logger.log('error', 'Database connected perfectly..')
 
         } catch (error) {
             logger.log('error', `Error during Database Connection: ${error}`);
