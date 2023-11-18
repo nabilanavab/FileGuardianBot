@@ -47,8 +47,8 @@ class CHANNEL_INFO {
     static FORCE_URL = null;
     static FORCE_SUB = Number(process.env.FORCE_SUB) ? Number(process.env.FORCE_SUB) : 0;
     static WELCOME_PIC = String(process.env.WELCOME_PIC);
-    static REQUEST_URL = String(process.env.REQUEST_URL);
-    static AUTO_APPROVAL = process.env.CONSOLE_LOG === 'true' ? true : false;
+    static AUTO_APPROVAL = process.env.AUTO_APPROVAL === 'true' ? true : false;
+    static REQUEST_CHANNEL = process.env.REQUEST_CHANNEL === 'true' ? true : false;
 }
 
 class SOURCE_INFO {

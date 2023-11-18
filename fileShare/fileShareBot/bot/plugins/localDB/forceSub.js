@@ -4,6 +4,7 @@ const logger = require("../../../logger");
 const config = require("../../../config");
 const { Api } = require('telegram');
 
+
 const moduleSub = async ({client, update }) => {
     try{
         console.log(`${config.CHANNEL_INFO.FORCE_SUB}`);
@@ -24,7 +25,7 @@ const moduleSub = async ({client, update }) => {
         let lang_code = await getLang(update.message.chatId);
         let translated = await translate({
             text: 'force.message', button: 'force.button',
-            langCode: lang_code, order: 11, asString: true
+            langCode: lang_code, asString: true
         });
 
         let newButton = await editDict({

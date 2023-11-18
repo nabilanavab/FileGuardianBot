@@ -2,6 +2,7 @@
 const config = require("../config");
 let logger = require("../logger");
 const loader = require("./loader");
+const { Api } = require('telegram');
 var { TelegramClient, errors, client } = require("telegram");
 var { StringSession } = require("telegram/sessions");
 
@@ -23,6 +24,37 @@ global.botInfo = null;
             });
 
             botInfo = await client.getMe();
+
+            if (config.CHANNEL_INFO.FORCE_SUB) {
+                try {
+
+                    // checks whether an admin
+                    await client.invoke(
+                        new Api.channels.GetParticipant({
+                            channel: config.CHANNEL_INFO.FORCE_SUB,
+                            participant: botInfo.id
+                        })
+                    );
+
+                    // getiing force subscribe url
+                    const fullChannel = await client.invoke(
+                        new Api.channels.GetFullChannel({
+                            channel: Number(config.CHANNEL_INFO.FORCE_SUB)
+                        })
+                    );
+                    if (fullChannel.chats[0].username){
+                        config.CHANNEL_INFO.FORCE_URL = `telegram.dog/${fullChannel.chats[0].username}`
+                    } else {
+                        config.CHANNEL_INFO.FORCE_URL = fullChannel.fullChat.exportedInvite.link
+                    }
+                    console.log(config.CHANNEL_INFO.FORCE_URL);
+                } catch (error) {
+                    config.CHANNEL_INFO.FORCE_SUB = null;
+                    logger.log('error', `Maybe B0t N0t Admin in UpdateChannel: ${error}`);
+                    logger.log('error', 'So Removing Update Channel and Getting Start Bot');
+                }
+            }
+
         } catch (error) {
             if (error instanceof errors.FloodWaitError) {
                 logger.log(`Error During Login: ${error}`);
