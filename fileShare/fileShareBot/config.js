@@ -44,6 +44,7 @@ class LOG_FILE {
 }
 
 class CHANNEL_INFO {
+    static FORCE_URL = null;
     static FORCE_SUB = Number(process.env.FORCE_SUB) ? Number(process.env.FORCE_SUB) : 0;
     static WELCOME_PIC = String(process.env.WELCOME_PIC);
     static REQUEST_URL = String(process.env.REQUEST_URL);

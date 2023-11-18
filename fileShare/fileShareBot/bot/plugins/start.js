@@ -16,8 +16,9 @@ module.exports = async function(client){
 
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
-                await moduleSub({ client, update });
-                
+                if (!await moduleSub({ client, update })) {
+                    return "notAUser";
+                };
 
                 let lang_code = await getLang(update.message.chatId);
                 if (DATABASE.MONGODB_URI) {
