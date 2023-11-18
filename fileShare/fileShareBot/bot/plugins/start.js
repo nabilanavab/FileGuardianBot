@@ -16,7 +16,7 @@ module.exports = async function(client){
 
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
-                await moduleSub(client);
+                await moduleSub({ client, update });
                 
 
                 let lang_code = await getLang(update.message.chatId);
