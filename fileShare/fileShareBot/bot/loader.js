@@ -37,11 +37,7 @@ const moduleLoader = async (client) => {
     for (const modulePath of filesToLoad) {
         try {
             let loadedModule = require(modulePath);
-            let result = await loadedModule(client);
-            console.log(result);
-            if (result){
-                break;
-            }
+            await loadedModule(client);
         } catch (error) {
             console.error(`-> Some Error when importing from ${modulePath}`);
             console.error("-> An error occurred:", error.message);

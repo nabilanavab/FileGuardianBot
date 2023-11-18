@@ -35,7 +35,7 @@ class LANG_INFO {
 }
 
 class LOG_FILE {
-    static CONSOLE_LOG = process.env.CONSOLE_LOG === 'true' ? true : false;
+    static CONSOLE_LOG = process.env.CONSOLE_LOG === 'false' ? false : true;
     static FILE_NAME = (
         process.env.LOG_FILE &&
         process.env.LOG_FILE.toLowerCase().endsWith('.log')
@@ -46,7 +46,8 @@ class LOG_FILE {
 class CHANNEL_INFO {
     static FORCE_SUB = Number(process.env.FORCE_SUB) ? Number(process.env.FORCE_SUB) : 0;
     static WELCOME_PIC = String(process.env.WELCOME_PIC);
-    static REQUEST_SUPPORT = String(process.env.REQUEST_SUPPORT);
+    static REQUEST_URL = String(process.env.REQUEST_URL);
+    static AUTO_APPROVAL = process.env.CONSOLE_LOG === 'true' ? true : false;
 }
 
 class SOURCE_INFO {

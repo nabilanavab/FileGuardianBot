@@ -2,9 +2,10 @@
 
 let logger = require("../../logger");
 const { DATABASE } = require("../../config");
-var { CHANNEL_INFO } = require("../../config");
+const { CHANNEL_INFO } = require("../../config");
 const { coreDbFunctions } = require("../monGo/core");
-var { errors } = require("telegram");
+const { errors } = require("telegram");
+const { moduleSub } = require("./localDB/forceSub");
 
 
 module.exports = async function(client){
@@ -15,6 +16,9 @@ module.exports = async function(client){
 
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
+                await moduleSub(client);
+                
+
                 let lang_code = await getLang(update.message.chatId);
                 if (DATABASE.MONGODB_URI) {
                     await coreDbFunctions.isUserExist({
