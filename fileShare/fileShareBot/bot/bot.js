@@ -25,9 +25,8 @@ global.botInfo = null;
 
             botInfo = await client.getMe();
 
-            if (config.CHANNEL_INFO.FORCE_SUB) {
+            if ( config.CHANNEL_INFO.FORCE_SUB ) {
                 try {
-
                     // checks whether an admin
                     await client.invoke(
                         new Api.channels.GetParticipant({
@@ -37,17 +36,18 @@ global.botInfo = null;
                     );
 
                     // getiing force subscribe url
-                    const fullChannel = await client.invoke(
+                    let fullChannel = await client.invoke(
                         new Api.channels.GetFullChannel({
                             channel: Number(config.CHANNEL_INFO.FORCE_SUB)
                         })
                     );
-                    if (fullChannel.chats[0].username){
+
+                    if (fullChannel.chats[0].username) {
                         config.CHANNEL_INFO.FORCE_URL = `telegram.dog/${fullChannel.chats[0].username}`
-                    } else {
+                    } else if ( !config.CHANNEL_INFO.REQUEST_CHANNEL ) {
                         config.CHANNEL_INFO.FORCE_URL = fullChannel.fullChat.exportedInvite.link
                     }
-                    console.log(config.CHANNEL_INFO.FORCE_URL);
+
                 } catch (error) {
                     config.CHANNEL_INFO.FORCE_SUB = null;
                     logger.log('error', `Maybe B0t N0t Admin in UpdateChannel: ${error}`);
@@ -55,11 +55,37 @@ global.botInfo = null;
                 }
             }
 
+            // checks whether b0t admin in l0g channel
+            await client.invoke(
+                new Api.channels.GetParticipant({
+                    channel: config.LOG_FILE.LOG_CHANNEL,
+                    participant: botInfo.id
+                })
+            );
+
+            try {
+                // checking log channel permission
+                let fullChannel = await client.invoke(
+                    new Api.channels.GetFullChannel({
+                        channel: Number(config.CHANNEL_INFO.FORCE_SUB)
+                    })
+                );
+
+                console.log(fullChannel);
+            } catch (error) {
+                logger.log('error', 'Bot dont have the required permission in log channel');
+                logger.log('error', 'make admin with sendMessage permission...')
+                logger.log('error', `Error in Log Channel : ${error}`)
+            }
+
         } catch (error) {
+            
             if (error instanceof errors.FloodWaitError) {
+
                 logger.log(`Error During Login: ${error}`);
                 await sleep(error.seconds * 1000)
                 auth();
+
             } else {
                 logger.log(`Error During Login: ${error}`);
             }
