@@ -19,10 +19,12 @@ const fixedIV = Buffer.from('7860786078607860');
 async function decrypt(text){
     try {
         let decipher = crypto.createDecipheriv(algorithm, key, fixedIV);
-        let decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8');
+        let decrypted = decipher.update(text, 'hex', 'utf8') + decipher.final('utf8');
+        console.log(decrypted);
+        return decrypted;
     } catch (error) {
         logger.log('error', `Error in Decrypting: ${error.message}`);
-        throw error;
+        return false;
     }
 }
  

@@ -1,13 +1,15 @@
 
 
-var { errors } = require("telegram");
 const logger = require("../../logger");
 const {isBatchUser} = require("./localDB/batchData");
 const { generateInfo } = require("./localDB/generData");
 const { LOG_FILE } = require("../../config");
 const encrypt = require("../plugins/cryptoG/encrypt");
+const getLang = require("../i18n/utils");
+const translate = require("../i18n/t9n");
+const errors = require("telegram/errors");
 const editDict = require("../i18n/edtB10");
-const { forceSub } = require("./localDB/forceSub");
+const { forceSub } = require("./helpers/forceSub");
 
 
 module.exports = async function(client){
@@ -23,7 +25,7 @@ module.exports = async function(client){
                 if (!await forceSub({ client, update })) {
                     return "notAUser";
                 };
-                
+
                 let getUserInfo = generateInfo[update.message.chatId];
                 dot_message = await client.sendMessage(update.message.chatId, {
                     message : "."

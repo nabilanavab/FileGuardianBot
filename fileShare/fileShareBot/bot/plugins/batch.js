@@ -2,12 +2,12 @@
 
 
 let logger = require("../../logger");
-require("../i18n/utils").getLang;
-require("../i18n/t9n").translate;
-require("telegram/errors").errors;
-require("../i18n/edtB10").editDict;
+const getLang = require("../i18n/utils");
+const translate = require("../i18n/t9n");
+const errors = require("telegram/errors");
+const editDict = require("../i18n/edtB10");
 const {isBatch, isBatchUser} = require("./localDB/batchData");
-const { forceSub } = require("./localDB/forceSub");
+const { forceSub } = require("./helpers/forceSub");
 
 
 module.exports = async function(client){

@@ -4,8 +4,12 @@ let logger = require("../../logger");
 const { DATABASE } = require("../../config");
 const { CHANNEL_INFO } = require("../../config");
 const { coreDbFunctions } = require("../monGo/core");
-const { errors } = require("telegram");
-const { forceSub } = require("./localDB/forceSub");
+const { errors } = require("telegram/errors");
+const { forceSub } = require("./helpers/forceSub");
+const getLang = require("../i18n/utils");
+const translate = require("../i18n/t9n");
+const editDict = require("../i18n/edtB10");
+const decrypt = require("./cryptoG/decrypt");
 
 
 module.exports = async function(client){
@@ -31,6 +35,13 @@ module.exports = async function(client){
                         }
                     });
                 }
+
+                let haveCode = update.message.message.replace('/start ', '');
+                if ( haveCode !== '/start' ) {
+                    await decrypt(haveCode);
+                    return "sendAllFiles";
+                }
+
                 let translated = await translate({
                     text: 'start.message',
                     button: CHANNEL_INFO.FORCE_SUB
