@@ -7,6 +7,7 @@ const { generateInfo } = require("./localDB/generData");
 const { LOG_FILE } = require("../../config");
 const encrypt = require("../plugins/cryptoG/encrypt");
 const editDict = require("../i18n/edtB10");
+const { forceSub } = require("./localDB/forceSub");
 
 
 module.exports = async function(client){
@@ -19,6 +20,10 @@ module.exports = async function(client){
 
             logger.log('info', `user ${update.message.chatId} generating new link..`)
             try {
+                if (!await forceSub({ client, update })) {
+                    return "notAUser";
+                };
+                
                 let getUserInfo = generateInfo[update.message.chatId];
                 dot_message = await client.sendMessage(update.message.chatId, {
                     message : "."

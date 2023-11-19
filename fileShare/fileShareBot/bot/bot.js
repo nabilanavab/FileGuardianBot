@@ -48,12 +48,13 @@ global.botInfo = null;
                     } else if ( !config.CHANNEL_INFO.REQUEST_CHANNEL ) {
                         config.CHANNEL_INFO.FORCE_URL = fullChannel.fullChat.exportedInvite.link
                     } else {
-                        const inviteLink = await client.invoke({
-                            name: 'createChatInviteLink',
-                            chat_id: config.CHANNEL_INFO.FORCE_SUB,
-                            OWNER,
-                            creates_join_request: true,
-                        });
+                        const inviteLink = await client.invoke(
+                            new Api.messages.ExportChatInvite({
+                                peer : config.CHANNEL_INFO.FORCE_SUB,
+                                title : OWNER,
+                                requestNeeded: true
+                            })
+                        );
                         console.log(inviteLink);
                     }
 

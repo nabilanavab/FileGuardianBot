@@ -6,7 +6,7 @@ const { Api } = require('telegram');
 const editDict = require("../../i18n/edtB10");
 
 
-const moduleSub = async ({client, update }) => {
+const forceSub = async ({client, update }) => {
     try{
         if (!config.CHANNEL_INFO.FORCE_SUB && !config.CHANNEL_INFO.REQUEST_URL){
             return true;
@@ -47,4 +47,4 @@ const moduleSub = async ({client, update }) => {
     }
 };
 
-module.exports = { moduleSub };
+module.exports = { forceSub };

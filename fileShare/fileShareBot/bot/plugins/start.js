@@ -5,7 +5,7 @@ const { DATABASE } = require("../../config");
 const { CHANNEL_INFO } = require("../../config");
 const { coreDbFunctions } = require("../monGo/core");
 const { errors } = require("telegram");
-const { moduleSub } = require("./localDB/forceSub");
+const { forceSub } = require("./localDB/forceSub");
 
 
 module.exports = async function(client){
@@ -16,7 +16,7 @@ module.exports = async function(client){
 
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
-                if (!await moduleSub({ client, update })) {
+                if (!await forceSub({ client, update })) {
                     return "notAUser";
                 };
 

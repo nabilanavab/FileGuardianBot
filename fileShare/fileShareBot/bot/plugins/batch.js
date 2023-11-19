@@ -6,7 +6,8 @@ require("../i18n/utils").getLang;
 require("../i18n/t9n").translate;
 require("telegram/errors").errors;
 require("../i18n/edtB10").editDict;
-const {isBatch, isBatchUser} = require("./localDB/batchData")
+const {isBatch, isBatchUser} = require("./localDB/batchData");
+const { forceSub } = require("./localDB/forceSub");
 
 
 module.exports = async function(client){
@@ -17,6 +18,10 @@ module.exports = async function(client){
             
             logger.log('info', `user ${update.message.chatId} started batching`)
             try {
+                if (!await forceSub({ client, update })) {
+                    return "notAUser";
+                };
+
                 let lang_code = await getLang(update.message.chatId);
                 if (!isBatchUser(update.message.chatId.value)) {
                     isBatch.push(
