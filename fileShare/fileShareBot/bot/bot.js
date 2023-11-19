@@ -1,4 +1,5 @@
 
+const { Console } = require("winston/lib/winston/transports");
 const config = require("../config");
 let logger = require("../logger");
 const loader = require("./loader");
@@ -46,6 +47,14 @@ global.botInfo = null;
                         config.CHANNEL_INFO.FORCE_URL = `telegram.dog/${fullChannel.chats[0].username}`
                     } else if ( !config.CHANNEL_INFO.REQUEST_CHANNEL ) {
                         config.CHANNEL_INFO.FORCE_URL = fullChannel.fullChat.exportedInvite.link
+                    } else {
+                        const inviteLink = await client.invoke({
+                            name: 'createChatInviteLink',
+                            chat_id: config.CHANNEL_INFO.FORCE_SUB,
+                            OWNER,
+                            creates_join_request: true,
+                        });
+                        console.log(inviteLink);
                     }
 
                 } catch (error) {
