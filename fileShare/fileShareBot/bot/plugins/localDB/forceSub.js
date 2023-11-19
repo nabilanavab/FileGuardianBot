@@ -3,16 +3,15 @@
 const logger = require("../../../logger");
 const config = require("../../../config");
 const { Api } = require('telegram');
+const editDict = require("../../i18n/edtB10");
 
 
 const moduleSub = async ({client, update }) => {
     try{
-        console.log(`${config.CHANNEL_INFO.FORCE_SUB}`);
         if (!config.CHANNEL_INFO.FORCE_SUB && !config.CHANNEL_INFO.REQUEST_URL){
             return true;
         }
         if (config.CHANNEL_INFO.FORCE_SUB) {
-            console.log(update.message.chatId.value);
             const result = await client.invoke(new Api.channels.GetParticipant({
                 channel: config.CHANNEL_INFO.FORCE_SUB,
                 participant: update.message.chatId.value
@@ -41,9 +40,10 @@ const moduleSub = async ({client, update }) => {
             buttons: client.buildReplyMarkup(
                 newButton
             ),
+            replyTo: update.message.id
         });
 
-        logger.log(`Error: During force Subscription: ${error}`);
+        logger.log('info', `${update.message.chatId} cause error: ${error.message}`);
     }
 };
 

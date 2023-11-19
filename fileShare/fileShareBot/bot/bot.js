@@ -55,39 +55,40 @@ global.botInfo = null;
                 }
             }
 
-            // checks whether b0t admin in l0g channel
-            await client.invoke(
-                new Api.channels.GetParticipant({
-                    channel: config.LOG_FILE.LOG_CHANNEL,
-                    participant: botInfo.id
-                })
-            );
-
-            try {
-                // checking log channel permission
-                let fullChannel = await client.invoke(
-                    new Api.channels.GetFullChannel({
-                        channel: Number(config.CHANNEL_INFO.FORCE_SUB)
-                    })
-                );
-
-                console.log(fullChannel);
-            } catch (error) {
-                logger.log('error', 'Bot dont have the required permission in log channel');
-                logger.log('error', 'make admin with sendMessage permission...')
-                logger.log('error', `Error in Log Channel : ${error}`)
+            {
+                try {
+                    // checks whether b0t admin in l0g channel
+                    let logPermissoin = await client.invoke(
+                        new Api.channels.GetParticipant({
+                            channel: config.LOG_FILE.LOG_CHANNEL,
+                            participant: botInfo.id
+                        })
+                    );
+                    if (!( logPermissoin && logPermissoin.participant && 
+                        logPermissoin.participant.adminRights && 
+                        logPermissoin.participant.adminRights.postMessages
+                    )) {
+                        logger.log('error', 'Bot Must be Admin in Log Channel..');
+                        process.exit(1);
+                    }
+                } catch (error) {
+                    logger.log('error', `Telegram API : ${error}`);
+                    logger.log('error', `Error Message: ${error.message}`);
+                    logger.log('info', "B0t must be Admin In Channel [with SendMessage permis.]")
+                    process.exit(1);
+                }
             }
 
         } catch (error) {
             
             if (error instanceof errors.FloodWaitError) {
 
-                logger.log(`Error During Login: ${error}`);
+                logger.log('error', `Error During Login: ${error}`);
                 await sleep(error.seconds * 1000)
                 auth();
 
             } else {
-                logger.log(`Error During Login: ${error}`);
+                logger.log('error', `Error During Login: ${error}`);
             }
         }
     }
