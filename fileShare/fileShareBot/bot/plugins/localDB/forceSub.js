@@ -12,12 +12,12 @@ const forceSub = async ({client, update }) => {
             return true;
         }
         if (config.CHANNEL_INFO.FORCE_SUB) {
-            const result = await client.invoke(new Api.channels.GetParticipant({
-                channel: config.CHANNEL_INFO.FORCE_SUB,
-                participant: update.message.chatId.value
-            }));
-
-            return result;
+            const result = await client.invoke(
+                new Api.channels.GetParticipant({
+                    channel: config.CHANNEL_INFO.FORCE_SUB,
+                    participant: update.message.chatId.value
+                })
+            );
         }
     } catch (error) {
 

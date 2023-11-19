@@ -55,7 +55,7 @@ global.botInfo = null;
                                 requestNeeded: true
                             })
                         );
-                        console.log(inviteLink);
+                        config.CHANNEL_INFO.FORCE_URL = inviteLink.link
                     }
 
                 } catch (error) {
