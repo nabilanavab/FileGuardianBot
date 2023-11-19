@@ -18,6 +18,7 @@ const forceSub = async ({client, update }) => {
                     participant: update.message.chatId.value
                 })
             );
+            return result;
         }
     } catch (error) {
 
