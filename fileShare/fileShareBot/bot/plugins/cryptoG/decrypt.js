@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const logger = require("../../../logger");
 const algorithm = "aes-192-cbc";
 const fixedIV = Buffer.from('7860786078607860');
+const generateInfo = require("../localDB/generData");
 
 
 /**
@@ -17,9 +18,11 @@ const fixedIV = Buffer.from('7860786078607860');
 
 async function decrypt(code, userID){
     try {
-        let key = generateInfo[userID][addPassword]
-        if ( !key ){
-            key = OWNER
+        let key
+        if ( generateInfo[userID] && generateInfo[userID]['addPassword'] ){
+            key = generateInfo[userID]['addPassword'];
+        } else {
+            key = OWNER;
         }
         key = crypto.scryptSync(key, 'nabilanavab', 24);
         let decipher = crypto.createDecipheriv(algorithm, key, fixedIV);
