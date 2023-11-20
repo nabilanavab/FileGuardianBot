@@ -2,10 +2,10 @@
 
 
 let logger = require("../../logger");
-const getLang = require("../i18n/utils");
-const translate = require("../i18n/t9n");
+const getLang = require("../../bot/i18n/utils");
+const translate = require("../../bot/i18n/t9n");
 const errors = require("telegram/errors");
-const editDict = require("../i18n/edtB10");
+const editDict = require("../../bot/i18n/edtB10");
 const {isBatch, isBatchUser} = require("./localDB/batchData");
 const { forceSub } = require("./helpers/forceSub");
 

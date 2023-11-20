@@ -1,10 +1,10 @@
 
 
 const crypto = require("crypto");
-
+const logger = require("../../../logger");
 const algorithm = "aes-192-cbc";
-const key = crypto.scryptSync('nabilanavab', 'nabil_Ji', 24);
 const fixedIV = Buffer.from('7860786078607860');
+const { generateInfo } = require("../localDB/generData")
 
 
 /**
@@ -17,15 +17,22 @@ const fixedIV = Buffer.from('7860786078607860');
  * encrypt(text)
  */
 
-async function encrypt(text) {
+async function encrypt({text, userID}) {
     try {
+        let key
+        if ( generateInfo[userID] && generateInfo[userID]['addPassword'] ){
+            key = generateInfo[userID]['addPassword'];
+        } else {
+            key = OWNER;
+        }
+        key = crypto.scryptSync(key, 'nabilanavab', 24);
         let cipher = crypto.createCipheriv(algorithm, key, fixedIV);
         let encrypted = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
         return encrypted;
     } catch (error) {
         // Handle errors
         logger.log('error', `Error in Encrypting: ${error.message}`);
-        throw error;
+        return false
     }
 }
 

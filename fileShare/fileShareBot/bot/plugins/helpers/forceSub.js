@@ -3,7 +3,9 @@
 const logger = require("../../../logger");
 const config = require("../../../config");
 const { Api } = require('telegram');
-const editDict = require("../../i18n/edtB10");
+const getLang = require("../../../bot/i18n/utils");
+const translate = require("../../../bot/i18n/t9n");
+const editDict = require("../../../bot/i18n/edtB10");
 
 
 const forceSub = async ({client, update }) => {

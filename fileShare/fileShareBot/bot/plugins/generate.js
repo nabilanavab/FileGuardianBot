@@ -5,10 +5,10 @@ const {isBatchUser} = require("./localDB/batchData");
 const { generateInfo } = require("./localDB/generData");
 const { LOG_FILE } = require("../../config");
 const encrypt = require("../plugins/cryptoG/encrypt");
-const getLang = require("../i18n/utils");
-const translate = require("../i18n/t9n");
+const getLang = require("../../bot/i18n/utils");
+const translate = require("../../bot/i18n/t9n");
 const errors = require("telegram/errors");
-const editDict = require("../i18n/edtB10");
+const editDict = require("../../bot/i18n/edtB10");
 const { forceSub } = require("./helpers/forceSub");
 
 
@@ -55,7 +55,10 @@ module.exports = async function(client){
                 } else {
                     messageInfo = `${update.message.id}|${update.message.chatId.value}`
                 }
-                code = await encrypt(messageInfo);
+                code = await encrypt({
+                    text: messageInfo,
+                    userID: update.message.chatId.value
+                });
 
                 let newButton = await editDict({
                     inDict : translated.button,

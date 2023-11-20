@@ -1,8 +1,7 @@
 
 const crypto = require("crypto");
-
+const logger = require("../../../logger");
 const algorithm = "aes-192-cbc";
-const key = crypto.scryptSync('nabilanavab', 'nabil_Ji', 24);
 const fixedIV = Buffer.from('7860786078607860');
 
 
@@ -16,11 +15,15 @@ const fixedIV = Buffer.from('7860786078607860');
  * decrypt(text)
  */
 
-async function decrypt(text){
+async function decrypt(code, userID){
     try {
+        let key = generateInfo[userID][addPassword]
+        if ( !key ){
+            key = OWNER
+        }
+        key = crypto.scryptSync(key, 'nabilanavab', 24);
         let decipher = crypto.createDecipheriv(algorithm, key, fixedIV);
-        let decrypted = decipher.update(text, 'hex', 'utf8') + decipher.final('utf8');
-        console.log(decrypted);
+        let decrypted = decipher.update(code, 'hex', 'utf8') + decipher.final('utf8');
         return decrypted;
     } catch (error) {
         logger.log('error', `Error in Decrypting: ${error.message}`);

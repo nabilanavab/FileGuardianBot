@@ -12,6 +12,9 @@ const generateInfo = {
         'isProtected' : true,
         // not all attributes will be added to all users
         // false values never be added [ prevent unwanted wastage of memory]
+    },
+    531733867 : {
+        'addPassword' : "hey there"
     }
 }
 
