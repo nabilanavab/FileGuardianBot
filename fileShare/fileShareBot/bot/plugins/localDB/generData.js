@@ -7,6 +7,8 @@ const generateInfo = {
         isProtected : true,
         isAccesable : true,
         addPassword : "password",
+        forwardQuot : true,
+        medaCaption : true,
     }, 
     12345678 : {
         'isProtected' : true,
