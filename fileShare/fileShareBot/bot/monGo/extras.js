@@ -34,9 +34,9 @@ class extrasDb {
     async changeData({ userID, key, value = false, deleteIt = false }) {
         let updateData;
 
+        // Not all attributes will be added to all users
+        // False values will not be added to prevent unwanted wastage of memory
         if ( deleteIt || !value ){
-            // not all attributes will be added to all users
-            // false values never be added [ prevent unwanted wastage of memory]
             if (deleteIt) delete generateInfo[userID];
             else delete generateInfo[userID][key];
             updateData = await database.client.db(database.databaseName).collection(

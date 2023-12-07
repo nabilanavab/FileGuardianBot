@@ -12,18 +12,26 @@ const { forceSub } = require("./helpers/forceSub");
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
-        if (update && update.message && update.message.message &&
-            update.message.peerId.className === 'PeerUser' &&
-                    update.message.message.toLowerCase().startsWith("/batch")){
+        if (
+            // Check if the user sent a /batch (in a private chat)
+            update && update.message && update.message.message &&
+                update.message.peerId.className === 'PeerUser' &&
+                    update.message.message.toLowerCase().startsWith("/batch")
+        ){
             
             logger.log('info', `user ${update.message.chatId} started batching`)
             try {
+                // Check for force subscription: If the user is required to subscribe forcefully
                 if (!await forceSub({ client, update })) {
                     return "notAUser";
                 };
 
+                // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
+
                 if (!isBatchUser(update.message.chatId.value)) {
+                    // If the user is not currently in the batch process
+                    // or workflow, add them to the process
                     isBatch.push(
                         { "id" : update.message.chatId.value }
                     );
@@ -38,6 +46,8 @@ module.exports = async function(client){
                         }
                     );
                 } else {
+                    // If the user is already in the batch process,
+                    // Make an Option to remove them from the process
                     let translated = await translate({
                         text: "batch.current",
                         langCode: lang_code

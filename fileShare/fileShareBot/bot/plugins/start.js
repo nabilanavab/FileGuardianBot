@@ -20,11 +20,16 @@ module.exports = async function(client){
 
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
+
+                // Check for force subscription: If the user is required to subscribe forcefully
                 if (!await forceSub({ client, update })) {
                     return "notAUser";
                 };
 
+                // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
+
+                // Add a new user to the database
                 if (DATABASE.MONGODB_URI) {
                     await coreDbFunctions.isUserExist({
                         userID : update.message.chatId.value,
@@ -36,6 +41,8 @@ module.exports = async function(client){
                     });
                 }
 
+                // Check if there is a start message from the user
+                // If available, retrieve the code; otherwise, send a welcome message
                 let haveCode = update.message.message.replace('/start ', '');
                 if ( haveCode !== '/start' ) {
                     await decrypt({
@@ -45,16 +52,19 @@ module.exports = async function(client){
                     return "sendAllFiles";
                 }
 
+                // Retrieve translated text and button based on the user's language
                 let translated = await translate({
                     text: 'start.message',
                     button: CHANNEL_INFO.FORCE_SUB
-                        ? 'start.button.withChannel'
-                        : 'start.button.withOutChannel',
+                    ? 'start.button.withChannel'
+                    : 'start.button.withOutChannel',
                     langCode: lang_code,
                     order: CHANNEL_INFO.FORCE_SUB
                         ? "221" : "211", 
                 });
 
+                // If the user is a developer, include a welcome picture;
+                // otherwise, send a text message
                 if (!CHANNEL_INFO.WELCOME_PIC){
                     await client.sendMessage(update.message.chatId, {
                         message: translated.text,

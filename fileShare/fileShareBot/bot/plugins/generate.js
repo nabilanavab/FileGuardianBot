@@ -14,47 +14,75 @@ const { forceSub } = require("./helpers/forceSub");
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
-        if (update && update.message && !( update.message.message && 
+        if (
+            // All messages, except /start or /batch, will be considered as a request &
+            // It will automatically generate a URL for that message
+
+            update && update.message && !( update.message.message && 
                 (update.message.message.toLowerCase().startsWith("/start") ||
                  update.message.message.toLowerCase().startsWith("/batch"))) &&
                     update.message.peerId.className === 'PeerUser' &&
-                        !isBatchUser(update.message.chatId.value)){
+                        !isBatchUser(update.message.chatId.value)
+        ){
 
             logger.log('info', `user ${update.message.chatId} generating new link..`)
             try {
+                // Check for force subscription: If the user is required to subscribe forcefully
                 if (!await forceSub({ client, update })) {
                     return "notAUser";
                 };
 
+                // Retrieve user data from the local database to determine
+                // if the link should be password protected or not, etc
                 let getUserInfo = generateInfo[update.message.chatId];
-                dot_message = await client.sendMessage(update.message.chatId, {
+
+                // Note: As the creator of this project, 'nabilanavab,' is highly interested
+                // in enhancing user experience, consider this aspect in implementation.
+                // [ useless in practice ]
+                dot_message = await client.sendMessage(
+                    update.message.chatId, {
                     message : "."
                 })
-                await sleep(1000);
-                await client.editMessage(update.message.chatId, {
+                await sleep(500);
+                await client.editMessage(
+                    update.message.chatId, {
                     message : dot_message.id,
                     text : ".."
                 })
-                await sleep(1000);
+                await sleep(500);
+
+                // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
+                
+                // Retrieve translated text and button based on the user's language
                 let translated = await translate({
                     text: "generate.message",
                     button: "generate.button",
                     asString : true,
                     langCode: lang_code
                 });
-                if (unicornMagicNumber) {
-                    forwardMsg = await client.forwardMessages(
-                        LOG_FILE.LOG_CHANNEL, {
-                            messages : update.message.id,
-                            dropAuthor : true,
-                            noforwards: true,
-                        }
-                    )
-                    messageInfo = `${forwardMsg[0].id}`
-                } else {
-                    messageInfo = `${update.message.id}|${update.message.chatId.value}`
-                }
+                
+                // Forward the message to the log channel
+                forwardMsg = await client.forwardMessages(
+                    LOG_FILE.LOG_CHANNEL,
+                    {
+                        messages : update.message.id,
+                        fromPeer : update.message.chatId,
+                        // noforwards: true,
+                    }
+                )
+
+                console.log(forwardMsg[0]);
+                // Set some service message for later use
+                replyMessage = await client.sendMessage(
+                    LOG_FILE.LOG_CHANNEL,
+                    {
+                        message: 'hey tyhere',
+                        replyToMsgId: forwardMsg[0][0].id
+                    }
+                )
+                messageInfo = `:${replyMessage[0][0].id}`
+
                 code = await encrypt({
                     text: messageInfo,
                     userID: update.message.chatId.value
