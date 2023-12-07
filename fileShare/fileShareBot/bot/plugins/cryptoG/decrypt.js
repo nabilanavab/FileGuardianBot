@@ -14,7 +14,7 @@ const generateInfo = require("../localDB/generData");
  * 
  * @example
  * decrypt(text)
- */
+**/
 
 async function decrypt(code, userID){
     try {
