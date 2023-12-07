@@ -10,6 +10,7 @@ const translate = require("../../bot/i18n/t9n");
 const errors = require("telegram/errors");
 const editDict = require("../../bot/i18n/edtB10");
 const { forceSub } = require("./helpers/forceSub");
+const forward = require("./helpers/forward")
 
 
 module.exports = async function(client){
@@ -41,7 +42,8 @@ module.exports = async function(client){
                 // [ useless in practice ]
                 dot_message = await client.sendMessage(
                     update.message.chatId, {
-                    message : "."
+                    message : ".",
+                    replyTo : update.message.message
                 })
                 await sleep(500);
                 await client.editMessage(
@@ -63,25 +65,41 @@ module.exports = async function(client){
                 });
                 
                 // Forward the message to the log channel
-                forwardMsg = await client.forwardMessages(
-                    LOG_FILE.LOG_CHANNEL,
-                    {
-                        messages : update.message.id,
-                        fromPeer : update.message.chatId,
-                        // noforwards: true,
+                try{
+                    forwardMsg = await client.forwardMessages(
+                        LOG_FILE.LOG_CHANNEL,
+                        {
+                            messages : update.message.id,
+                            fromPeer : update.message.chatId,
+                            // noforwards: true,
+                        }
+                    )
+                } catch(error) {
+                    if (error instanceof errors.FloodError){
+                        console.log(error.seconds);
                     }
-                )
-
-                console.log(forwardMsg[0][0]['id']);
+                }
                 // Set some service message for later use
+                let message = `<pre><code class="language-js">{
+    userID      : ${update.message.chatId},
+    messageID   : ${forwardMsg[0][0]['id']},
+    addPassword : ${getUserInfo['addPassword']},
+    forwardQuot : ${getUserInfo['forwardQuot']},
+    medaCaption : ${getUserInfo['medaCaption']},
+    isAccesable : ${getUserInfo['isAccesable']},
+    isProtected : ${getUserInfo['isProtected']}
+}</code></pre>
+
+<a href="tg://user?id=${update.message.chatId}">👤 viewProfile 👤</a>`;
                 replyMessage = await client.sendMessage(
                     LOG_FILE.LOG_CHANNEL,
                     {
-                        message: 'hey tyhere',
-                        replyTo: forwardMsg[0][0]['id']
+                        message: message,
+                        replyTo: forwardMsg[0][0]['id'],
+                        parseMode: "html"
                     }
                 )
-                messageInfo = `:${replyMessage[0][0]['id']}`
+                messageInfo = `${replyMessage['id']}`
 
                 code = await encrypt({
                     text: messageInfo,
