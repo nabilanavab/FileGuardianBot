@@ -72,16 +72,16 @@ module.exports = async function(client){
                     }
                 )
 
-                console.log(forwardMsg[0]);
+                console.log(forwardMsg[0][0]['id']);
                 // Set some service message for later use
                 replyMessage = await client.sendMessage(
                     LOG_FILE.LOG_CHANNEL,
                     {
                         message: 'hey tyhere',
-                        replyToMsgId: forwardMsg[0][0].id
+                        replyTo: forwardMsg[0][0]['id']
                     }
                 )
-                messageInfo = `:${replyMessage[0][0].id}`
+                messageInfo = `:${replyMessage[0][0]['id']}`
 
                 code = await encrypt({
                     text: messageInfo,
