@@ -1,24 +1,23 @@
 
 
-
+// Import necessary modules
 let logger = require("../../logger");
 const getLang = require("../../bot/i18n/utils");
 const translate = require("../../bot/i18n/t9n");
 const errors = require("telegram/errors");
 const editDict = require("../../bot/i18n/edtB10");
-const {isBatch, isBatchUser} = require("./localDB/batchData");
+const { isBatch, isBatchUser } = require("./localDB/batchData");
 const { forceSub } = require("./helpers/forceSub");
 
 
-module.exports = async function(client){
+// Check if the user sent a /batch (in a private chat)
+module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
-            // Check if the user sent a /batch (in a private chat)
             update && update.message && update.message.message &&
-                update.message.peerId.className === 'PeerUser' &&
-                    update.message.message.toLowerCase().startsWith("/batch")
-        ){
-            
+            update.message.peerId.className === 'PeerUser' &&
+            update.message.message.toLowerCase().startsWith("/batch")
+        ) {
             logger.log('info', `user ${update.message.chatId} started batching`)
             try {
                 // Check for force subscription: If the user is required to subscribe forcefully
@@ -33,14 +32,15 @@ module.exports = async function(client){
                     // If the user is not currently in the batch process
                     // or workflow, add them to the process
                     isBatch.push(
-                        { "id" : update.message.chatId.value }
+                        { "id": update.message.chatId.value }
                     );
                     let translated = await translate({
                         text: "batch.new",
                         langCode: lang_code
                     });
                     await client.sendMessage(
-                        update.message.chatId, {
+                        update.message.chatId,
+                        {
                             message: translated.text,
                             replyTo: update.message.id
                         }
@@ -53,7 +53,8 @@ module.exports = async function(client){
                         langCode: lang_code
                     });
                     await client.sendMessage(
-                        update.message.chatId, {
+                        update.message.chatId,
+                        {
                             message: translated.text,
                             replyTo: update.message.id
                         }
@@ -61,6 +62,7 @@ module.exports = async function(client){
                 }
                 return 0;
             } catch (error) {
+                // Handle errors, including flood errors
                 if (error instanceof errors.FloodWaitError) {
                     logger.log(
                         "error", `Error ${error.errorMessage} in ?batch: ${error.seconds}`
@@ -73,6 +75,5 @@ module.exports = async function(client){
                 }
             }
         }
-    }
-)}
-
+    });
+}

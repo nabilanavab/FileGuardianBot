@@ -1,5 +1,6 @@
 
 
+// Import necessary modules
 let logger = require("../../logger");
 const { DATABASE } = require("../../config");
 const { CHANNEL_INFO } = require("../../config");
@@ -8,16 +9,16 @@ const { errors } = require("telegram/errors");
 const { forceSub } = require("./helpers/forceSub");
 const getLang = require("../i18n/utils");
 const translate = require("../i18n/t9n");
-const editDict = require("../i18n/edtB10");
 const decrypt = require("./cryptoG/decrypt");
 
 
-module.exports = async function(client){
+// Define welcome message
+module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (update && update.message && update.message.message &&
-                update.message.peerId.className === 'PeerUser' &&
-                    update.message.message.toLowerCase().startsWith("/start")){
-
+            update.message.peerId.className === 'PeerUser' &&
+            update.message.message.toLowerCase().startsWith("/start")
+        ) {
             logger.log('info', `user ${update.message.chatId} started bot`)
             try {
 
@@ -32,11 +33,11 @@ module.exports = async function(client){
                 // Add a new user to the database
                 if (DATABASE.MONGODB_URI) {
                     await coreDbFunctions.isUserExist({
-                        userID : update.message.chatId.value,
-                        elseAdd : {
+                        userID: update.message.chatId.value,
+                        elseAdd: {
                             // "name" : username, slly many cany be added
                             // check isUserExist only (only minor update needed)
-                            "lang" : lang_code
+                            "lang": lang_code
                         }
                     });
                 }
@@ -44,7 +45,7 @@ module.exports = async function(client){
                 // Check if there is a start message from the user
                 // If available, retrieve the code; otherwise, send a welcome message
                 let haveCode = update.message.message.replace('/start ', '');
-                if ( haveCode !== '/start' ) {
+                if (haveCode !== '/start') {
                     await decrypt({
                         code: haveCode,
                         userID: update.message.chatId
@@ -56,16 +57,16 @@ module.exports = async function(client){
                 let translated = await translate({
                     text: 'start.message',
                     button: CHANNEL_INFO.FORCE_SUB
-                    ? 'start.button.withChannel'
-                    : 'start.button.withOutChannel',
+                        ? 'start.button.withChannel'
+                        : 'start.button.withOutChannel',
                     langCode: lang_code,
                     order: CHANNEL_INFO.FORCE_SUB
-                        ? "221" : "211", 
+                        ? "221" : "211",
                 });
 
                 // If the user is a developer, include a welcome picture;
                 // otherwise, send a text message
-                if (!CHANNEL_INFO.WELCOME_PIC){
+                if (!CHANNEL_INFO.WELCOME_PIC) {
                     await client.sendMessage(update.message.chatId, {
                         message: translated.text,
                         buttons: client.buildReplyMarkup(
@@ -82,7 +83,9 @@ module.exports = async function(client){
                     })
                 }
                 return 0;
+
             } catch (error) {
+                // Handle errors, including flood errors
                 if (error instanceof errors.FloodWaitError) {
                     logger.log(
                         "error", `Error ${error.errorMessage} in ?start: ${error.seconds}`
@@ -97,4 +100,3 @@ module.exports = async function(client){
         }
     })
 }
-

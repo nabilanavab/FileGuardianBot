@@ -19,9 +19,7 @@ const forward = require("./helpers/forward");
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
-            update &&
-            update.message &&
-            !(update.message.message &&
+            update && update.message && !(update.message.message &&
                 (update.message.message.toLowerCase().startsWith("/start") ||
                     update.message.message.toLowerCase().startsWith("/batch"))) &&
             update.message.peerId.className === 'PeerUser' &&
