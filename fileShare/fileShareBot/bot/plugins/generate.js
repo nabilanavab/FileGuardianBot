@@ -12,6 +12,8 @@ const errors = require("telegram/errors");
 const editDict = require("../../bot/i18n/edtB10");
 const { forceSub } = require("./helpers/forceSub");
 const forward = require("./helpers/forward");
+const reply = require("./helpers/reply");
+const edit = require("./helpers/edit");
 
 
 // All messages, except /start or /batch, will be considered as a request &
@@ -37,9 +39,21 @@ module.exports = async function (client) {
                 let getUserInfo = generateInfo[update.message.chatId];
 
                 // Display a series of messages to enhance user experience
-                dot_message = await client.sendMessage(update.message.chatId, { message: ".", replyTo: update.message.message });
+                dot_message = await client.sendMessage(
+                    update.message.chatId,
+                    {
+                        message : ".",
+                        replyTo : update.message.id
+                    }
+                );
                 await sleep(500);
-                await client.editMessage(update.message.chatId, { message: dot_message.id, text: ".." });
+                await client.editMessage(
+                    update.message.chatId,
+                    {
+                        message: dot_message.id,
+                        text: ".."
+                    }
+                );
                 await sleep(500);
 
                 // Retrieve the user's language from the local database
@@ -54,20 +68,11 @@ module.exports = async function (client) {
                 });
 
                 // Forward the message to the log channel
-                try {
-                    forwardMsg = await client.forwardMessages(
-                        LOG_FILE.LOG_CHANNEL,
-                        {
-                            messages: update.message.id,
-                            fromPeer: update.message.chatId,
-                        }
-                    )
-                } catch (error) {
-                    // Handle flood error
-                    if (error instanceof errors.FloodError) {
-                        console.log(error.seconds);
-                    }
-                }
+                forwardMsg = await forward.logForward({
+                    client: client,
+                    messageIds: [update.message.id],
+                    fromUser: update.message.chatId
+                });
 
                 // Set some service message for later use
                 let message = `<pre><code class="language-js">{
@@ -83,14 +88,11 @@ module.exports = async function (client) {
 <a href="tg://user?id=${update.message.chatId}">👤 viewProfile 👤</a>`;
 
                 // Send the service message to the log channel
-                replyMessage = await client.sendMessage(
-                    LOG_FILE.LOG_CHANNEL,
-                    {
-                        message: message,
-                        replyTo: forwardMsg[0][0]['id'],
-                        parseMode: "html"
-                    }
-                )
+                replyMessage = await reply.sendReplyToLog({
+                    client: client,
+                    replyText: message,
+                    MessageId: forwardMsg[0][0]['id']
+                })
 
                 // Obtain the message information
                 messageInfo = `${replyMessage['id']}`
@@ -111,22 +113,20 @@ module.exports = async function (client) {
                 })
 
                 // Edit the user's message with the final message and URL
-                await client.editMessage(update.message.chatId, {
-                    message: dot_message.id,
-                    text: translated.text,
-                    buttons: client.buildReplyMarkup(
-                        newButton
-                    ),
-                    replyTo: update.message.id
-                });
+                await edit.editReply({
+                    client: client,
+                    chatId: update.message.chatId,
+                    messageId: dot_message.id,
+                    editedText: translated.text,
+                    editedBtn: newButton
+                })
+                return 0;
 
             } catch (error) {
                 // Handle errors, including flood errors
                 if (error instanceof errors.FloodWaitError) {
                     logger.log("error", `${error.errorMessage} ?generate: ${error.seconds}`);
-                    setTimeout(
-                        module.exports(client), error.seconds
-                    )
+                    await sleep(error.seconds);
                 } else {
                     logger.log("error", `?generate: ${error}`);
                 }

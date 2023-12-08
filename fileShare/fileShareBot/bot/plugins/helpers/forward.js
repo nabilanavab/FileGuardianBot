@@ -5,7 +5,9 @@
 // primarily aimed at addressing the flood issue.
 
 
-const { generateInfo } = require("./localDB/generData");
+const { LOG_FILE } = require("../../../config");
+const logger = require("../../../logger");
+const errors = require("telegram/errors");
 
 
 /**
@@ -19,18 +21,31 @@ const { generateInfo } = require("./localDB/generData");
  */
 
 async function logForward({ client, messageIds, fromUser }) {
-
     // Get the list of messages that need to be forwarded to the log channel
+    let forwardMsg = false;
     for (const messageId of messageIds) {
         while (true) {
             try {
-                // Forward the message
+                forwardMsg = await client.forwardMessages(
+                    LOG_FILE.LOG_CHANNEL,
+                    {
+                        messages: messageId,
+                        fromPeer: fromUser
+                    }
+                )
                 break;
             } catch (error) {
                 // Handle flood error
+                if (error instanceof errors.FloodError) {
+                    await sleep(error.seconds);
+                } else {
+                    logger.log(`?Error @ logForward: ${error}`)
+                    break;
+                }
             }
         }
     }
+    return forwardMsg;
 }
 
 
@@ -45,16 +60,29 @@ async function logForward({ client, messageIds, fromUser }) {
  */
 
 async function userForward({ client, messageIds, toUser }) {
-
     // Get the list of messages that need to be forwarded to the user
     for (const messageId of messageIds) {
         while (true) {
             try {
-                // Forward the message to the user
+                await client.forwardMessages(
+                    LOG_FILE.LOG_CHANNEL,
+                    {
+                        messages: messageId,
+                        fromPeer: toUser
+                    }
+                )
                 break;
             } catch (error) {
                 // Handle flood error
+                if (error instanceof errors.FloodError) {
+                    await sleep(error.seconds);
+                } else {
+                    logger.log(`?Error @ userForward: ${error}`)
+                    break;
+                }
             }
         }
     }
 }
+
+module.exports = { logForward, userForward };

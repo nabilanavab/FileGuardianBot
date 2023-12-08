@@ -74,7 +74,8 @@ createButton = async function(
     }
 
     return keyboard ? keyboard : null;
-    }
+}
+
 module.exports = {
     maxClmnForButton, createButton
 }
