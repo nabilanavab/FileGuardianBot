@@ -59,13 +59,18 @@ module.exports = async function (client) {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                // Retrieve translated text and button based on the user's language
+                // Retrieve translated text for generating message
                 let translated = await translate({
                     text: "generate.message",
-                    button: "generate.button",
-                    asString: true,
                     langCode: lang_code
                 });
+                await client.editMessage(
+                    update.message.chatId,
+                    {
+                        message: dot_message.id,
+                        text: translated.text
+                    }
+                );
 
                 // Forward the message to the log channel
                 forwardMsg = await forward.logForward({
@@ -103,7 +108,13 @@ module.exports = async function (client) {
                     userID: update.message.chatId.value
                 });
 
-                console.log(translated.button)
+                translated = await translate({
+                    text: getUserInfo.addPassword ? "generate.publLink" : "generate.privLink",
+                    button: "generate.button",
+                    asString: true,
+                    langCode: lang_code
+                });
+
                 // Edit the button with the generated URL
                 let newButton = await editDict({
                     inDict: translated.button,

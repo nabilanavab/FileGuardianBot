@@ -69,10 +69,10 @@
     "generate" : {
         "message" : "Generating Url..",
         "privLink" : "Generated Private Link..",
-        "publLink" : "Generated Public Link..",
+        "publLink" : "Good news! Your file is ready for sharing.\n\nOpen Link: [ 📂 VIEW FILE 📂]\nShare your file effortlessly: [📎 SHARE URL 📎]",
         "button" : {
-            "Share" : "https://t.me/share/url?url=%s",
-            "Open Url" : "%s"
+            "📂 VIEW FILE 📂" : "%s",
+            "📎 SHARE URL 📎" : "https://t.me/share/url?url=%s"
         }
     }
 }

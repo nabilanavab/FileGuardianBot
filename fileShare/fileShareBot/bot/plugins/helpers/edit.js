@@ -25,7 +25,8 @@ async function editReply({ client, chatId, editedText, editedBtn, messageId }) {
                 text: editedText,
                 buttons: client.buildReplyMarkup(
                     editedBtn
-                )
+                ),
+                parseMode: "html"
             }
         );
         return editedMsg;
