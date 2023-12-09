@@ -13,6 +13,9 @@
  * 
  */
 
+const file_name = __dirname
+const author = "@nabilanavab"
+
 require('dotenv').config();
 let lang_data = require('./bot/i18n/data');
 

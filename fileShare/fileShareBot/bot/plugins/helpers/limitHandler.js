@@ -15,6 +15,9 @@
  *                rate-limiting mechanism.
  */
 
+const file_name = __dirname
+const author = "@nabilanavab"
+
 const userRequests = new Map();
 const { BOT_ADMIN, RATE_LIMIT_INFO } = require("../../../config");
 const toMinutes = 60 * 1000

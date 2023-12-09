@@ -8,10 +8,12 @@
  *
  * @version 1.0.0
  * @author NabilANavab
- * @copyright 2023 ©️ nabilanavab
+ * @copyright 2023 ©️ nabilanavab 
  * 
  */
 
+const file_name = __dirname
+const author = "@nabilanavab"
 
 const LOG_FILE = require("./config")
 const { createLogger, transports, format } = require('winston');
