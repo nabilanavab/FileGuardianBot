@@ -19,6 +19,21 @@ const userRequests = new Map();
 const { BOT_ADMIN, RATE_LIMIT_INFO } = require("../../../config");
 const toMinutes = 60 * 1000
 
+
+// Define a custom error class that extends the built-in Error class
+class timeLimitError extends Error {
+    constructor(message, code) {
+        // Call the constructor of the parent class (Error)
+        super(message);
+
+        // Set the name of the error for identification
+        this.name = 'timeLimitError';
+
+        // Attach a custom code property to the error
+        this.seconds = code;
+    }
+}
+
 /**
  * Handles message frequency limits for a user.
  * @param {object} client         - The client object for communication.
@@ -45,9 +60,17 @@ async function limitHandler(client, userId, check=false) {
             .timeLimit * toMinutes - (
                 currentTime - userRequestInfo.lastTimestamp
             );
+
         // send message to user and return
         `You are sending messages too frequently. Please wait for
         ${Math.ceil(remainingTime / 1000)} seconds.`;
+
+        if (check) return {
+            message: "can'tPerformAdditionalTask",
+            seconds: remainingTime
+        }
+
+        throw new timeLimitError("LIMIT_EXCEEDED", remainingTime);
     }
 
     // Update user request information
@@ -61,7 +84,10 @@ async function limitHandler(client, userId, check=false) {
             );
     
 
-    return "canPerformAdditionalTask"
+    return {
+        message: "canPerformAdditionalTask",
+        seconds: 0
+    }
 }
 
 module.exports = { limitHandler };
