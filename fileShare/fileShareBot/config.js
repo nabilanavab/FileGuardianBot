@@ -81,7 +81,7 @@ class LANG_INFO {
      * @type {string}
      * @static
      */
-    static DEFAULT_LANG = String(process.env.DEFAULT_LANG) || "eng";
+    static DEFAULT_LANG = String(process.env.DEFAULT_LANG) === undefined || "eng";
 
     /**
      * Flag indicating whether multiple languages are enabled.
@@ -98,7 +98,7 @@ class LANG_INFO {
      * @static
      */
     static ENABLED_LANG = (
-        LANG_INFO.MULTIPLE_LANG === false ? LANG_INFO.DEFAULT_LANG : lang_data.enabledLang
+        this.MULTIPLE_LANG === false ? this.DEFAULT_LANG : lang_data.enabledLang
     );
 }
 

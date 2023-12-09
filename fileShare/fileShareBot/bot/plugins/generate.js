@@ -103,6 +103,7 @@ module.exports = async function (client) {
                     userID: update.message.chatId.value
                 });
 
+                console.log(translated.button)
                 // Edit the button with the generated URL
                 let newButton = await editDict({
                     inDict: translated.button,

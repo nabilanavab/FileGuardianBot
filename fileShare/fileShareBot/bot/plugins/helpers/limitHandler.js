@@ -11,12 +11,13 @@
  * @author NabilANavab [ @nabilanavab ]
  * @copyright 2023 ©️ nabilanavab
  * @date December 12, 2023
- * @description This file contains functions for handling user requests with a rate-limiting mechanism.
- * 
+ * @description : This file contains functions for handling user requests with a
+ *                rate-limiting mechanism.
  */
 
 const userRequests = new Map();
-const { BOT_ADMIN, RATE_LIMIT_INFO } = require("../../../config")
+const { BOT_ADMIN, RATE_LIMIT_INFO } = require("../../../config");
+const toMinutes = 60 * 1000
 
 /**
  * Handles message frequency limits for a user.
@@ -37,11 +38,11 @@ async function limitHandler(client, userId, check=false) {
 
     // Check if the user sent messages too frequently
     if ( userRequestInfo.count >= RATE_LIMIT_INFO.numberLimit &&
-        currentTime - userRequestInfo.lastTimestamp < RATE_LIMIT_INFO.timeLimit * 60 * 1000
+        currentTime - userRequestInfo.lastTimestamp < RATE_LIMIT_INFO.timeLimit * toMinutes
     ) {
         // if user started spamming
         const remainingTime = RATE_LIMIT_INFO
-            .timeLimit * 60 * 1000 - (
+            .timeLimit * toMinutes - (
                 currentTime - userRequestInfo.lastTimestamp
             );
         // send message to user and return
@@ -64,3 +65,21 @@ async function limitHandler(client, userId, check=false) {
 }
 
 module.exports = { limitHandler };
+
+/**
+ * 
+ * @license
+ * FileShareBot is open-source software distributed under the MIT License.
+ * Please see the LICENSE: file for more details.
+ *
+ * @repository
+ * You can find the source code of this bot and contribute on GitHub: 
+ * https://github.com/nabilanavab/filesharebot
+ *
+ * @author
+ * Created with ❤️ by Your Name - Feel free to reach out for questions,
+ * bug reports, or collaboration.
+ * 
+ *                                 Contact: https://telegram.me/nabilanavab
+ * 
+ */
