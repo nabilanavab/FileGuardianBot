@@ -45,7 +45,8 @@ async function limitHandler(client, userId, check=false) {
                 currentTime - userRequestInfo.lastTimestamp
             );
         // send message to user and return
-        `You are sending messages too frequently. Please wait for ${Math.ceil(remainingTime / 1000)} seconds.`;
+        `You are sending messages too frequently. Please wait for
+        ${Math.ceil(remainingTime / 1000)} seconds.`;
     }
 
     // Update user request information
