@@ -5,7 +5,7 @@ let logger = require("../../logger");
 const { DATABASE } = require("../../config");
 const { CHANNEL_INFO } = require("../../config");
 const { coreDbFunctions } = require("../monGo/core");
-const { errors } = require("telegram/errors");
+const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 const { forceSub } = require("./helpers/forceSub");
 const getLang = require("../i18n/utils");
 const translate = require("../i18n/t9n");
@@ -20,12 +20,10 @@ module.exports = async function (client) {
             update.message.message.toLowerCase().startsWith("/start")
         ) {
             logger.log('info', `user ${update.message.chatId} started bot`)
+            
             try {
-
-                // Check for force subscription: If the user is required to subscribe forcefully
-                if (!await forceSub({ client, update })) {
-                    return "notAUser";
-                };
+                // Check for force subscription & time limit
+                await forceSub({ client, update })
 
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
@@ -86,7 +84,7 @@ module.exports = async function (client) {
 
             } catch (error) {
                 // Handle errors, including flood errors
-                if (error instanceof errors.FloodWaitError) {
+                if (error instanceof FloodWaitError) {
                     logger.log(
                         "error", `Error ${error.errorMessage} in ?start: ${error.seconds}`
                     );

@@ -3,7 +3,8 @@
 // This snippet helps to edit user messages, primarily aimed at addressing the flood issue.
 
 const logger = require("../../../logger");
-const errors = require("telegram/errors");
+const { FloodWaitError,
+    EditMessage } = require("telegram/errors/RPCErrorList");
 
 /**
  * Asynchronous function to send edited reply messages to a log channel.
@@ -30,12 +31,14 @@ async function editReply({ client, chatId, editedText, editedBtn, messageId }) {
             }
         );
         return editedMsg;
-    } catch (error) {
+    } catch ( error ) {
         // Handle flood error
-        if (error instanceof errors.FloodError) {
+        if (error instanceof FloodWaitError) {
             await sleep(error.seconds);
             // Retry editing and sending the reply after waiting for the flood interval
-            return editReplyInLog({ client, editedText, messageId });
+            return editReply({ client, editedText, messageId });
+        } else if (error instanceof EditMessage){
+            return editReply({ client, editedText, messageId });
         } else {
             logger.log(`?Error @ editReplyInLog: ${error}`);
             return null;

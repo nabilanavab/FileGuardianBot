@@ -6,6 +6,9 @@
             "♻️ REFRESH ♻️" : "refreshSub"
         }
     },
+    "timeLimit" : {
+        "message" : "`You are sending messages too frequently. Please wait for %s seconds.`"
+    },
     "start" : {
         "comment" : "welcome message: {button.withOutChannel} if force sub. else its easy to leave the channel :)",
         "photo" : "https://te.legra.ph/file/8dfa3760df91a218a629c.jpg",

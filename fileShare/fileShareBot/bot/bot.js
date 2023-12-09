@@ -1,11 +1,12 @@
 
 const { Console } = require("winston/lib/winston/transports");
 const config = require("../config");
-let logger = require("../logger");
+const logger = require("../logger");
 const loader = require("./loader");
 const { Api } = require('telegram');
-var { TelegramClient, errors, client } = require("telegram");
-var { StringSession } = require("telegram/sessions");
+const { TelegramClient, client } = require("telegram");
+const { StringSession } = require("telegram/sessions");
+const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 
 global.botInfo = null;
 
@@ -91,7 +92,7 @@ global.botInfo = null;
 
         } catch (error) {
             
-            if (error instanceof errors.FloodWaitError) {
+            if (error instanceof FloodWaitError) {
 
                 logger.log('error', `Error During Login: ${error}`);
                 await sleep(error.seconds * 1000)

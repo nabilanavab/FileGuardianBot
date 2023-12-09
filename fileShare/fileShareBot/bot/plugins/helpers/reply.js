@@ -5,7 +5,7 @@
 
 const { LOG_FILE } = require("../../../config");
 const logger = require("../../../logger");
-const errors = require("telegram/errors");
+const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 
 /**
  * Asynchronous function to send reply messages to a log channel.
@@ -31,7 +31,7 @@ async function sendReplyToLog({ client, replyText, MessageId }) {
         return replyMsg;
     } catch (error) {
         // Handle flood error
-        if (error instanceof errors.FloodError) {
+        if (error instanceof FloodWaitError) {
             await sleep(error.seconds);
             // Retry sending the reply after waiting for the flood interval
             return sendReplyToLog({ client, replyText, originalMessageId });

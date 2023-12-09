@@ -219,14 +219,14 @@ class RATE_LIMIT_INFO {
      * @type {number}
      * @static
      */
-    static timeLimit = Number(process.env.TIME_LIMIT_MINUTES) || 5;
+    static timeLimit = Number(process.env.TIME_LIMIT) || 2;
 
     /**
      * Number limit within the time limit.
      * @type {number}
      * @static
      */
-    static numberLimit = Number(process.env.NUMBER_LIMIT) || 5;
+    static numberLimit = Number(process.env.NUMBER_LIMIT) || 2;
 }
 
 // ===================================================================================

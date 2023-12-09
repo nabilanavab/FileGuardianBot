@@ -7,7 +7,7 @@
 
 const { LOG_FILE } = require("../../../config");
 const logger = require("../../../logger");
-const errors = require("telegram/errors");
+const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 
 
 /**
@@ -36,7 +36,7 @@ async function logForward({ client, messageIds, fromUser }) {
                 break;
             } catch (error) {
                 // Handle flood error
-                if (error instanceof errors.FloodError) {
+                if (error instanceof FloodWaitError) {
                     await sleep(error.seconds);
                 } else {
                     logger.log(`?Error @ logForward: ${error}`)

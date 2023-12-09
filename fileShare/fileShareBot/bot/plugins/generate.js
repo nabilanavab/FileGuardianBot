@@ -8,7 +8,7 @@ const { LOG_FILE } = require("../../config");
 const encrypt = require("../plugins/cryptoG/encrypt");
 const getLang = require("../../bot/i18n/utils");
 const translate = require("../../bot/i18n/t9n");
-const errors = require("telegram/errors");
+const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 const editDict = require("../../bot/i18n/edtB10");
 const { forceSub } = require("./helpers/forceSub");
 const forward = require("./helpers/forward");
@@ -28,11 +28,10 @@ module.exports = async function (client) {
             !isBatchUser(update.message.chatId.value)
         ) {
             logger.log('info', `user ${update.message.chatId} generating new link..`);
+
             try {
                 // Check for force subscription: If the user is required to subscribe forcefully
-                if (!await forceSub({ client, update })) {
-                    return "notAUser";
-                };
+                await forceSub({ client, update, checkLimit: true })
 
                 // Retrieve user data from the local database to determine
                 // if the link should be password protected or not, etc
@@ -47,14 +46,13 @@ module.exports = async function (client) {
                     }
                 );
                 await sleep(500);
-                await client.editMessage(
-                    update.message.chatId,
-                    {
-                        message: dot_message.id,
-                        text: ".."
-                    }
-                );
-                await sleep(500);
+                // await edit.editReply({
+                //     client: client,
+                //     chatId: update.message.chatId,
+                //     messageId: dot_message.id,
+                //     editedText: ".."
+                // });
+                // await sleep(500);
 
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
@@ -64,13 +62,12 @@ module.exports = async function (client) {
                     text: "generate.message",
                     langCode: lang_code
                 });
-                await client.editMessage(
-                    update.message.chatId,
-                    {
-                        message: dot_message.id,
-                        text: translated.text
-                    }
-                );
+                // await edit.editReply({
+                //     client: client,
+                //     chatId: update.message.chatId,
+                //     messageId: dot_message.id,
+                //     editedText: translated.text
+                // })
 
                 // Forward the message to the log channel
                 forwardMsg = await forward.logForward({
@@ -136,7 +133,7 @@ module.exports = async function (client) {
 
             } catch (error) {
                 // Handle errors, including flood errors
-                if (error instanceof errors.FloodWaitError) {
+                if (error instanceof FloodWaitError) {
                     logger.log("error", `${error.errorMessage} ?generate: ${error.seconds}`);
                     await sleep(error.seconds);
                 } else {

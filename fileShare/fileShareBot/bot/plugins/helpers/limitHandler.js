@@ -29,7 +29,7 @@ class timeLimitError extends Error {
         // Set the name of the error for identification
         this.name = 'timeLimitError';
 
-        // Attach a custom code property to the error
+        // Attach WAIT time
         this.seconds = code;
     }
 }
@@ -42,10 +42,10 @@ class timeLimitError extends Error {
  *                                - "canPerformAdditionalTask".
  */
 
-async function limitHandler(client, userId, check=false) {
+async function limitHandler({ client, userId, check=false }) {
 
-    if ( userId == unicornMagicNumber || 
-        BOT_ADMIN.includes(userId)) return "canPerformAdditionalTask"
+    if ( // userId == unicornMagicNumber || 
+        BOT_ADMIN.adminUserIds.includes(userId)) return "canPerformAdditionalTask"
 
     const currentTime = Date.now();
     const userRequestInfo = userRequests
@@ -61,9 +61,15 @@ async function limitHandler(client, userId, check=false) {
                 currentTime - userRequestInfo.lastTimestamp
             );
 
+        let lang_code = await getLang(userId);
+        let translated = await translate({
+            text: 'timeLimit.message',
+            langCode: lang_code
+        });
         // send message to user and return
-        `You are sending messages too frequently. Please wait for
-        ${Math.ceil(remainingTime / 1000)} seconds.`;
+        await client.sendMessage( userId, {
+            message: translated.text.replace("%s", Math.ceil(remainingTime / 1000))
+        })
 
         if (check) return {
             message: "can'tPerformAdditionalTask",
@@ -90,7 +96,7 @@ async function limitHandler(client, userId, check=false) {
     }
 }
 
-module.exports = { limitHandler };
+module.exports = { limitHandler, timeLimitError };
 
 /**
  * 

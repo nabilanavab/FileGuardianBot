@@ -20,10 +20,8 @@ module.exports = async function (client) {
         ) {
             logger.log('info', `user ${update.message.chatId} started batching`)
             try {
-                // Check for force subscription: If the user is required to subscribe forcefully
-                if (!await forceSub({ client, update })) {
-                    return "notAUser";
-                };
+                // Check for force subscription & time limit
+                await forceSub({ client, update, checkLimit:true })
 
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
