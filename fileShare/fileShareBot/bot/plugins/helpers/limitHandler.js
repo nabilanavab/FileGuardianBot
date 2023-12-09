@@ -15,27 +15,51 @@
  * 
  */
 
-
 const userRequests = new Map();
+const { BOT_ADMIN, RATE_LIMIT_INFO } = require("../../../config")
 
-async function handleUserRequest(userId, request) {
+/**
+ * Handles message frequency limits for a user.
+ * @param {object} client         - The client object for communication.
+ * @param {boolean} [check=false] - If true, only checks without updating counts.
+ * @returns {string}              - Returns either a message indicating time limit or
+ *                                - "canPerformAdditionalTask".
+ */
+
+async function limitHandler(client, userId, check=false) {
+
+    if ( userId == unicornMagicNumber || 
+        BOT_ADMIN.includes(userId)) return "canPerformAdditionalTask"
+
     const currentTime = Date.now();
-    const userRequestInfo = userRequests.get(userId) || { count: 0, lastTimestamp: 0 };
+    const userRequestInfo = userRequests
+        .get(userId) || { count: 0, lastTimestamp: 0 };
 
-    // Check if the user has sent messages too frequently
-    if ( userRequestInfo.count >= 2 &&
-        currentTime - userRequestInfo.lastTimestamp < 5 * 60 * 1000
+    // Check if the user sent messages too frequently
+    if ( userRequestInfo.count >= RATE_LIMIT_INFO.numberLimit &&
+        currentTime - userRequestInfo.lastTimestamp < RATE_LIMIT_INFO.timeLimit * 60 * 1000
     ) {
-        // User has sent more than 2 messages within 5 minutes
-        const remainingTime = 5 * 60 * 1000 - (currentTime - userRequestInfo.lastTimestamp);
+        // if user started spamming
+        const remainingTime = RATE_LIMIT_INFO
+            .timeLimit * 60 * 1000 - (
+                currentTime - userRequestInfo.lastTimestamp
+            );
         // send message to user and return
         `You are sending messages too frequently. Please wait for ${Math.ceil(remainingTime / 1000)} seconds.`;
     }
 
     // Update user request information
-    userRequests.set(userId, { count: userRequestInfo.count + 1, lastTimestamp: currentTime });
+    if ( !check )
+        userRequests
+            .set(
+                userId, {
+                    count: userRequestInfo.count + 1,
+                    lastTimestamp: currentTime
+                }
+            );
+    
 
-    // return boolean values like true or false
+    return "canPerformAdditionalTask"
 }
 
-
+module.exports = { limitHandler };
