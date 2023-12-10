@@ -20,6 +20,8 @@ const author = "@nabilanavab"
 
 const userRequests = new Map();
 const { BOT_ADMIN, RATE_LIMIT_INFO } = require("../../../config");
+const editDict = require("../../i18n/edtB10");
+const { createButton } = require("../../i18n/ba10");
 const toMinutes = 60 * 1000
 
 
@@ -45,9 +47,9 @@ class timeLimitError extends Error {
  *                                - "canPerformAdditionalTask".
  */
 
-async function limitHandler({ client, userId, check=false }) {
+async function limitHandler({ client, userId, replyTo=null, check=false }) {
 
-    if ( // userId == unicornMagicNumber || 
+    if ( userId == unicornMagicNumber || 
         BOT_ADMIN.adminUserIds.includes(userId)) return "canPerformAdditionalTask"
 
     const currentTime = Date.now();
@@ -67,12 +69,24 @@ async function limitHandler({ client, userId, check=false }) {
         let lang_code = await getLang(userId);
         let translated = await translate({
             text: 'timeLimit.message',
-            langCode: lang_code
+            button: 'timeLimit.button',
+            langCode: lang_code,
+            asString: true
         });
+        
+        let newButton = await editDict({
+            inDict: translated.button,
+            front: `${Math.ceil(remainingTime / 1000)}`
+        })
+
         // send message to user and return
         await client.sendMessage( userId, {
-            message: translated.text.replace("%s", Math.ceil(remainingTime / 1000))
-        })
+            message: translated.text.replace("%s", Math.ceil(remainingTime / 1000)),
+            buttons: client.buildReplyMarkup(
+                await createButton({ button: newButton })
+            ),
+            replyTo: replyTo
+        });
 
         if (check) return {
             message: "can'tPerformAdditionalTask",

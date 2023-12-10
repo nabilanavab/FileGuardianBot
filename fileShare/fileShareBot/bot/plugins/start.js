@@ -18,7 +18,7 @@ const author = "@nabilanavab"
 
 // Import necessary modules
 let logger = require("../../logger");
-const { DATABASE } = require("../../config");
+const { DATABASE, LOG_FILE } = require("../../config");
 const { CHANNEL_INFO } = require("../../config");
 const { coreDbFunctions } = require("../monGo/core");
 const { FloodWaitError } = require("telegram/errors/RPCErrorList");
@@ -26,6 +26,8 @@ const { forceSub } = require("./helpers/forceSub");
 const getLang = require("../i18n/utils");
 const translate = require("../i18n/t9n");
 const decrypt = require("./cryptoG/decrypt");
+const { Api } = require("telegram");
+const { userForward } = require("./helpers/forward");
 
 
 // Define welcome message
@@ -64,7 +66,20 @@ module.exports = async function (client) {
                         code: haveCode,
                         userID: update.message.chatId
                     });
-                    console.log(code)
+                    if(!isNaN(Number(code))){
+                        // If the result is a valid number and not NaN
+                        let data = await client.invoke(
+                            new Api.channels.GetMessages({
+                                channel: LOG_FILE.LOG_CHANNEL,
+                                id: [Number(code)]
+                            })
+                        )
+                        await userForward({
+                            client: client,
+                            messageIds: [ data['messages'][0]['replyTo']['replyToMsgId'] ],
+                            toUser: update.message.chatId
+                        })
+                    }
                     return "sendAllFiles";
                 }
 
@@ -82,20 +97,24 @@ module.exports = async function (client) {
                 // If the user is a developer, include a welcome picture;
                 // otherwise, send a text message
                 if (!CHANNEL_INFO.WELCOME_PIC) {
-                    await client.sendMessage(update.message.chatId, {
-                        message: translated.text,
-                        buttons: client.buildReplyMarkup(
-                            translated.button
-                        ),
-                    });
+                    await client.sendMessage(
+                        update.message.chatId, {
+                            message: translated.text,
+                            buttons: client.buildReplyMarkup(
+                                translated.button
+                            ),
+                        }
+                    );
                 } else {
-                    await client.sendMessage(update.message.chatId, {
-                        message: translated.text,
-                        file: CHANNEL_INFO.WELCOME_PIC,
-                        buttons: client.buildReplyMarkup(
-                            translated.button
-                        ),
-                    })
+                    await client.sendMessage(
+                        update.message.chatId, {
+                            message: translated.text,
+                            file: CHANNEL_INFO.WELCOME_PIC,
+                            buttons: client.buildReplyMarkup(
+                                translated.button
+                            ),
+                        }
+                    )
                 }
                 return 0;
 

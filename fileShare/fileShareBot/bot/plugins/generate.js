@@ -55,35 +55,15 @@ module.exports = async function (client) {
 
                 // Display a series of messages to enhance user experience
                 dot_message = await client.sendMessage(
-                    update.message.chatId,
-                    {
+                    update.message.chatId, {
                         message : ".",
                         replyTo : update.message.id
                     }
                 );
-                await sleep(500);
-                // await edit.editReply({
-                //     client: client,
-                //     chatId: update.message.chatId,
-                //     messageId: dot_message.id,
-                //     editedText: ".."
-                // });
                 // await sleep(500);
 
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
-
-                // Retrieve translated text for generating message
-                let translated = await translate({
-                    text: "generate.message",
-                    langCode: lang_code
-                });
-                // await edit.editReply({
-                //     client: client,
-                //     chatId: update.message.chatId,
-                //     messageId: dot_message.id,
-                //     editedText: translated.text
-                // })
 
                 // Forward the message to the log channel
                 forwardMsg = await forward.logForward({

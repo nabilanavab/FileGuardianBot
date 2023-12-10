@@ -31,39 +31,51 @@ const util = require('util');
  * 
  */
 
-async function editDict({inDict, value = false, front = false}) {
-    let outDict = {};
+async function editDict({ inDict, value = false, front = false }) {
+    try {
+        let outDict = {};
 
-    if (front) {
-        // Changes cb in UI
-        for (const [i, j] of Object.entries(inDict)) {
-            outDict[i.format(front)] = j;
-        }
-        inDict = outDict;
-    }
-
-    if (value && !Array.isArray(value)) {
-        // Changes cb.data
-        for (const [i, j] of Object.entries(inDict)) {
-            outDict[i] = util.format(j, value);
-        }
-    } else if (Array.isArray(value)) {
-        if (value.length === 2) {
+        if (front) {
+            // Changes cb in UI
             for (const [i, j] of Object.entries(inDict)) {
-                outDict[i] = util.format(
-                    j, value[0], value[1]
-                );
+                try{
+                    const modifiedKey = i.replace('%s', front);
+                    outDict[modifiedKey] = j;
+                } catch (error){
+                    outDict[i] = j;
+                }
+            }
+            inDict = outDict;
+        }
+
+        if (value && !Array.isArray(value)) {
+            // Changes cb.data
+            for (const [i, j] of Object.entries(inDict)) {
+                outDict[i] = util.format(j, value);
+            }
+        } else if (Array.isArray(value)) {
+            if (value.length === 2) {
+                for (const [i, j] of Object.entries(inDict)) {
+                    outDict[i] = util.format(
+                        j, value[0], value[1]
+                    );
+                }
+            }
+            if (value.length === 3) {
+                for (const [i, j] of Object.entries(inDict)) {
+                    outDict[i] = util.format(
+                        j, value[0], value[1], value[2]
+                    );
+                }
             }
         }
-        if (value.length === 3) {
-            for (const [i, j] of Object.entries(inDict)) {
-                outDict[i] = util.format(
-                    j, value[0], value[1], value[2]
-                );
-            }
-        }
+        return outDict;
+
+    } catch ( error ) {
+
+        return inDict;
+    
     }
-    return outDict;
 }
 
 module.exports = editDict;

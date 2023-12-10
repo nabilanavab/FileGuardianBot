@@ -7,7 +7,10 @@
         }
     },
     "timeLimit" : {
-        "message" : "`You are sending messages too frequently. Please wait for %s seconds.`"
+        "message" : "`You are sending messages too frequently. Please wait for %s seconds.`",
+        "button" : {
+            "Try Again: %s sec Over" : "generate"
+        }
     },
     "start" : {
         "comment" : "welcome message: {button.withOutChannel} if force sub. else its easy to leave the channel :)",

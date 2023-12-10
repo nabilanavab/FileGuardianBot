@@ -54,7 +54,8 @@ const forceSub = async ({ client, update, checkLimit = false }) => {
             if (checkLimit){
                 await limitHandler({
                     client: client,
-                    userId: update.message.chatId.value
+                    userId: update.message.chatId.value,
+                    replyTo: update.message.id
                 })
             }
             return true;

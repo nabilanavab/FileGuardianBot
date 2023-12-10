@@ -79,10 +79,9 @@ async function userForward({ client, messageIds, toUser }) {
         while (true) {
             try {
                 await client.forwardMessages(
-                    LOG_FILE.LOG_CHANNEL,
-                    {
+                    toUser, {
                         messages: messageId,
-                        fromPeer: toUser
+                        fromPeer: LOG_FILE.LOG_CHANNEL
                     }
                 )
                 break;
