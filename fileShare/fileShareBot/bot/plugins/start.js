@@ -60,10 +60,11 @@ module.exports = async function (client) {
                 // If available, retrieve the code; otherwise, send a welcome message
                 let haveCode = update.message.message.replace('/start ', '');
                 if (haveCode !== '/start') {
-                    await decrypt({
+                    const code = await decrypt({
                         code: haveCode,
                         userID: update.message.chatId
                     });
+                    console.log(code)
                     return "sendAllFiles";
                 }
 

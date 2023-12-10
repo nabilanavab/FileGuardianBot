@@ -20,7 +20,7 @@ const crypto = require("crypto");
 const logger = require("../../../logger");
 const algorithm = "aes-192-cbc";
 const fixedIV = Buffer.from('7860786078607860');
-const generateInfo = require("../localDB/generData");
+const { generateInfo } = require("../localDB/generData");
 
 
 /**
@@ -33,7 +33,7 @@ const generateInfo = require("../localDB/generData");
  * decrypt(text)
 **/
 
-async function decrypt(code, userID){
+async function decrypt({ code, userID }){
     try {
         let key
         if ( generateInfo[userID] && generateInfo[userID]['addPassword'] ){

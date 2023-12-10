@@ -33,7 +33,7 @@ const { generateInfo } = require("../localDB/generData")
  * encrypt(text)
  */
 
-async function encrypt({text, userID}) {
+async function encrypt({ text, userID }) {
     try {
         let key
         if ( generateInfo[userID] && generateInfo[userID]['addPassword'] ){
