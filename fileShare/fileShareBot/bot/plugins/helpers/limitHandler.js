@@ -42,6 +42,8 @@ class timeLimitError extends Error {
 /**
  * Handles message frequency limits for a user.
  * @param {object} client         - The client object for communication.
+ * @param {number} userId         - UserId
+ * @param {number} replyTo        - replyTo message_id
  * @param {boolean} [check=false] - If true, only checks without updating counts.
  * @returns {string}              - Returns either a message indicating time limit or
  *                                - "canPerformAdditionalTask".
@@ -106,7 +108,6 @@ async function limitHandler({ client, userId, replyTo=null, check=false }) {
                 }
             );
     
-
     return {
         message: "canPerformAdditionalTask",
         seconds: 0
