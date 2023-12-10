@@ -70,11 +70,11 @@ module.exports = async function (client) {
                 let translated = await translate({
                     text: 'start.message',
                     button: CHANNEL_INFO.FORCE_SUB
-                        ? 'start.button.withChannel'
-                        : 'start.button.withOutChannel',
+                        ? 'start.button.withOutChannel'
+                        : 'start.button.withChannel',
                     langCode: lang_code,
                     order: CHANNEL_INFO.FORCE_SUB
-                        ? "221" : "211",
+                        ? "211" : "221",
                 });
 
                 // If the user is a developer, include a welcome picture;

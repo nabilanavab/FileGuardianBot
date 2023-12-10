@@ -1,3 +1,4 @@
+
 /**
  *
  * This code snippet is part of the FileShareBot by @nabilanavab.
@@ -15,32 +16,32 @@
 const file_name = __dirname
 const author = "@nabilanavab"
 
-let logger = require("../../logger");
-const settings = require("./callBack/settings")
-const helpCbHandler = require("./callBack/help");
-const closeCbMessage = require("./callBack/close");
+const logger = require("../../../logger");
+const { Api } = require('telegram');
 
-module.exports = async function(client){
-    client.addEventHandler(async (update) => {
-        if (update  && update.className == "UpdateBotCallbackQuery"){
-            try {
-                let data = Buffer.from(update.data).toString('utf8');
-                
-                if (data == 'close') {
-                    return closeCbMessage({ client: client, update: update });
-                }
-                else if (data.startsWith(":")) {
-                    return settings.settingsHandler(update);
-                }
-                else if (data.startsWith("-")) {
-                    return helpCbHandler({ client: client, update: update });
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        }
+async function closeCbMessage({ client, update }) {
+    try {
+
+        await client.invoke(new Api.messages.SetBotCallbackAnswer({
+            message: "closing.. ",
+            // alert: true,
+            queryId: update.queryId
+        }));
+
+        let deleteMessage = await client.deleteMessages(
+            update.userId, [update.msgId], {}
+        )
+        return deleteMessage
+
+    } catch ( error ){
+
+        logger.log(`${file_name}: ${update.userId} : ${error.message}`);
+        return fasle
+
     }
-)}
+}
+
+module.exports = closeCbMessage;
 
 /**
  * 
