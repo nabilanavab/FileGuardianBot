@@ -25,9 +25,7 @@ const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 const { forceSub } = require("./helpers/forceSub");
 const getLang = require("../i18n/utils");
 const translate = require("../i18n/t9n");
-const decrypt = require("./cryptoG/decrypt");
-const { Api } = require("telegram");
-const { userForward } = require("./helpers/forward");
+const checkDecCode = require("./util/checkDecCode")
 
 
 // Define welcome message
@@ -62,24 +60,9 @@ module.exports = async function (client) {
                 // If available, retrieve the code; otherwise, send a welcome message
                 let haveCode = update.message.message.replace('/start ', '');
                 if (haveCode !== '/start') {
-                    const code = await decrypt({
-                        code: haveCode,
-                        userID: update.message.chatId
-                    });
-                    if(!isNaN(Number(code))){
-                        // If the result is a valid number and not NaN
-                        let data = await client.invoke(
-                            new Api.channels.GetMessages({
-                                channel: LOG_FILE.LOG_CHANNEL,
-                                id: [Number(code)]
-                            })
-                        )
-                        await userForward({
-                            client: client,
-                            messageIds: [ data['messages'][0]['replyTo']['replyToMsgId'] ],
-                            toUser: update.message.chatId
-                        })
-                    }
+                    await checkDecCode(
+                        { client: client, code: haveCode, userID: update.message.chatId }
+                    );
                     return "sendAllFiles";
                 }
 

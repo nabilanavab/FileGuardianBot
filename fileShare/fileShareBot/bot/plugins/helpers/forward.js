@@ -73,7 +73,8 @@ async function logForward({ client, messageIds, fromUser }) {
  * @returns {Boolean}               - A Promise that resolves once the messages are forwarded to the user.
  */
 
-async function userForward({ client, messageIds, toUser }) {
+async function userForward({ client, messageIds, toUser,
+    dropAuthor=false, dropMediaCaptions=false, noforwards=false}) {
     // Get the list of messages that need to be forwarded to the user
     for (const messageId of messageIds) {
         while (true) {
@@ -81,7 +82,10 @@ async function userForward({ client, messageIds, toUser }) {
                 await client.forwardMessages(
                     toUser, {
                         messages: messageId,
-                        fromPeer: LOG_FILE.LOG_CHANNEL
+                        fromPeer: LOG_FILE.LOG_CHANNEL,
+                        noforwards: noforwards,
+                        dropAuthor: dropAuthor,
+                        dropMediaCaptions: dropMediaCaptions
                     }
                 )
                 break;

@@ -18,21 +18,36 @@ const author = "@nabilanavab"
 
 // saves all user data except language [lang]
 
+/*
+* properties of forward messages [attributes]
+*
+* dropAuthor: Whether to forward messages without quoting the original author
+* dropMediaCaptions : Whether to strip captions from media
+* noforwards: Only for bots, disallows further re-forwarding and saving of the messages
+* 
+* setPassword: custom password
+* isAccesable: can make it offline [without deleting]
+*/
+
 const generateInfo = {
     1234567 : {
-        isProtected : true,
+        dropAuthor : true,
+        noforwards : true,
         isAccesable : true,
-        addPassword : "password",
-        forwardQuot : true,
-        medaCaption : true,
+        setPassword : "password",
+        dropMediaCaptions : true,
     }, 
     12345678 : {
-        'isProtected' : true,
+        dropAuthor : true,
         // not all attributes will be added to all users
         // false values never be added [ prevent unwanted wastage of memory]
     },
     531733867 : {
-        'addPassword' : "hey there"
+        // dropAuthor : true,
+        // noforwards : true,
+        // isAccesable : true,
+        // setPassword : "password",
+        // dropMediaCaptions : true,
     }
 }
 

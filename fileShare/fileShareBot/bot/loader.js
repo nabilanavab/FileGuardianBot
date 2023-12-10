@@ -42,7 +42,7 @@ const walkSync = (dir, filelist = [], exclude = []) => {
   
 
 const excludeList = [
-    'localDB', 'excludeFile.js', 'cryptoG', 'callBack', 'helpers'
+    'localDB', 'excludeFile.js', 'cryptoG', 'callBack', 'helpers', 'util'
 ];
 const moduleLoader = async (client) => {
     const root = path.join(__dirname, 'plugins');
