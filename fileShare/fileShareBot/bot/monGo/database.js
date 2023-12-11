@@ -51,17 +51,24 @@ class Database {
                 userLang[user.userID] = user.lang;
             });
 
-            result = await this.client.db(this.databaseName).collection(
-                this.userCollection).find(
-                    { isProtected: { $exists: true }, addPassword: { $exists: true } }
-                ).toArray();
+            result = await this.client.db(this.databaseName)
+                .collection(this.userCollection)
+                .find({ userID: { $exists: true } })
+                .toArray();
 
             result.forEach(user => {
-                let userId = user.userId;
-                generateInfo[userId] = {
-                    isProtected: user.isProtected,
-                    addPassword: user.addPassword,
-                };
+                let userId = user.userID;
+
+                if (!generateInfo[userId]){
+                    generateInfo[userId] = {};
+                }
+
+                Object.keys(user).forEach(key => {
+                    if ( key !== 'join_date' && key !== 'lang'
+                        && key !== '_id' && key !== 'userID' ) {
+                        generateInfo[userId][key] = user[key];
+                    }
+                });
             });
 
             logger.log('error', 'Database connected perfectly..')

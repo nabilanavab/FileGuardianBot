@@ -57,7 +57,7 @@ async function settingsCbHandler({ client, update }) {
                     ? "🔐 " + key : "🔓 " + key;
                 
                 if (replacementValue){
-                    value = `:password ${replacementValue}`
+                    value = `:${replacementValue}`
                 }
                 
                 newButton[replacementKey] = value;

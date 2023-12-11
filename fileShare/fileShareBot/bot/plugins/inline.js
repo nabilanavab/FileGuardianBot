@@ -18,12 +18,36 @@ const author = "@nabilanavab"
 
 const { Api } = require("telegram");
 const logger = require("../../logger");
+const { generateInfo } = require("./localDB/generData");
 
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (update  && update.className == "UpdateBotInlineQuery"){
             try {
                 let langCode = await getLang(update.userId);
+
+                if ( generateInfo[update.userId] && 
+                    generateInfo[update.userId]['setPassword'] &&
+                        generateInfo[update.userId]['setPassword'] === update
+                            .query.match(/[A-Za-z0-9]/g)?.join('') || '' ){
+
+                    let translated = await translate({
+                        text: `settings.samePassword`,
+                        langCode: langCode
+                    });
+
+                    return await client.invoke(
+                        new Api.messages.SetInlineBotResults({
+                            queryId: BigInt(update.queryId.value),
+                            results: [],
+                            cacheTime: 0,
+                            switchPm: new Api.InlineBotSwitchPM({
+                                text: translated.text,
+                                startParam: "password",
+                            }),
+                        })
+                    )
+                }
 
                 let translated = await translate({
                     text: `settings.setPassword`,
@@ -43,6 +67,7 @@ module.exports = async function (client) {
                         }),
                     })
                 )
+
             } catch (error) {
                 logger.log('error', `${file_name}: ${update.userId} : ${error}`);
                 let langCode = await getLang(update.userId);

@@ -77,7 +77,11 @@
             "🔙 BacK" : "-help|0"
         },
         "setPassword" : "Set Password As:",
-        "bigPassword" : "Too Big Password.."
+        "bigPassword" : "Too Big Password..",
+        "samePassword" : "Current Password..",
+        "passUpdated" : "Password Updated..\n\nclick below button to know",
+        "closeCB" : { "ClosE" : "close"},
+        "passUpdCB" : { "👁 VIEW PASSWORD 👁" : "%s", "ClosE" : "close" }
     },
     "batch" : {
         "new" : "A new batch is being created, and new messages will be added to the queue.",

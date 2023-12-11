@@ -13,20 +13,20 @@
  * 
  */
 
-const file_name = __dirname
+const file_name = __filename
 const author = "@nabilanavab"
 
 // Import necessary modules
 let logger = require("../../logger");
-const { DATABASE, LOG_FILE } = require("../../config");
+const { DATABASE } = require("../../config");
 const { CHANNEL_INFO } = require("../../config");
 const { coreDbFunctions } = require("../monGo/core");
 const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 const { forceSub } = require("./helpers/forceSub");
 const getLang = require("../i18n/utils");
 const translate = require("../i18n/t9n");
-const checkDecCode = require("./util/checkDecCode")
-
+const checkDecCode = require("./util/checkDecCode");
+const setPassword = require("./util/setPassword");
 
 // Define welcome message
 module.exports = async function (client) {
@@ -35,7 +35,6 @@ module.exports = async function (client) {
             update.message.peerId.className === 'PeerUser' &&
             update.message.message.toLowerCase().startsWith("/start")
         ) {
-            logger.log('info', `user ${update.message.chatId} started bot`)
             
             try {
                 // Check for force subscription & time limit
@@ -60,10 +59,14 @@ module.exports = async function (client) {
                 // If available, retrieve the code; otherwise, send a welcome message
                 let haveCode = update.message.message.replace('/start ', '');
                 if (haveCode !== '/start') {
-                    await checkDecCode(
+                    if (haveCode.startsWith("password")){
+                        return await setPassword({
+                            client: client, update: update, haveCode: haveCode
+                        })
+                    }
+                    return await checkDecCode(
                         { client: client, code: haveCode, userID: update.message.chatId }
                     );
-                    return "sendAllFiles";
                 }
 
                 // Retrieve translated text and button based on the user's language
