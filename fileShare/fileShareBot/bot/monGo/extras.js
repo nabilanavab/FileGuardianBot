@@ -48,6 +48,7 @@ class extrasDb {
     }
 
     async changeData({ userID, key, value = false, deleteIt = false }) {
+        // [impo] please dont use deleteIt it delete user completely 
         let updateData;
 
         // Not all attributes will be added to all users
@@ -57,13 +58,13 @@ class extrasDb {
             else delete generateInfo[userID][key];
             updateData = await database.client.db(database.databaseName).collection(
                 database.userCollection).updateOne(
-                    { userID: userID }, { $unset : { [key] : 1 } }
+                    { userID: Number(userID) }, { $unset : { [key] : 1 } }
                 );
         } else {
             generateInfo[userID][key] = value;
             updateData = await database.client.db(database.databaseName).collection(
                 database.userCollection).updateOne(
-                    { userID: userID }, { $set : { [key] : value } }
+                    { userID: Number(userID) }, { $set : { [key] : value } }
                 );
         }
     }

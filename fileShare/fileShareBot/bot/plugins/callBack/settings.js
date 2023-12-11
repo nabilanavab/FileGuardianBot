@@ -33,23 +33,37 @@ const { createButton } = require("../../i18n/ba10");
 
 async function settingsCbHandler({ client, update }) {
     try {
-        let cbData = Buffer.from(update.data, 'base64').toString('utf8');
-
         // Get the user's language code
         let langCode = await getLang(update.userId);
 
-        if (cbData === "!set"){
-            let translated = await translate({
-                text: `settings.message`,
-                button: `settings.button`,
-                langCode: langCode,
-                asString: true,
-                order: 2211
-            });
+        let translated = await translate({
+            text: `settings.message`,
+            button: `settings.button`,
+            langCode: langCode,
+            asString: true,
+            order: 2211
+        });
 
-            let newButton = {};
+        let newButton = {};
+        if (!generateInfo[update.userId]){
+            generateInfo[update.userId] = {}
+        };
 
-            for (const [key, value] of Object.entries(translated.button)) {
+        for (let [key, value] of Object.entries(translated.button)) {
+            if (value.startsWith(":password")){
+                let replacementValue = generateInfo[update.userId]['setPassword'];
+
+                let replacementKey = (replacementValue !== undefined)
+                    ? "🔐 " + key : "🔓 " + key;
+                
+                if (replacementValue){
+                    value = `:password ${replacementValue}`
+                }
+                
+                newButton[replacementKey] = value;
+            
+            } else {
+                "!{name} : corresponts to generateInfo[user][name]"
                 let modifiedValue = value.replace("!", "");
                 let replacementValue = generateInfo[update.userId][modifiedValue];
 
@@ -57,25 +71,32 @@ async function settingsCbHandler({ client, update }) {
                     ? key : ( replacementValue == true )
                         ? "✅ " + key + " ✅"
                         : "☑️ " + key + " ☑️";
+                
+                if (replacementValue){
+                    value = `${value}|true`
+                } else {
+                    value = `${value}|false`
+                }
 
                 newButton[replacementKey] = value;
             }
-
-            newButton = await createButton({
-                button: newButton,
-                order: 2211
-            })
-            return await client.editMessage(
-                update.userId, {
-                    message: update.msgId,
-                    text: translated.text,
-                    buttons: client.buildReplyMarkup(newButton),
-                    parseMode: "html",
-                }
-            );
         }
+
+        newButton = await createButton({
+            button: newButton,
+            order: 2211
+        })
+        return await client.editMessage(
+            update.userId, {
+                message: update.msgId,
+                text: translated.text,
+                buttons: client.buildReplyMarkup(newButton),
+                parseMode: "html",
+            }
+        );
+        
     } catch (error) {
-        logger.log(`${file_name}: ${update.userId} : ${error.message}`);
+        logger.log('error', `${file_name}: ${update.userId} : ${error}`);
         return false;
     }
 }

@@ -42,7 +42,7 @@ async function closeCbMessage({ client, update }) {
         );
 
     } catch (error) {
-        logger.log(`${file_name}: ${update.userId} : ${error.message}`);
+        logger.log(`${file_name}: ${update.userId} : ${error}`);
         return false; // Return false in case of an error
     }
 }

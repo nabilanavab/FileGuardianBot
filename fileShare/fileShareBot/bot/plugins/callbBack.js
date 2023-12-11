@@ -19,6 +19,7 @@ let logger = require("../../logger");
 const settingsCbHandler = require("./callBack/settings")
 const helpCbHandler = require("./callBack/help");
 const closeCbMessage = require("./callBack/close");
+const changeSettings = require("./callBack/change")
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
@@ -26,17 +27,21 @@ module.exports = async function(client){
             try {
                 let data = Buffer.from(update.data).toString('utf8');
                 
-                if (data == 'close') {
+                if (data === 'close') {
                     return closeCbMessage({ client: client, update: update });
                 }
-                else if (data.startsWith("!")) {
+                else if (data === "!set") {
                     return settingsCbHandler({ client: client, update: update });
+                }
+                else if (data.startsWith("!")){
+                    return changeSettings({ client: client, update: update });
                 }
                 else if (data.startsWith("-")) {
                     return helpCbHandler({ client: client, update: update });
                 }
             } catch (error) {
-                console.log(error)
+                logger.log(`${file_name}: ${update.userId} : ${error}`);
+                return false;
             }
         }
     }

@@ -69,11 +69,11 @@
     "settings" : {
         "message" : "Settings Page Mesage",
         "button" : {
-            "setPassword" : ":password | ",
-            "noforwards" : "!noforwards",
-            "dropMediaCaptions" : "!dropMediaCaptions",
-            "dropAuthor" : "!dropAuthor",
-            "isAccessable" : "!isAccesable",
+            "SET PASSWORD" : ":password | ",
+            "CANT FORWARD" : "!noforwards",
+            "NO CAPTIONS" : "!dropMediaCaptions",
+            "WITHOUT QUOTES" : "!dropAuthor",
+            "ACCESS CLOSED" : "!isAccesable",
             "🔙 BacK" : "-help|0"
         }
     },

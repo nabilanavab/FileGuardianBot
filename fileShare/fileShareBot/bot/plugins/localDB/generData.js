@@ -34,7 +34,7 @@ const generateInfo = {
         dropAuthor : true,
         noforwards : true,
         isAccesable : true,
-        setPassword : "password",
+        setPassword : "hey there",
         dropMediaCaptions : true,
     }, 
     12345678 : {
@@ -44,8 +44,8 @@ const generateInfo = {
     },
     531733867 : {
         dropAuthor : true,
-        noforwards : true,
-        setPassword : "password",
+        // noforwards : true,
+        // setPassword : "hey there",
     }
 }
 
