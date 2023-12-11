@@ -18,8 +18,6 @@ const author = "@nabilanavab"
 
 const logger = require("../../../logger");
 const { generateInfo } = require("../localDB/generData");
-const translate = require("../../i18n/t9n");
-const { createButton } = require("../../i18n/ba10");
 const { extrasDbFunctions } = require("../../monGo/extras");
 const settingsCbHandler = require("./settings");
 const { DATABASE } = require("../../../config");

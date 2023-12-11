@@ -75,7 +75,9 @@
             "WITHOUT QUOTES" : "!dropAuthor",
             "ACCESS CLOSED" : "!isAccesable",
             "🔙 BacK" : "-help|0"
-        }
+        },
+        "setPassword" : "Set Password As:",
+        "bigPassword" : "Too Big Password.."
     },
     "batch" : {
         "new" : "A new batch is being created, and new messages will be added to the queue.",

@@ -29,20 +29,13 @@ const { Api } = require('telegram');
 
 async function closeCbMessage({ client, update }) {
     try {
-        // Send a callback answer to indicate closing
-        // await client.invoke(new Api.messages.SetBotCallbackAnswer({
-        //     message: "Closing...",
-        //     alert: true,
-        //     queryId: update.queryId
-        // }));
-
         // Delete the original message
         return await client.deleteMessages(
             update.userId, [update.msgId], {}
         );
 
     } catch (error) {
-        logger.log(`${file_name}: ${update.userId} : ${error}`);
+        logger.log('error', `${file_name}: ${update.userId} : ${error}`);
         return false; // Return false in case of an error
     }
 }
