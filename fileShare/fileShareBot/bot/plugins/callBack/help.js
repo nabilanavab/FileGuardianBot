@@ -54,7 +54,7 @@ async function helpCbHandler({ client, update }) {
         });
 
         // Edit the original message with the translated text and buttons
-        let editedMsg = await client.editMessage(
+        return await client.editMessage(
             update.userId, {
                 message: update.msgId,
                 text: translated.text,
@@ -62,8 +62,6 @@ async function helpCbHandler({ client, update }) {
                 parseMode: "html",
             }
         );
-
-        return editedMsg;
 
     } catch (error) {
         logger.log(`${file_name}: ${update.userId} : ${error.message}`);

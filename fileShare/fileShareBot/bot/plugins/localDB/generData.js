@@ -43,11 +43,9 @@ const generateInfo = {
         // false values never be added [ prevent unwanted wastage of memory]
     },
     531733867 : {
-        // dropAuthor : true,
-        // noforwards : true,
-        // isAccesable : true,
-        // setPassword : "password",
-        // dropMediaCaptions : true,
+        dropAuthor : true,
+        noforwards : true,
+        setPassword : "password",
     }
 }
 

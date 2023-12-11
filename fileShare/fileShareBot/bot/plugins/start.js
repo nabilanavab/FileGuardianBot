@@ -99,7 +99,12 @@ module.exports = async function (client) {
                         }
                     )
                 }
-                return 0;
+
+                return await client.deleteMessages(
+                    update.message.chatId,
+                    [update.message],
+                    {}
+                )
 
             } catch (error) {
                 // Handle errors, including flood errors

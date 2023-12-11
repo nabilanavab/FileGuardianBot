@@ -16,7 +16,7 @@ const file_name = __dirname
 const author = "@nabilanavab"
 
 let logger = require("../../logger");
-const settings = require("./callBack/settings")
+const settingsCbHandler = require("./callBack/settings")
 const helpCbHandler = require("./callBack/help");
 const closeCbMessage = require("./callBack/close");
 
@@ -29,8 +29,8 @@ module.exports = async function(client){
                 if (data == 'close') {
                     return closeCbMessage({ client: client, update: update });
                 }
-                else if (data.startsWith(":")) {
-                    return settings.settingsHandler(update);
+                else if (data.startsWith("!")) {
+                    return settingsCbHandler({ client: client, update: update });
                 }
                 else if (data.startsWith("-")) {
                     return helpCbHandler({ client: client, update: update });

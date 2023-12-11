@@ -63,7 +63,7 @@ createButton = async function(
             )
         } else if (type==="query"){
             temp_button.push(
-                Button.switchInline(text=key, query=value)
+                Button.switchInline(text=key, query=value, samePeer=true)
             )
         }
     };

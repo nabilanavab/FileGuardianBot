@@ -19,27 +19,34 @@ const author = "@nabilanavab"
 const logger = require("../../../logger");
 const { Api } = require('telegram');
 
+/**
+ * Handles callback queries related to closing a message.
+ * @param {object} options - Options object.
+ * @param {object} options.client - The Telegram Bot API client.
+ * @param {object} options.update - The Telegram update object.
+ * @returns {Promise<*>} - A Promise that resolves with the result of deleting the message or false if there's an error.
+ */
+
 async function closeCbMessage({ client, update }) {
     try {
+        // Send a callback answer to indicate closing
+        // await client.invoke(new Api.messages.SetBotCallbackAnswer({
+        //     message: "Closing...",
+        //     alert: true,
+        //     queryId: update.queryId
+        // }));
 
-        await client.invoke(new Api.messages.SetBotCallbackAnswer({
-            message: "closing.. ",
-            // alert: true,
-            queryId: update.queryId
-        }));
-
-        let deleteMessage = await client.deleteMessages(
+        // Delete the original message
+        return await client.deleteMessages(
             update.userId, [update.msgId], {}
-        )
-        return deleteMessage
+        );
 
-    } catch ( error ){
-
+    } catch (error) {
         logger.log(`${file_name}: ${update.userId} : ${error.message}`);
-        return fasle
-
+        return false; // Return false in case of an error
     }
 }
+
 
 module.exports = closeCbMessage;
 
