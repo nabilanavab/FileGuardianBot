@@ -69,7 +69,7 @@
     "settings" : {
         "message" : "Settings Page Mesage",
         "button" : {
-            "SET PASSWORD" : ":password | ",
+            "SET PASSWORD" : ":",
             "CANT FORWARD" : "!noforwards",
             "NO CAPTIONS" : "!dropMediaCaptions",
             "WITHOUT QUOTES" : "!dropAuthor",
@@ -80,6 +80,7 @@
         "bigPassword" : "Too Big Password..",
         "samePassword" : "Current Password..",
         "passUpdated" : "Password Updated..\n\nclick below button to know",
+        "passworDlt" : "delete password..",
         "closeCB" : { "ClosE" : "close"},
         "passUpdCB" : { "👁 VIEW PASSWORD 👁" : "%s", "ClosE" : "close" }
     },

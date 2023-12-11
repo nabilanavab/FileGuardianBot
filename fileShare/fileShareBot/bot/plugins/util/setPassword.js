@@ -42,43 +42,48 @@ async function setPassword({ client, update, haveCode }) {
                     )
                 }
             )
-            return await client.deleteMessages(
-                update.message.chatId,
-                [update.message],
-                {}
-            )
-        }
-        
-        if(!generateInfo[update.message.chatId])
-            generateInfo[update.message.chatId] = {}
+        } else {
+            if(!generateInfo[update.message.chatId])
+                generateInfo[update.message.chatId] = {}
 
-        generateInfo[update.message.chatId]['setPassword'] = password
-        if (DATABASE.MONGODB_URI){
-            await extrasDbFunctions.changeData({
-                userID: update.message.chatId,
-                key: 'setPassword',
-                value: password
-            });
-        }
+            if (password == '-Delete'){
+                delete generateInfo[update.message.chatId]['setPassword']
+                if (DATABASE.MONGODB_URI){
+                    await extrasDbFunctions.changeData({
+                        userID: update.message.chatId,
+                        key: 'setPassword'
+                    });
+                }
+            } else {
+                generateInfo[update.message.chatId]['setPassword'] = password
+                if (DATABASE.MONGODB_URI){
+                    await extrasDbFunctions.changeData({
+                        userID: update.message.chatId,
+                        key: 'setPassword',
+                        value: password
+                    });
+                }
 
-        let translated = await translate({
-            text : 'settings.passUpdated',
-            button : 'settings.passUpdCB',
-            asString : true,
-            langCode : lang_code
-        });
-        let newButton = await editDict({
-            inDict : translated.button,
-            value : `:${password}`
-        })
-        await client.sendMessage(update.message.chatId, {
-            message: translated.text,
-            buttons: client.buildReplyMarkup(
-                await createButton({
-                    button : newButton, order : '11'
+                let translated = await translate({
+                    text : 'settings.passUpdated',
+                    button : 'settings.passUpdCB',
+                    asString : true,
+                    langCode : lang_code
+                });
+                let newButton = await editDict({
+                    inDict : translated.button,
+                    value : `:${password}`
                 })
-            )
-        });
+                await client.sendMessage(update.message.chatId, {
+                    message: translated.text,
+                    buttons: client.buildReplyMarkup(
+                        await createButton({
+                            button : newButton, order : '11'
+                        })
+                    )
+                });
+            }
+        }
 
         return await client.deleteMessages(
             update.message.chatId,

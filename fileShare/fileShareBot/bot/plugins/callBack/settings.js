@@ -50,7 +50,7 @@ async function settingsCbHandler({ client, update }) {
         };
 
         for (let [key, value] of Object.entries(translated.button)) {
-            if (value.startsWith(":password")){
+            if (value.startsWith(":")){
                 let replacementValue = generateInfo[update.userId]['setPassword'];
 
                 let replacementKey = (replacementValue !== undefined)

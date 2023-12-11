@@ -51,7 +51,8 @@ async function editDict({ inDict, value = false, front = false }) {
         if (value && !Array.isArray(value)) {
             // Changes cb.data
             for (const [i, j] of Object.entries(inDict)) {
-                outDict[i] = util.format(j, value);
+                // outDict[i] = util.format(j, value);
+                outDict[i] = j.replace('%s', value);
             }
         } else if (Array.isArray(value)) {
             if (value.length === 2) {

@@ -26,6 +26,27 @@ module.exports = async function (client) {
             try {
                 let langCode = await getLang(update.userId);
 
+                if (generateInfo[update.userId] && 
+                    generateInfo[update.userId]['setPassword'] &&
+                        (update.query.match(/[A-Za-z0-9]/g)?.join('') || '') === ''){
+                    let translated = await translate({
+                        text: `settings.passworDlt`,
+                        langCode: langCode
+                    });
+
+                    return await client.invoke(
+                        new Api.messages.SetInlineBotResults({
+                            queryId: BigInt(update.queryId.value),
+                            results: [],
+                            cacheTime: 0,
+                            switchPm: new Api.InlineBotSwitchPM({
+                                text: translated.text,
+                                startParam: "password-Delete",
+                            }),
+                        })
+                    )
+                }
+
                 if ( generateInfo[update.userId] && 
                     generateInfo[update.userId]['setPassword'] &&
                         generateInfo[update.userId]['setPassword'] === update
