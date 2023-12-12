@@ -89,6 +89,7 @@ module.exports = async function (client) {
                             buttons: client.buildReplyMarkup(
                                 translated.button
                             ),
+                            parseMode: "html"
                         }
                     );
                 } else {
@@ -99,6 +100,7 @@ module.exports = async function (client) {
                             buttons: client.buildReplyMarkup(
                                 translated.button
                             ),
+                            parseMode: "html"
                         }
                     )
                 }

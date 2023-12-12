@@ -22,12 +22,23 @@ const { DATABASE } = require("../../../config");
 const editDict = require("../../i18n/edtB10");
 const translate = require("../../i18n/t9n");
 
+/**
+ * setPassword - Handles the process of setting and updating user passwords.
+ * 
+ * @param {Object} params - Parameters for the function.
+ * @param {Object} params.client - The Telegram client object.
+ * @param {Object} params.update - The update object received from Telegram.
+ * @param {string} params.haveCode - The code containing the password information.
+ * @returns {boolean} - Returns true if the password is successfully processed, false otherwise.
+ */
+
 async function setPassword({ client, update, haveCode }) {
     try {
         let password = haveCode.replace("password", "");
 
         let lang_code = await getLang(update.message.chatId);
 
+        // Check if the password is empty
         if (password == ''){
             let translated = await translate({
                 text: 'settings.samePassword',

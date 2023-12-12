@@ -14,11 +14,11 @@
     },
     "start" : {
         "photo" : "https://te.legra.ph/file/8dfa3760df91a218a629c.jpg",
-        "message" : "👋 Welcome to the FileShare Bot! 📁\n\nWith FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.\n\nTo get started, simply send the file you want to share",
+        "message" : "👋 <i>Welcome to the</i> <b>FileShare Bot!</b> 📁\n\n<i>With FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.</i>\n\n<i>Get started by simply sending a file you want to share</i>\n\n<i>powered by:</i> @ilovepdf_bot ❤️",
         "button" : {
             "withChannel" : {
                 "🌍 LANGUAGE 🌍" : "~language",
-                "📚 HELP 📚" : "-help|0",
+                "📚 HELP 📚" : "-help|1",
                 "🔊 CHANNEL 🔊" : "https://github.com/nabilanavab",
                 "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
                 " ⚙️ SETTINGS ⚙️" : "!set"
@@ -33,7 +33,7 @@
     },
     "help" : {
         "0" : {
-            "message" : "👋 Welcome to the FileShare Bot! 📁\n\nWith FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.\n\nTo get started, simply send the file you want to share",
+            "message" : "👋 <i>Welcome to the</i> <b>FileShare Bot!</b> 📁\n\n<i>With FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.</i>\n\n<i>Get started, by simply sending a file you want to share</i>\n\n<i>powered by:</i> @ilovepdf_bot ❤️",
             "button" : {
                 "withChannel" : {
                     "🌍 LANGUAGE 🌍" : "~language",
@@ -52,14 +52,14 @@
             }
         },
         "1" : {
-            "message" : "first page of help message",
+            "message" : "<b>🤖 Discover DataGuard - Your Ultimate Privacy Shield! 🔒</b>\n\n<i>Tired of your data going public? Look no further! DataGuard is your solution to safeguarding information. Generate unique links for your text, files, gifs, stickers, and more! Worried about unauthorized access? Add an extra layer with personal passwords – clients will need it to unlock the treasure. This bot is simpler than you think! Just forward anything you want to protect, and witness the magic unfold.\n\nYour privacy, your control.</i> 🔐✨",
             "button" : {
                 "🔙 BacK" : "-help|0",
                 "NexT ➡️" : "-help|2"
             }
         },
         "2" : {
-            "message" : "second page of help message",
+            "message" : "🤖 <b>Introducing FIleShareBot - Your File Batch Wizard!</b> 📦\n\n<i>Ever wished to combine multiple files into one neat package? Now you can with the `/batch` command! Just send it in my private chat, then forward the first file from any channel and the last message of the batch from the same channel. Voila! I'll weave them into a single file, generating a unique link for your convenience. If it's a private channel, ensure I'm an administrator for the magic to unfold.\n\nSimplify your sharing, one batch at a time! 🌐✨</i>",
             "button" : {
                 "🔙 BacK" : "-help|1",
                 "NexT ➡️" : "-help|0"
@@ -67,7 +67,7 @@
         }
     },
     "settings" : {
-        "message" : "Settings Page Mesage",
+        "message" : "<b>⚙️ SETTINGS:</b> \n\n<b>🔐 SET PASSWORD</b><i>: Enhance additional security by setting a password for your data. This can be applied to all formats, including text, stickers, and more.</i>\n\n🚫 <b>CAN'T FORWARD</b><i>: Restrict the forwarding of messages to maintain privacy and control the flow of information in your bot.</i>\n\n📸<b>NO CAPTIONS</b><i>: Customize media sharing by removing captions from files, providing a cleaner and more streamlined user experience.</i>\n\n👤 <b>WITHOUT QUOTES</b><i>: Tailor your bot's appearance by removing author information from messages, offering a sleek and minimalist interface.</i>\n\n🚷 <b>ACCESS CLOSED</b><i>: Customize access to features based on user roles or conditions, allowing you to control and limit certain functionalities.</i>",
         "button" : {
             "SET PASSWORD" : ":",
             "CANT FORWARD" : "!noforwards",
@@ -76,13 +76,13 @@
             "ACCESS CLOSED" : "!isAccesable",
             "🔙 BacK" : "-help|0"
         },
-        "setPassword" : "Set Password As:",
-        "bigPassword" : "Too Big Password..",
-        "samePassword" : "Current Password..",
-        "passUpdated" : "Password Updated..\n\nclick below button to know",
-        "passworDlt" : "delete password..",
-        "closeCB" : { "ClosE" : "close"},
-        "passUpdCB" : { "👁 VIEW PASSWORD 👁" : "%s", "ClosE" : "close" }
+        "setPassword" : "🔒 Set Password As:",
+        "bigPassword" : "⛔ Too Big Password..",
+        "samePassword" : "🔑 Current Password..",
+        "passUpdated" : "🔒 <b>Password Updated..</b>\n\nClick below button to know 🤫",
+        "passworDlt" : "🚫 Delete Password..",
+        "closeCB" : { "✖️ Close ✖️" : "close"},
+        "passUpdCB" : { "👁 VIEW PASSWORD 👁" : "%s", "✖️ Close ✖️" : "close" }
     },
     "batch" : {
         "new" : "A new batch is being created, and new messages will be added to the queue.",
