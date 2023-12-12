@@ -82,7 +82,9 @@
         "passUpdated" : "🔒 <b>Password Updated..</b>\n\nClick below button to know 🤫",
         "passworDlt" : "🚫 Delete Password..",
         "closeCB" : { "✖️ Close ✖️" : "close"},
-        "passUpdCB" : { "👁 VIEW PASSWORD 👁" : "%s", "✖️ Close ✖️" : "close" }
+        "passUpdCB" : { "👁 VIEW PASSWORD 👁" : "%s", "✖️ Close ✖️" : "close" },
+        "askPassword" : "<b>This file is secure with a password 🔒.</b>\n\n<i>Use the button below if you have the password to access it.</i>",
+        "askPswdButon" : { "😎 i know the password 😎" : ":get %s " }
     },
     "batch" : {
         "new" : "A new batch is being created, and new messages will be added to the queue.",

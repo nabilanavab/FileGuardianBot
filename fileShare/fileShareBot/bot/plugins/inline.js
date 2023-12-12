@@ -19,12 +19,58 @@ const author = "@nabilanavab"
 const { Api } = require("telegram");
 const logger = require("../../logger");
 const { generateInfo } = require("./localDB/generData");
+const { LOG_FILE } = require("../../config");
+
+// Local database to store passwords for quick access and
+// prevent flooding during frequent requests.
+localCbMessageDataWhichSavePassword = {
+    786: {
+        "dataMessage" :785,
+        "password" : "BismillahirRahmanirRaheem"
+    }
+}
 
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (update  && update.className == "UpdateBotInlineQuery"){
             try {
                 let langCode = await getLang(update.userId);
+
+                if (update.query.startsWith("get ")){
+                    const [_, messageId, password] = update.query.split(/\s+/);
+
+                    console.log(`${messageId} | ${password}`)
+                    if (localCbMessageDataWhichSavePassword[Number(messageId)] === undefined){
+                        let data = await client.invoke(
+                            new Api.channels.GetMessages({
+                                channel: LOG_FILE.LOG_CHANNEL,
+                                id: [Number(messageId)]
+                            })
+                        );
+                        let jsonData = JSON.parse(
+                            data['messages'][0]['message'].split("\n\n")[0]
+                        );
+                        if (!jsonData['setPassword']){
+                            return await client.invoke(
+                                new Api.messages.SetInlineBotResults({
+                                    queryId: BigInt(update.queryId.value),
+                                    results: [
+                                        // get message by id [but we need to add restriction]
+                                        new Api.InputBotInlineResult({
+                                            title: "This File Is Open For All, Use Link Directly",
+                                            description: "This File Is Open For All, Use Link Directly",
+                                            send_message: "channy.."
+                                        })
+                                    ]
+                                })
+                            );
+                        };
+                    localCbMessageDataWhichSavePassword[Number(messageId)]['dataMessage'] = 
+                        [ data['messages'][0]['replyTo']['replyToMsgId'] ];
+                    localCbMessageDataWhichSavePassword[Number(messageId)]['password'] =
+                        jsonData['setPassword'];
+                    }
+                }
 
                 if (generateInfo[update.userId] && 
                     generateInfo[update.userId]['setPassword'] &&

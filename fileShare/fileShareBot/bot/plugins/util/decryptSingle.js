@@ -18,7 +18,8 @@ const author = "@nabilanavab"
 
 const { Api } = require("telegram");
 const { userForward } = require("../helpers/forward");
-const { LOG_FILE } = require("../../../config")
+const { LOG_FILE } = require("../../../config");
+const editDict = require("../../i18n/edtB10");
 
 async function decryptSingle({client, code, userID}) {
     try{
@@ -34,8 +35,31 @@ async function decryptSingle({client, code, userID}) {
         )
         
         if (jsonData['setPassword']){
-            // ask for password
-            console.log("ask for password.. ");
+            let lang_code = await getLang(userID);
+
+            let translated = await translate({
+                text : 'settings.askPassword',
+                button : 'settings.askPswdButon',
+                asString : true,
+                langCode : lang_code
+            })
+
+            let newButton = await editDict({
+                inDict : translated.button,
+                value : Number(code)
+            })
+
+            return await client.sendMessage(
+                userID, {
+                    message: translated.text,
+                    buttons: client.buildReplyMarkup(
+                        await createButton({
+                            button : newButton
+                        })
+                    ),
+                    parseMode: "html"
+                }
+            )
         }
 
         await userForward({

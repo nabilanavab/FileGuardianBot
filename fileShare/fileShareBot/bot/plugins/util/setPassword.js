@@ -22,6 +22,7 @@ const { DATABASE } = require("../../../config");
 const editDict = require("../../i18n/edtB10");
 const translate = require("../../i18n/t9n");
 
+
 /**
  * setPassword - Handles the process of setting and updating user passwords.
  * 
@@ -35,7 +36,6 @@ const translate = require("../../i18n/t9n");
 async function setPassword({ client, update, haveCode }) {
     try {
         let password = haveCode.replace("password", "");
-
         let lang_code = await getLang(update.message.chatId);
 
         // Check if the password is empty
