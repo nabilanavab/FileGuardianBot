@@ -86,6 +86,10 @@
         "askPassword" : "<b>This file is secure with a password 🔒.</b>\n\n<i>Use the button below if you have the password to access it.</i>",
         "askPswdButon" : { "😎 i know the password 😎" : ":get %s " }
     },
+    "lang" : {
+        "select" : "Now, Select Language, Depending On Ur Choice: ",
+        "back" : { "🔙 BacK" : "-help|0" }
+    },
     "batch" : {
         "new" : "A new batch is being created, and new messages will be added to the queue.",
         "current" : "A batch job is currently in progress."
