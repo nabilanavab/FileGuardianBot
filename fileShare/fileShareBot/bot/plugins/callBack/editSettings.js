@@ -19,11 +19,11 @@ const author = "@nabilanavab"
 const logger = require("../../../logger");
 const { generateInfo } = require("../localDB/generData");
 const { extrasDbFunctions } = require("../../monGo/extras");
-const settingsCbHandler = require("./settings");
+const settingsCbHandler = require("./getSettings");
 const { DATABASE } = require("../../../config");
 
 /**
- * Handles callback queries related to the help command.
+ * Handles callback queries related to the setting.
  * @param {object} options        - Options object.
  * @param {object} options.client - The Telegram Bot API client.
  * @param {object} options.update - The Telegram update object.
@@ -38,6 +38,7 @@ async function changeSettings({ client, update }) {
 
         // Extract currentStatus either true or false [bool]
         // eg cb data will be like [!noForward|true]
+        // first line extrack new Value and 2nd line remove ! from the front 
         let currentStatus = (cbData.split("|")[1] === "true");
         let updateProcess = cbData.split("|")[0].slice(1);
 

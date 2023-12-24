@@ -42,7 +42,8 @@ const walkSync = (dir, filelist = [], exclude = []) => {
   
 
 const excludeList = [
-    'localDB', 'excludeFile.js', 'cryptoG', 'callBack', 'helpers', 'util'
+    'localDB', 'excludeFile.js', 'cryptoG', 'callBack',
+    'helpers', 'util', "__init__.js"
 ];
 const moduleLoader = async (client) => {
     const root = path.join(__dirname, 'plugins');
@@ -65,8 +66,10 @@ const moduleLoader = async (client) => {
         }
     }
 
-    // Print completely loaded files
-    console.log("loaded: " + filesToLoad.map((file) => file.split('/').pop()).join(', '));
+    const loadedFileNames = filesToLoad.map((file) => path.basename(file));
+    console.log("loaded: " + loadedFileNames.join(', '));
+    // Print completely loaded files [below code will print complete path]
+    // console.log("loaded: " + filesToLoad.map((file) => file.split('/').pop()).join(', '));
 };
   
 

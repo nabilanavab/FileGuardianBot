@@ -16,10 +16,12 @@ const file_name = __dirname
 const author = "@nabilanavab"
 
 let logger = require("../../logger");
-const settingsCbHandler = require("./callBack/settings")
+const settingsCbHandler = require("./callBack/getSettings")
 const helpCbHandler = require("./callBack/help");
 const closeCbMessage = require("./callBack/close");
-const changeSettings = require("./callBack/change")
+const changeSettings = require("./callBack/editSettings");
+const changeLang = require("./callBack/editLang");
+const askLang = require("./callBack/getLang");
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
