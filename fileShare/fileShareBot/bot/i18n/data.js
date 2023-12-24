@@ -25,7 +25,8 @@ const userLang = {
 }
 
 const enabledLang = {
-    eng : ["english", "ENglish"],
+    eng : ["english", "🅴🅽🅶🅻🅸🆂🅷"],
+    mal : ["മലയാളം", "🅼🅰🅻🅰🆈🅰🅻🅰🅼"]
 }
 
 module.exports = {

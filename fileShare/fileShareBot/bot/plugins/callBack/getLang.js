@@ -31,7 +31,7 @@ const { createButton } = require("../../i18n/ba10");
  *                                  false if there's an error.
  */
 
-const maxClmnForButton = 3;
+const maxClmnForButton = 2;
 
 async function askLang({ client, update }) {
     try {
@@ -53,24 +53,25 @@ async function askLang({ client, update }) {
             const langNames = data.enabledLang[langKey];
 
             // Check if the current language key is the user's language
-            const isUserLang = langKey === userLang;
+            const isUserLang = langKey === langCode;
 
             // Use tick emoji for the second value of the key if it's the user's language
-            const key = isUserLang ? `${langNames[0]} ✔️` : langNames[1];
-            const langKey = isUserLang ? `~lang|Done` : langNames[1];
+            const key = isUserLang ? `${langNames[0]} | ${langNames[1]} ✔️` : `${langNames[0]} | ${langNames[1]}`;
+            langKey = isUserLang ? `~lang|Done` : `~lang|${langKey}`;
 
             // Add the key-value pair to the dictionary
-            langDict[key] = `~lang|${langKey}`;
+            langDict[key] = langKey;
         }
 
         langDict = { ...langDict, ...translated.button };
 
         // Create a number based on the variable maxLen
-        let order = Array.from(
-            { length: Math.ceil(numElements / maxClmnForButton) + 1 },
+        let order = Array(Math.floor(numElements / maxClmnForButton) + 1).fill(0);
+        order = order.map(
             (_, i, arr) => i === arr.length - 1 ?
-                Math.ceil(numElements % maxClmnForButton) : Math.ceil(numElements / maxClmnForButton)
+                Math.floor(numElements % maxClmnForButton) : maxClmnForButton
         );
+
         // we need to add one back button also
         order = Number(order.join('') + '1');
 

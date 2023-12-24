@@ -250,8 +250,7 @@ if (!(missingVariables.length === 0)) {
 // =====================================================================================
 
 // Display current settings to the console: Log enabled languages, Log File Name
-console.log(`Currently supported languages: 
-    ${JSON.stringify(LANG_INFO.ENABLED_LANG, null, 4)}`);
+console.log(`Currently supported languages: ${Object.keys(LANG_INFO.ENABLED_LANG).join(', ')}`);
 console.log(`Log file: ${LOG_FILE.FILE_NAME}`);
 
 module.exports = {
