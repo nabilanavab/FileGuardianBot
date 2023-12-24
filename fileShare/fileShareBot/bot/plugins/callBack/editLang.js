@@ -19,11 +19,11 @@ const author = "@nabilanavab"
 
 const { LANG_INFO } = require("../../../config");
 const data = require("../../i18n/data");
-
-
+const translate = require("../../i18n/t9n");
+const { createButton } = require("../../i18n/ba10");
 
 /**
- * Handles callback queries related to the setting.
+ * Handles callback queries for changing Language
  * @param {object} options        - Options object.
  * @param {object} options.client - The Telegram Bot API client.
  * @param {object} options.update - The Telegram update object.
@@ -33,8 +33,31 @@ const data = require("../../i18n/data");
 
 async function changeLang({ client, update }) {
     try {
-        // Decode callback data from base64
-        let cbData = Buffer.from(update.data).toString('utf8');
+        // Get the user's language code
+        let langCode = await getLang(update.userId);
+        
+        const langDict = {};
+    
+        for (const langKey in enabledLang) {
+            const langNames = enabledLang[langKey];
+    
+            // Check if the current language key is the user's language
+            const langCode = langKey === userLang;
+    
+            // Use tick emoji for the second value of the key if it's the user's language
+            const key = langCode ? `${langNames[0]} ✔️` : langNames[1];
+    
+            // Add the key-value pair to the dictionary
+            langDict[key] = langKey;
+        }
+
+        newButton = await createButton({
+            button: langDict,
+            order: 332
+        })
+    
+        return ;
+
     } catch (error){
 
     }
