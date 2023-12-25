@@ -19,29 +19,33 @@ const author = "@nabilanavab"
 // features that are not crucial for the core functionality
 const { LANG_INFO } = require("../../config");
 const database = require("./database");
-const { userLang } = require("../i18n/data");
+const { userLang, enabledLang } = require("../i18n/data");
 const { generateInfo } = require("../plugins/localDB/generData");
 
 
 class extrasDb {
     async changeLang({ userID, lang = LANG_INFO.DEFAULT_LANG }) {
-        let updateData
+        userID = Number(userID);
+
+        if (!enabledLang.hasOwnProperty(lang))
+            return true;
         
+        let updateData
         if (lang === LANG_INFO.DEFAULT_LANG && !userLang[userID]) {
             updateData = true;
         } else if (lang === LANG_INFO.DEFAULT_LANG && userLang[userID]) {
             delete userLang[userID];
             updateData = await database.client.db(database.databaseName).collection(
                 database.userCollection).updateOne(
-                    { userID: userID }, { $unset : { [lang] : 1 } }
+                    { userID: Number(userID) }, { $unset : { ['lang'] : 1 } }
                 );
         } else if (userLang[userID] === lang) {
             return true;
-        } else if (lang !== defaultLang && !userLang[userID]) {
+        } else if (lang !== LANG_INFO.DEFAULT_LANG && !userLang[userID]) {
             userLang[userID] = lang;
             updateData = await database.client.db(database.databaseName).collection(
                 database.userCollection).updateOne(
-                    { userID: userID }, { $set : { [lang] : lang } }
+                    { userID: Number(userID) }, { $set : { ['lang'] : lang } }
                 );
         }
         return updateData;

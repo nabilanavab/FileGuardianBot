@@ -88,7 +88,8 @@
     },
     "lang" : {
         "select" : "Now, Select Language, Depending On Ur Choice: ",
-        "back" : { "🔙 BacK" : "-help|0" }
+        "back" : { "🔙 BacK" : "-help|0" },
+        "already" : "Already U are using this Language"
     },
     "batch" : {
         "new" : "A new batch is being created, and new messages will be added to the queue.",

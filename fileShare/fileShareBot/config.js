@@ -91,7 +91,7 @@ class LANG_INFO {
      * @type {boolean}
      * @static
      */
-    static MULTIPLE_LANG = process.env.MULTIPLE_LANG === 'false' ? false : true;
+    static MULTIPLE_LANG = process.env.MULTIPLE_LANG == 'false' ? false : true;
 
     /**
      * Enabled language(s) based on the MULTIPLE_LANG flag.

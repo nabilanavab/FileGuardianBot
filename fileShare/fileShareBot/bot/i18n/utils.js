@@ -20,7 +20,7 @@ const config = require("../../config")
 const fs = require('fs');
 const path = require('path');
 const logger = require("../../logger");
-const data = require("./data");
+const { userLang, enabledLang } = require("./data");
 
 let supportedLang = []
 const langFolder = path.join(__dirname, 'languages');
@@ -42,23 +42,22 @@ fs.readdir(langFolder, (err, files) => {
             // Get the language code from the file name
             const langCode = fileName.slice(0, -5); // Remove the last 5 characters (".json")
             // Filter only supported languages
-            return data.enabledLang[langCode] !== undefined ? langCode : null;
+            return enabledLang[langCode] !== undefined ? langCode : null;
         }).filter(
             (langCode) => langCode !== null
         );
     }
-    console.log('Supported Languages:', supportedLang);
 });
 
 
 getLang = async function(userID){
 
     // try to get lang code from data.useLang (default : default_lang_code)
-    var userLang = data.userLang[userID] === undefined ?
-        config.LANG_INFO.DEFAULT_LANG : data.userLang[userID];
+    var user_lang = userLang[userID] === undefined ?
+        config.LANG_INFO.DEFAULT_LANG : userLang[userID];
 
-    if (supportedLang.includes(userLang)){
-        return userLang;
+    if (enabledLang.hasOwnProperty(user_lang)){
+        return user_lang;
     } else {
         return config.LANG_INFO.DEFAULT_LANG;
     }

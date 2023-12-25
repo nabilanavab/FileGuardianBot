@@ -20,7 +20,7 @@ const settingsCbHandler = require("./callBack/getSettings")
 const helpCbHandler = require("./callBack/help");
 const closeCbMessage = require("./callBack/close");
 const changeSettings = require("./callBack/editSettings");
-// const changeLang = require("./callBack/editLang");
+const setLang = require("./callBack/editLang");
 const askLang = require("./callBack/getLang");
 
 module.exports = async function(client){
@@ -44,9 +44,9 @@ module.exports = async function(client){
                 else if (data === "~lang") {
                     return askLang({ client: client, update: update });
                 }
-                // else if (data.startsWith("~")) {
-                //     return changeLang({ client: client, update: update });
-                // }
+                else if (data.startsWith("~")) {
+                    return setLang({ client: client, update: update });
+                }
             } catch (error) {
                 logger.log(`${file_name}: ${update.userId} : ${error}`);
                 return false;

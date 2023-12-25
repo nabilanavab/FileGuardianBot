@@ -77,8 +77,8 @@ translate = async function({
     asString=false, order=button_trans.maxClmnForButton
 }) {
     let rtnText, rtnButton = null;
-    let langMsg = localeData[langCode];
-
+    langMsg = localeData[langCode] ?? localeData["eng"] ;
+    
     if (text) {
         try {
             let keys = text.split('.');

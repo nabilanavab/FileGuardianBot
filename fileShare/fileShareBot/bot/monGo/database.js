@@ -19,7 +19,7 @@ const author = "@nabilanavab"
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const { DATABASE } = require("../../config");
 const logger = require('../../logger');
-const { userLang } = require("../i18n/data")
+const { userLang } = require("../i18n/data");
 const { generateInfo } = require("../plugins/localDB/generData");
 
 
@@ -44,8 +44,10 @@ class Database {
         try {
             await this.client.connect();
 
-            let result = await this.client.db(this.databaseName).collection(
-                this.userCollection).find({ lang: { $exists: true } }).toArray();
+            let result = await this.client.db(this.databaseName)
+                .collection(this.userCollection)
+                .find({ lang: { $exists: true } })
+                .toArray();
 
             result.forEach(user => {
                 userLang[user.userID] = user.lang;
