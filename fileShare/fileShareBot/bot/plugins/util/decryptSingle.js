@@ -20,6 +20,7 @@ const { Api } = require("telegram");
 const { userForward } = require("../helpers/forward");
 const { LOG_FILE } = require("../../../config");
 const editDict = require("../../i18n/edtB10");
+const { logger } = require("../../../logger");
 
 async function decryptSingle({client, code, userID}) {
     try{
@@ -74,8 +75,8 @@ async function decryptSingle({client, code, userID}) {
 
     } catch ( error ){
 
-        console.log(error);
-        return false
+        logger.log('error', `${file_name}: ${update.userId} : ${error}`);
+        return false;
     
     }
 }
