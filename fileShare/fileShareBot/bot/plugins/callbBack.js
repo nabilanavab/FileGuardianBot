@@ -1,3 +1,4 @@
+
 /**
  *
  * This code snippet is part of the FileShareBot by @nabilanavab.
@@ -22,6 +23,8 @@ const closeCbMessage = require("./callBack/close");
 const changeSettings = require("./callBack/editSettings");
 const setLang = require("./callBack/editLang");
 const askLang = require("./callBack/getLang");
+const setDuration = require("./callBack/editDuration");
+const askDuration = require("./callBack/getDuration");
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
@@ -35,7 +38,7 @@ module.exports = async function(client){
                 else if (data === "!set") {
                     return settingsCbHandler({ client: client, update: update });
                 }
-                else if (data.startsWith("!")){
+                else if (data.startsWith("!")) {
                     return changeSettings({ client: client, update: update });
                 }
                 else if (data.startsWith("-")) {
@@ -46,6 +49,12 @@ module.exports = async function(client){
                 }
                 else if (data.startsWith("~")) {
                     return setLang({ client: client, update: update });
+                }
+                else if (data === "$duration") {
+                    return askDuration({ client: client, update: update});
+                }
+                else if (data.startsWith("$")) {
+                    return setDuration({ client: client, update: update })
                 }
             } catch (error) {
                 logger.log(`${file_name}: ${update.userId} : ${error}`);
