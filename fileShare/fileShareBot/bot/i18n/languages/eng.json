@@ -74,6 +74,7 @@
             "NO CAPTIONS" : "!dropMediaCaptions",
             "WITHOUT QUOTES" : "!dropAuthor",
             "ACCESS CLOSED" : "!isAccesable",
+            "SET DURATION" : "$duration",
             "🔙 BacK" : "-help|0"
         },
         "setPassword" : "🔒 Set Password As:",

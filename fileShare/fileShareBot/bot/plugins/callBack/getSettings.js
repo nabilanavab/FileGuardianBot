@@ -51,18 +51,29 @@ async function settingsCbHandler({ client, update }) {
 
         for (let [key, value] of Object.entries(translated.button)) {
             if (value.startsWith(":")){
+                // inline message [set password button]
                 let replacementValue = generateInfo[update.userId]['setPassword'];
 
                 let replacementKey = (replacementValue !== undefined)
                     ? "🔐 " + key : "🔓 " + key;
                 
-                if (replacementValue){
-                    value = `:${replacementValue}`
-                }
+                if (replacementValue) value = `:${replacementValue}`
                 
                 newButton[replacementKey] = value;
             
+            } else if ( value.startsWith("$")){
+                // callBack Button for setting file duration
+                let replacementValue = generateInfo[update.userId]['duration'];
+
+                let replacementKey = (replacementValue === undefined)
+                    ? "🕐 " + key + " 🕐" : key + `: ${replacementValue}`;
+                
+                if (replacementValue) value = `$${replacementValue}`
+                
+                newButton[replacementKey] = value;
+
             } else {
+                // callback with true false value
                 "!{name} : corresponts to generateInfo[user][name]"
                 let modifiedValue = value.replace("!", "");
 
@@ -71,17 +82,13 @@ async function settingsCbHandler({ client, update }) {
                 else 
                     replacementValue = generateInfo[update.userId][modifiedValue]
                 
-
                 let replacementKey = (!value.startsWith("!"))
                     ? key : ( replacementValue == true )
                         ? "✅ " + key + " ✅"
                         : "☑️ " + key + " ☑️";
                 
-                if (replacementValue){
-                    value = `${value}|true`
-                } else {
-                    value = `${value}|false`
-                }
+                if (replacementValue) value = `${value}|true`
+                else value = `${value}|false`
 
                 newButton[replacementKey] = value;
             }
@@ -89,7 +96,7 @@ async function settingsCbHandler({ client, update }) {
 
         newButton = await createButton({
             button: newButton,
-            order: 2211
+            order: 2221
         })
         return await client.editMessage(
             update.userId, {
