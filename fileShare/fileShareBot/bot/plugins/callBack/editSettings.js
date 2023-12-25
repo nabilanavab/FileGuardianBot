@@ -42,6 +42,9 @@ async function changeSettings({ client, update }) {
         let currentStatus = (cbData.split("|")[1] === "true");
         let updateProcess = cbData.split("|")[0].slice(1);
 
+        if (updateProcess === "dropAuthor")
+            currentStatus = !currentStatus;
+
         if (currentStatus){
             if (generateInfo[update.userId] &&
                 generateInfo[update.userId][updateProcess] !== undefined) {

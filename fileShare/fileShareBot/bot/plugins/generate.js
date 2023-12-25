@@ -77,7 +77,7 @@ module.exports = async function (client) {
     "userID"            : ${update.message.chatId},
     "messageID"         : ${forwardMsg[0][0]['id']},
     "setPassword"       : ${getUserInfo['setPassword'] ? `"${getUserInfo['setPassword']}"` : false},
-    "dropAuthor"        : ${getUserInfo['dropAuthor'] ? getUserInfo['dropAuthor'] : false},
+    "dropAuthor"        : ${getUserInfo['dropAuthor'] === undefined ? true : false},
     "dropMediaCaptions" : ${getUserInfo['dropMediaCaptions'] ? getUserInfo['dropMediaCaptions'] : false},
     "isAccesable"       : ${getUserInfo['isAccesable'] ? getUserInfo['isAccesable'] : false},
     "noforwards"        : ${getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false}

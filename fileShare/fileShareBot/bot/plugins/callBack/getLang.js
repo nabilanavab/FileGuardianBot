@@ -55,7 +55,7 @@ async function askLang({ client, update }) {
             const isUserLang = langKey === langCode;
 
             // Use tick emoji for the second value of the key if it's the user's language
-            const key = isUserLang ? `🎯 ${langNames[0]} | ${langNames[1]} 🎯` : `${langNames[0]} | ${langNames[1]}`;
+            const key = isUserLang ? `🟢 ${langNames[0]} | ${langNames[1]} 🟢` : `${langNames[0]} | ${langNames[1]}`;
             langKey = isUserLang ? `~lang|Done` : `~lang|${langKey}`;
 
             // Add the key-value pair to the dictionary

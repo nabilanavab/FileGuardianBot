@@ -65,7 +65,12 @@ async function settingsCbHandler({ client, update }) {
             } else {
                 "!{name} : corresponts to generateInfo[user][name]"
                 let modifiedValue = value.replace("!", "");
-                let replacementValue = generateInfo[update.userId][modifiedValue];
+
+                if ( value === "!dropAuthor" )
+                    replacementValue = !generateInfo[update.userId][modifiedValue]
+                else 
+                    replacementValue = generateInfo[update.userId][modifiedValue]
+                
 
                 let replacementKey = (!value.startsWith("!"))
                     ? key : ( replacementValue == true )
