@@ -42,21 +42,33 @@ async function askDuration({ client, update }) {
             asString: true
         })
         
-        let langDict = {};
+        let langDict = {}, index = 0;
+
+        // Check if user's preferred duration is set in generateInfo
+        const currentDuration = generateInfo[update.userId]?.duration;
 
         // Iterate through translated.button using duration as the variable name
         for (let durationKey in translated.button) {
-            const durationNames = translated.button[durationKey];
+            const durationNames = translated.button[durationKey].replace("$", "");
 
-            // Check if the current duration key is the user's preferred duration
-            const isUserDuration = generateInfo[update.userId]?.duration === durationKey;
+            if (index === 0 && !currentDuration) {
 
-            // Use tick emoji for the second value of the key if it's the user's preferred duration
-            const key = isUserDuration ? `$duration|Done` : `${durationNames}`;
-            durationKey = isUserDuration ? `🟢 ${durationKey} 🟢` : `${durationKey}`;
+                langDict[`🟢 ${durationKey} 🟢`] = `$${durationNames}`;
 
-            // Add the key-value pair to the dictionary
-            langDict[durationKey] = key;
+            } else {
+                
+                // Check if the current duration key is the user's preferred duration
+                const isUserDuration = currentDuration === durationNames;
+
+                // Use tick emoji for the second value of the key if it's the user's preferred duration
+                const key = isUserDuration ? `🟢 ${durationKey} 🟢` : `${durationKey}`;
+                
+                if (durationNames != "!set") langDict[key] = `$${durationNames}`;
+                else langDict[key] = durationNames;
+                    
+            }
+
+            index++;
         }
 
         newButton = await createButton({

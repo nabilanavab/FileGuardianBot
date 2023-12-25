@@ -66,7 +66,7 @@ async function settingsCbHandler({ client, update }) {
                 let replacementValue = generateInfo[update.userId]['duration'];
 
                 let replacementKey = (replacementValue === undefined)
-                    ? "🕐 " + key + " 🕐" : key + `: ${replacementValue}`;
+                    ? "⌛️ " + key + " ⌛️" : `⌛️ ` + key + `: ${replacementValue} sec`;
                 
                 if (replacementValue) value = `$${replacementValue}`
                 

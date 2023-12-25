@@ -67,7 +67,7 @@
         }
     },
     "settings" : {
-        "message" : "<b>⚙️ SETTINGS:</b> \n\n<b>🔐 SET PASSWORD</b><i>: Enhance additional security by setting a password for your data. This can be applied to all formats, including text, stickers, and more.</i>\n\n🚫 <b>CAN'T FORWARD</b><i>: Restrict the forwarding of messages to maintain privacy and control the flow of information in your bot.</i>\n\n📸<b>NO CAPTIONS</b><i>: Customize media sharing by removing captions from files, providing a cleaner and more streamlined user experience.</i>\n\n👤 <b>WITHOUT QUOTES</b><i>: Tailor your bot's appearance by removing author information from messages, offering a sleek and minimalist interface.</i>\n\n🚷 <b>ACCESS CLOSED</b><i>: Customize access to features based on user roles or conditions, allowing you to control and limit certain functionalities.</i>",
+        "message" : "<b>⚙️ SETTINGS:</b> \n\n<b>🔐 SET PASSWORD</b><i>: Enhance additional security by setting a password for your data. This can be applied to all formats, including text, stickers, and more.</i>\n\n🚫 <b>CAN'T FORWARD</b><i>: Restrict the forwarding of messages to maintain privacy and control the flow of information in your bot.</i>\n\n📸<b>NO CAPTIONS</b><i>: Customize media sharing by removing captions from files, providing a cleaner and more streamlined user experience.</i>\n\n👤 <b>WITHOUT QUOTES</b><i>: Tailor your bot's appearance by removing author information from messages, offering a sleek and minimalist interface.</i>\n\n🚷 <b>ACCESS CLOSED</b><i>: Customize access to features based on user roles or conditions, allowing you to control and limit certain functionalities.</i>\n\n🗑️ <b>AUTO-ERASE</b></i>: Enable the auto-erase function to seamlessly remove messages, enhancing data control and privacy within your bot.</i>",
         "button" : {
             "SET PASSWORD" : ":",
             "CANT FORWARD" : "!noforwards",
@@ -106,9 +106,10 @@
     },
     "duration" : {
         "message" : "Now, Selete A Time Duration to The Message,\n\nIt wILL Delete The Message After The Spefied Time",
-        "button" : { "10 sec" : "$10", "30 sec" : "$30", "1 min" : "$60",
-                     "5 min" : "$300", "10 min" : "$600", "15 min" : "$900",
+        "button" : { "dontDelete" : "$delete", "10 sec" : "$10", "30 sec" : "$30", 
+                     "1 min" : "$60", "10 min" : "$600", "15 min" : "$900",
                      "30 min" : "$1800", "1 hr" : "$3600", "3 hr" : "$10800",
-                     "6 hr" : "$21600", "12 hr" : "$43200", "1 day" : "$86400", "🔙 BacK" : "!set" }
+                     "6 hr" : "$21600", "12 hr" : "$43200", "1 day" : "$86400", "🔙 BacK" : "!set" },
+        "already" : "Already U are using this Duration Time"
     }
 }

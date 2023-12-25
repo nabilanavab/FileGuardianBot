@@ -42,6 +42,7 @@ async function changeSettings({ client, update }) {
         let currentStatus = (cbData.split("|")[1] === "true");
         let updateProcess = cbData.split("|")[0].slice(1);
 
+        // dropAuthor By defaylt it will be true
         if (updateProcess === "dropAuthor")
             currentStatus = !currentStatus;
 

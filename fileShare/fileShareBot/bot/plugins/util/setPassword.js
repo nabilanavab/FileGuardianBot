@@ -91,7 +91,8 @@ async function setPassword({ client, update, haveCode }) {
                         await createButton({
                             button : newButton, order : '11'
                         })
-                    )
+                    ),
+                    parseMode: "html"
                 });
             }
         }

@@ -22,7 +22,7 @@ const { LOG_FILE } = require("../../../config");
 const editDict = require("../../i18n/edtB10");
 const { logger } = require("../../../logger");
 
-async function decryptSingle({client, code, userID}) {
+async function decryptSingle({ client, code, userID }) {
     try{
         let data = await client.invoke(
             new Api.channels.GetMessages({
