@@ -37,7 +37,7 @@ async function deleteMsg({ client, messageID, chatID }) {
             chatID, [messageID], {}
         );
     } catch (error) {
-        logger.log('error', `${file_name}: ${update.userId} : ${error}`);
+        logger.log('error', `${file_name}: ${chatID} : ${error}`);
         return false;
     }
 }

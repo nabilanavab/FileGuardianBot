@@ -30,8 +30,6 @@ const { createButton } = require("../../i18n/ba10");
  *                                  false if there's an error.
  */
 
-const maxClmnForButton = 3;
-
 async function askDuration({ client, update }) {
     try {
         // Get the user's language code
@@ -46,8 +44,6 @@ async function askDuration({ client, update }) {
         
         let langDict = {};
 
-        const numElements = Object.keys(translated.button).length;
-
         // Iterate through translated.button using duration as the variable name
         for (let durationKey in translated.button) {
             const durationNames = translated.button[durationKey];
@@ -56,23 +52,16 @@ async function askDuration({ client, update }) {
             const isUserDuration = generateInfo[update.userId]?.duration === durationKey;
 
             // Use tick emoji for the second value of the key if it's the user's preferred duration
-            const key = isUserDuration ? `🟢 ${durationNames} 🟢` : `${durationNames}`;
-            durationKey = isUserDuration ? `~duration|Done` : `$${durationKey}`;
+            const key = isUserDuration ? `$duration|Done` : `${durationNames}`;
+            durationKey = isUserDuration ? `🟢 ${durationKey} 🟢` : `${durationKey}`;
 
             // Add the key-value pair to the dictionary
-            langDict[key] = durationKey;
+            langDict[durationKey] = key;
         }
-
-        // Create a number array based on the variable maxLen
-        let order = Array(Math.floor(numElements / maxClmnForButton)).fill(0);
-        order = order.map(
-            (_, i, arr) => i === arr.length - 1 ?
-                Math.floor(numElements % maxClmnForButton) : maxClmnForButton
-        );
 
         newButton = await createButton({
             button: langDict,
-            order: Number(order.join(''))
+            order: 33331
         })
     
         return await client.editMessage(
