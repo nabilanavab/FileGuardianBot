@@ -76,12 +76,12 @@ module.exports = async function (client) {
                 let message = `<pre><code class="language-js">{
     "userID"            : ${update.message.chatId},
     "messageID"         : ${forwardMsg[0][0]['id']},
-    "setPassword"       : ${getUserInfo['setPassword'] ? `"${getUserInfo['setPassword']}"` : false},
+    "setPassword"       : ${getUserInfo['setPassword'] ? `\"${getUserInfo['setPassword']}\"` : false},
     "dropAuthor"        : ${getUserInfo['dropAuthor'] === undefined ? false : true},
     "dropMediaCaptions" : ${getUserInfo['dropMediaCaptions'] ? getUserInfo['dropMediaCaptions'] : false},
     "isAccesable"       : ${getUserInfo['isAccesable'] ? getUserInfo['isAccesable'] : false},
     "noforwards"        : ${getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false},
-    "duration"          : ${getUserInfo['duration'] ? getUserInfo['duration'] : false},
+    "duration"          : ${getUserInfo['duration'] ? getUserInfo['duration'] : false}
 }</code></pre>
 
 <a href="tg://user?id=${update.message.chatId}">👤 viewProfile 👤</a>`;

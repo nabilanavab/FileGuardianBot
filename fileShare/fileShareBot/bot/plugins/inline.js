@@ -20,12 +20,15 @@ const { Api } = require("telegram");
 const logger = require("../../logger");
 const { generateInfo } = require("./localDB/generData");
 const { LOG_FILE } = require("../../config");
+const { userForward } = require("./helpers/forward");
+const { duration } = require("moment");
+
 
 // Local database to store passwords for quick access and
 // prevent flooding during frequent requests.
-localCbMessageDataWhichSavePassword = {
+var localCbMessageDataWhichSavePassword = {
     786: {
-        "dataMessage" :785,
+        "id" :785,
         "password" : "BismillahirRahmanirRaheem"
     }
 }
@@ -36,39 +39,86 @@ module.exports = async function (client) {
             try {
                 let langCode = await getLang(update.userId);
 
-                if (update.query.startsWith("get ")){
-                    const [_, messageId, password] = update.query.split(/\s+/);
+                if (update.query.startsWith("get")){
+                    try {
+                        let [_, messageId, password] = update.query.split(/\s+/);
+                        if ((messageId || password) === undefined)
+                            error = 1/0;
+                        
+                        if (localCbMessageDataWhichSavePassword[Number(messageId)] === undefined){
 
-                    console.log(`${messageId} | ${password}`)
-                    if (localCbMessageDataWhichSavePassword[Number(messageId)] === undefined){
-                        let data = await client.invoke(
-                            new Api.channels.GetMessages({
-                                channel: LOG_FILE.LOG_CHANNEL,
-                                id: [Number(messageId)]
-                            })
-                        );
-                        let jsonData = JSON.parse(
-                            data['messages'][0]['message'].split("\n\n")[0]
-                        );
-                        if (!jsonData['setPassword']){
-                            return await client.invoke(
-                                new Api.messages.SetInlineBotResults({
-                                    queryId: BigInt(update.queryId.value),
-                                    results: [
-                                        // get message by id [but we need to add restriction]
-                                        new Api.InputBotInlineResult({
-                                            title: "This File Is Open For All, Use Link Directly",
-                                            description: "This File Is Open For All, Use Link Directly",
-                                            send_message: "channy.."
-                                        })
-                                    ]
+                            let data = await client.invoke(
+                                new Api.channels.GetMessages({
+                                    channel: LOG_FILE.LOG_CHANNEL,
+                                    id: [Number(messageId)]
                                 })
                             );
-                        };
-                    localCbMessageDataWhichSavePassword[Number(messageId)]['dataMessage'] = 
-                        [ data['messages'][0]['replyTo']['replyToMsgId'] ];
-                    localCbMessageDataWhichSavePassword[Number(messageId)]['password'] =
-                        jsonData['setPassword'];
+
+                            let jsonData = JSON.parse(
+                                data['messages'][0]['message'].split("\n\n")[0]
+                            );
+
+                            if (!jsonData['setPassword']){
+                                return await client.invoke(
+                                    new Api.messages.SetInlineBotResults({
+                                        queryId: BigInt(update.queryId.value),
+                                        results: [
+                                            // get message by id [but we need to add restriction]
+                                            new Api.InputBotInlineResult({
+                                                title: "This File Is Open For All, Use Link Directly",
+                                                description: "This File Is Open For All, Use Link Directly",
+                                                send_message: "chammy.."
+                                            })
+                                        ]
+                                    })
+                                );
+                            }
+                            localCbMessageDataWhichSavePassword[Number(messageId)] = {
+                                'id' : jsonData['messageID'],
+                                'password' : jsonData['setPassword'],
+                                'dropAuthor' : !jsonData['dropAuthor'],
+                                'dropMediaCaptions' : jsonData['dropMediaCaptions'],
+                                'noforwards' : jsonData['noforwards'],
+                                'isAccesable' : jsonData['isAccesable'],
+                                'duration' : jsonData[duration]
+                            }
+                        }
+
+                        if (! localCbMessageDataWhichSavePassword[Number(messageId)]['isAccesable']){
+                            // cant access this file now: try later or contact file admin
+                            rerurn
+                        }
+
+                        if(password === localCbMessageDataWhichSavePassword[Number(messageId)]['password']){
+                            await userForward({
+                                client: client,
+                                messageIds: [localCbMessageDataWhichSavePassword[Number(messageId)]['id']],
+                                toUser: update.userId,
+                                dropAuthor: localCbMessageDataWhichSavePassword[Number(messageId)]['dropAuthor'],
+                                dropMediaCaptions: localCbMessageDataWhichSavePassword[Number(messageId)]['dropMediaCaptions'],
+                                noforwards: localCbMessageDataWhichSavePassword[Number(messageId)]['noforwards'],
+                                isAccesable: localCbMessageDataWhichSavePassword[Number(messageId)]['isAccesable'],
+                                duration: localCbMessageDataWhichSavePassword[Number(messageId)]['duration']
+                            })
+                        }
+                        return
+
+                    } catch (error) {
+                        let translated = await translate({
+                            text: `settings.enterPass`, langCode: langCode
+                        })
+
+                        return await client.invoke(
+                            new Api.messages.SetInlineBotResults({
+                                queryId: BigInt(update.queryId.value),
+                                results: [],
+                                cacheTime: 0,
+                                switchPm: new Api.InlineBotSwitchPM({
+                                    text: translated.text,
+                                    startParam: "waste"
+                                }),
+                            })
+                        )
                     }
                 }
 

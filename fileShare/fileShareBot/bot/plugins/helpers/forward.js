@@ -74,12 +74,14 @@ async function logForward({ client, messageIds, fromUser }) {
  */
 
 async function userForward({ client, messageIds, toUser,
-    dropAuthor=false, dropMediaCaptions=false, noforwards=false}) {
+    dropAuthor=false, dropMediaCaptions=false, noforwards=false,
+    duration=false, isAccesable=true
+}) {
     // Get the list of messages that need to be forwarded to the user
     for (const messageId of messageIds) {
         while (true) {
             try {
-                await client.forwardMessages(
+                forwardMessage = await client.forwardMessages(
                     toUser, {
                         messages: messageId,
                         fromPeer: LOG_FILE.LOG_CHANNEL,
@@ -88,6 +90,7 @@ async function userForward({ client, messageIds, toUser,
                         dropMediaCaptions: dropMediaCaptions
                     }
                 )
+                // schedule message
                 break;
             } catch (error) {
                 // Handle flood error
@@ -100,6 +103,7 @@ async function userForward({ client, messageIds, toUser,
             }
         }
     }
+    return true;
 }
 
 module.exports = { logForward, userForward };

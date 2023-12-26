@@ -20,7 +20,7 @@ const { Api } = require("telegram");
 const { userForward } = require("../helpers/forward");
 const { LOG_FILE } = require("../../../config");
 const editDict = require("../../i18n/edtB10");
-const { logger } = require("../../../logger");
+const logger = require("../../../logger");
 
 async function decryptSingle({ client, code, userID }) {
     try{
@@ -31,9 +31,8 @@ async function decryptSingle({ client, code, userID }) {
             })
         )
         
-        let jsonData = JSON.parse(
-            data['messages'][0]['message'].split("\n\n")[0]
-        )
+        jsonString = data['messages'][0]['message'].split("\n\n")[0];
+        const jsonData = JSON.parse(`${jsonString}`);
         
         if (jsonData['setPassword']){
             let lang_code = await getLang(userID);
@@ -75,7 +74,7 @@ async function decryptSingle({ client, code, userID }) {
 
     } catch ( error ){
 
-        logger.log('error', `${file_name}: ${update.userId} : ${error}`);
+        logger.log('error', `${file_name}: ${userID} : ${error}`);
         return false;
     
     }

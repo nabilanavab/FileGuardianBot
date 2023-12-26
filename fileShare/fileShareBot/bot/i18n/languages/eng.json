@@ -73,8 +73,8 @@
             "CANT FORWARD" : "!noforwards",
             "NO CAPTIONS" : "!dropMediaCaptions",
             "WITHOUT QUOTES" : "!dropAuthor",
-            "ACCESS CLOSED" : "!isAccesable",
-            "SET DURATION" : "$duration",
+            "CANT ACCESS" : "!isAccesable",
+            "AUTO-ERASE" : "$duration",
             "🔙 BacK" : "-help|0"
         },
         "setPassword" : "🔒 Set Password As:",
@@ -82,6 +82,7 @@
         "samePassword" : "🔑 Current Password..",
         "passUpdated" : "🔒 <b>Password Updated..</b>\n\nClick below button to know 🤫",
         "passworDlt" : "🚫 Delete Password..",
+        "enterPass" : "Now Enter Password..",
         "closeCB" : { "✖️ Close ✖️" : "close"},
         "passUpdCB" : { "👁 VIEW PASSWORD 👁" : "%s", "✖️ Close ✖️" : "close" },
         "askPassword" : "<b>This file is secure with a password 🔒.</b>\n\n<i>Use the button below if you have the password to access it.</i>",
@@ -106,7 +107,7 @@
     },
     "duration" : {
         "message" : "Now, Selete A Time Duration to The Message,\n\nIt wILL Delete The Message After The Spefied Time",
-        "button" : { "dontDelete" : "$delete", "10 sec" : "$10", "30 sec" : "$30", 
+        "button" : { "Dont Erase" : "$delete", "10 sec" : "$10", "30 sec" : "$30", 
                      "1 min" : "$60", "10 min" : "$600", "15 min" : "$900",
                      "30 min" : "$1800", "1 hr" : "$3600", "3 hr" : "$10800",
                      "6 hr" : "$21600", "12 hr" : "$43200", "1 day" : "$86400", "🔙 BacK" : "!set" },
