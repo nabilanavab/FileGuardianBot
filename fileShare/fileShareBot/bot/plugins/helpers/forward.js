@@ -34,7 +34,7 @@ const { FloodWaitError } = require("telegram/errors/RPCErrorList");
  * @returns {Boolean}               - A Promise that resolves once the messages are forwarded.
  */
 
-async function logForward({ client, messageIds, fromUser }) {
+async function logForward({ client, messageIds, fromUser, replyTo }) {
     // Get the list of messages that need to be forwarded to the log channel
     let forwardMsg = false;
     for (const messageId of messageIds) {
@@ -53,8 +53,21 @@ async function logForward({ client, messageIds, fromUser }) {
                 if (error instanceof FloodWaitError) {
                     await sleep(error.seconds);
                 } else {
-                    logger.log(`?Error @ logForward: ${error}`)
-                    break;
+                    let lang_code = await getLang(userID);
+
+                    let translated = await translate({
+                        text : 'settings.messageDeleted',
+                        button : 'settings.closeCB',
+                        langCode : lang_code
+                    })
+
+                    if (messageIds.length == 1){
+                        return await client.sendMesssage({
+                            message: translated.text,
+                            buttons: translated.button,
+                            replyTo: replyTo
+                        })
+                    }
                 }
             }
         }

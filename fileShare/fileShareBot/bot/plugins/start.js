@@ -71,7 +71,8 @@ module.exports = async function (client) {
                         )
                     }
                     return await checkDecCode(
-                        { client: client, code: haveCode, userID: update.message.chatId }
+                        { client: client, code: haveCode,
+                          userID: update.message.chatId, replyTo: update.message }
                     );
                 }
 

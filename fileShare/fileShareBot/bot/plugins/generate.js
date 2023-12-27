@@ -102,29 +102,23 @@ module.exports = async function (client) {
                     userID: update.message.chatId.value
                 });
 
+                let data = ""
+                for (let [key, value] of Object.entries(getUserInfo)) {
+                    if (key=="setPassword")
+                        data += `${value ? `<i>🔐 ${key}</i> : <spoiler>${value}</spoiler>` : ''}`;
+                    else 
+                        data += `${value ? `<i>🟢 ${key}</i>` : ''}`;
+                    data += " | "
+                }
+                data = data.slice(0, -3);
+
                 translated = await translate({
-                    text: !(getUserInfo.setPassword == undefined)
+                    text: !(getUserInfo['setPassword'] == undefined)
                         ? "generate.publLink" : "generate.privLink",
                     button: "generate.button",
                     asString: true,
                     langCode: lang_code
                 });
-
-                let data = ""
-                for (let [key, value] of Object.entries(getUserInfo)) {
-                    if (key=="setPassword")
-                        data += `${value ? `<i>🔐 ${key} 🔐</i> : <spoiler>${value}</spoiler>` : ''}\n`;
-                    else if (key=="dropAuthor")
-                        data += `${value ? `<i>❗️ ${key} ❗️</i> : <i>${!value}</i>` : ''}\n`;
-                    else if (key=="noforwards")
-                        data += `${value ? `<i>🙅 ${key} 🙅</i> : <i>${value}</i>` : ''}\n`;
-                    else if (key=="duration")
-                        data += `${value ? `<i>⌛️ ${key} ⌛️</i> : <i>${value}</i>` : ''}\n`;
-                    else if (key=="dropMediaCaptions")
-                        data += `${value ? `<i>🥴 ${key} 🥴</i> : <i>${value}</i>` : ''}\n`;
-                    else if (key=="isAccesable")
-                        data += `${value ? `<i>❌ ${key} ❌</i> : <i>${value}</i>` : ''}\n`;
-                }
                 
                 // Edit the button with the generated URL
                 let newButton = await editDict({

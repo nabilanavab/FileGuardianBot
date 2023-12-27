@@ -50,6 +50,7 @@
             "AUTO-ERASE" : "$duration",
             "🔙 BacK" : "-help|0"
         },
+        "errorLink" : "Please Check The Link",
         "noAccess" : "Temporarly Admin Disabled This File\n\nContact link creator or Try Again Later",
         "noAccessBtn" : { "♻️ Try Again ♻️" : "%s" },
         "setPassword" : "🔒 Set Password As:",
@@ -61,7 +62,8 @@
         "closeCB" : { "✖️ Close ✖️" : "close"},
         "passUpdCB" : { "VIEW PASSWORD" : "%s", "✖️ Close ✖️" : "close" },
         "askPassword" : "<b>This file is secure with a password 🔒.</b>\n\n<i>Use the button below if you have the password to access it.</i>",
-        "askPswdButon" : { "😎 i know the password 😎" : ":get %s " }
+        "askPswdButon" : { "😎 i know the password 😎" : ":get %s " },
+        "messageDeleted" : "Unfortunately someting went wrong\nI cant accees this data, maybe due to copyright issue"
     },
     "lang" : {
         "select" : "Now, Select Language, Depending On Ur Choice: ",

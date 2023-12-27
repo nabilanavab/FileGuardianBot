@@ -35,6 +35,7 @@ const { generateInfo } = require("../localDB/generData")
 
 async function encrypt({ text, userID }) {
     try {
+
         let key
         if ( generateInfo[userID] && generateInfo[userID]['addPassword'] ){
             key = generateInfo[userID]['addPassword'];
@@ -45,6 +46,7 @@ async function encrypt({ text, userID }) {
         let cipher = crypto.createCipheriv(algorithm, key, fixedIV);
         let encrypted = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
         return encrypted;
+        
     } catch (error) {
         // Handle errors
         logger.log('error', `Error in Encrypting: ${error.message}`);

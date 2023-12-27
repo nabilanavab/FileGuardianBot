@@ -46,8 +46,7 @@ async function decrypt({ code, userID }){
         let decrypted = decipher.update(code, 'hex', 'utf8') + decipher.final('utf8');
         return decrypted;
     } catch (error) {
-        logger.log('error', `Error in Decrypting: ${error.message}`);
-        return false;
+        throw "error in code";
     }
 }
  

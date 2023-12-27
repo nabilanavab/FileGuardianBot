@@ -21,27 +21,40 @@ const decryptSingle = require("./decryptSingle");
 const decryptBatch = require("./decryptBatch");
 
 
-async function checkDecCode({client, code, userID}) {
+async function checkDecCode({client, code, userID, replyTo}) {
     try {
         messageID = await decrypt({
             code: code, userID: userID
         });
 
-        if (!code){
-            return "cant perform funcion error in url"
-        }
-
         if ( !isNaN(Number(messageID)) ){
             // If the result is a valid number and not NaN
-            await decryptSingle({ client: client, messageID: messageID, userID: userID, code:code })
+            await decryptSingle({
+                client: client, messageID: messageID,
+                userID: userID, code:code, replyTo: replyTo
+            })
         } else {
             await decryptBatch()
         }
         return true
 
     } catch ( error ){
-        console.log(error);
-        return false 
+        let lang_code = await getLang(userID);
+        let translated = await translate({
+            text : 'settings.errorLink',
+            button : 'settings.closeCB',
+            langCode : lang_code,
+            order: 1
+        })
+
+        await client.sendMessage(
+            userID, {
+                message: translated.text,
+                buttons: translated.button,
+                replyTo: replyTo
+            }
+        )
+        return "💩" 
     }
 }
 
