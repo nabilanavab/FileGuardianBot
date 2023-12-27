@@ -103,7 +103,8 @@ module.exports = async function (client) {
                 });
 
                 translated = await translate({
-                    text: !getUserInfo.setPassword ? "generate.publLink" : "generate.privLink",
+                    text: !(getUserInfo.setPassword == undefined)
+                        ? "generate.publLink" : "generate.privLink",
                     button: "generate.button",
                     asString: true,
                     langCode: lang_code
@@ -121,8 +122,8 @@ module.exports = async function (client) {
                         data += `${value ? `<i>⌛️ ${key} ⌛️</i> : <i>${value}</i>` : ''}\n`;
                     else if (key=="dropMediaCaptions")
                         data += `${value ? `<i>🥴 ${key} 🥴</i> : <i>${value}</i>` : ''}\n`;
-                    else
-                        data += `${value ? `<i> ${key} </i> : <i>${value}</i>` : ''}\n`;
+                    else if (key=="isAccesable")
+                        data += `${value ? `<i>❌ ${key} ❌</i> : <i>${value}</i>` : ''}\n`;
                 }
                 
                 // Edit the button with the generated URL

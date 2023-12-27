@@ -31,7 +31,7 @@ async function checkDecCode({client, code, userID}) {
             return "cant perform funcion error in url"
         }
 
-        if ( !isNaN(Number(code)) ){
+        if ( !isNaN(Number(messageID)) ){
             // If the result is a valid number and not NaN
             await decryptSingle({ client: client, messageID: messageID, userID: userID, code:code })
         } else {

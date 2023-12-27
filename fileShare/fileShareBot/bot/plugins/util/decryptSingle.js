@@ -62,7 +62,7 @@ async function decryptSingle({ client, messageID, userID, code }) {
             )
         }
 
-        if ( ! jsonData['isAccesable'] ){
+        if ( jsonData['isAccesable'] ){
             let lang_code = await getLang(userID);
 
             let translated = await translate({
@@ -73,7 +73,7 @@ async function decryptSingle({ client, messageID, userID, code }) {
             })
             let newButton = await editDict({
                 inDict : translated.button,
-                value : code
+                value : `https://telegram.dog/${botInfo.username}?start=${code}`
             })
             return await client.sendMessage(
                 userID, {
