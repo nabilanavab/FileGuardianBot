@@ -22,12 +22,12 @@ const { LOG_FILE } = require("../../../config");
 const editDict = require("../../i18n/edtB10");
 const logger = require("../../../logger");
 
-async function decryptSingle({ client, code, userID }) {
+async function decryptSingle({ client, messageID, userID, code }) {
     try{
         let data = await client.invoke(
             new Api.channels.GetMessages({
                 channel: LOG_FILE.LOG_CHANNEL,
-                id: [Number(code)]
+                id: [Number(messageID)]
             })
         )
         
@@ -46,7 +46,7 @@ async function decryptSingle({ client, code, userID }) {
 
             let newButton = await editDict({
                 inDict : translated.button,
-                value : Number(code)
+                value : Number(messageID)
             })
 
             return await client.sendMessage(
@@ -60,6 +60,32 @@ async function decryptSingle({ client, code, userID }) {
                     parseMode: "html"
                 }
             )
+        }
+
+        if ( ! jsonData['isAccesable'] ){
+            let lang_code = await getLang(userID);
+
+            let translated = await translate({
+                text : 'settings.noAccess',
+                button : 'settings.noAccessBtn',
+                asString : true,
+                langCode : lang_code
+            })
+            let newButton = await editDict({
+                inDict : translated.button,
+                value : code
+            })
+            return await client.sendMessage(
+                userID, {
+                    message: translated.text,
+                    buttons: client.buildReplyMarkup(
+                        await createButton({
+                            button : newButton
+                        })
+                    ),
+                    parseMode: "html"
+                }
+            ) 
         }
 
         await userForward({

@@ -23,7 +23,7 @@ const decryptBatch = require("./decryptBatch");
 
 async function checkDecCode({client, code, userID}) {
     try {
-        code = await decrypt({
+        messageID = await decrypt({
             code: code, userID: userID
         });
 
@@ -33,7 +33,7 @@ async function checkDecCode({client, code, userID}) {
 
         if ( !isNaN(Number(code)) ){
             // If the result is a valid number and not NaN
-            await decryptSingle({client: client, code: code, userID: userID})
+            await decryptSingle({ client: client, messageID: messageID, userID: userID, code:code })
         } else {
             await decryptBatch()
         }
