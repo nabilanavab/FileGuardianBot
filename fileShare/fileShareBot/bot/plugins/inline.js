@@ -23,7 +23,6 @@ const { LOG_FILE } = require("../../config");
 const { userForward } = require("./helpers/forward");
 const { duration } = require("moment");
 
-
 // Local database to store passwords for quick access and
 // prevent flooding during frequent requests.
 var localCbMessageDataWhichSavePassword = {
@@ -42,8 +41,8 @@ module.exports = async function (client) {
                 if (update.query.startsWith("get")){
                     try {
                         let [_, messageId, password] = update.query.split(/\s+/);
-                        if ((messageId || password) === undefined)
-                            error = 1/0;
+                        if (messageId == undefined || password == undefined)
+                            error = error;
                         
                         if (localCbMessageDataWhichSavePassword[Number(messageId)] === undefined){
 
@@ -84,9 +83,9 @@ module.exports = async function (client) {
                             }
                         }
 
-                        if (! localCbMessageDataWhichSavePassword[Number(messageId)]['isAccesable']){
+                        if (localCbMessageDataWhichSavePassword[Number(messageId)]['isAccesable']){
                             // cant access this file now: try later or contact file admin
-                            rerurn
+                            // return
                         }
 
                         if(password === localCbMessageDataWhichSavePassword[Number(messageId)]['password']){

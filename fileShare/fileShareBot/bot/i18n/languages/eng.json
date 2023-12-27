@@ -12,43 +12,16 @@
             "Try Again: %s sec Over" : "generate"
         }
     },
-    "start" : {
-        "photo" : "https://te.legra.ph/file/8dfa3760df91a218a629c.jpg",
-        "message" : "👋 <i>Welcome to the</i> <b>FileShare Bot!</b> 📁\n\n<i>With FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.</i>\n\n<i>Get started by simply sending a file you want to share</i>\n\n<i>powered by:</i> @ilovepdf_bot ❤️",
-        "button" : {
-            "withChannel" : {
-                "🌍 LANGUAGE 🌍" : "~lang",
-                "📚 HELP 📚" : "-help|1",
-                "🔊 CHANNEL 🔊" : "https://telegram.dog/ilovepdf_bot",
-                "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
-                " ⚙️ SETTINGS ⚙️" : "!set"
-            },
-            "withOutChannel" : {
-                "🌍 LANGUAGE 🌍" : "~lang",
-                "📚 HELP 📚" : "-help|1",
-                "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
-                " ⚙️ SETTINGS ⚙️" : "!set"
-            }
-        }
-    },
     "help" : {
         "0" : {
             "message" : "👋 <i>Welcome to the</i> <b>FileShare Bot!</b> 📁\n\n<i>With FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.</i>\n\n<i>Get started, by simply sending a file you want to share</i>\n\n<i>powered by:</i> @ilovepdf_bot ❤️",
             "button" : {
-                "withChannel" : {
-                    "🌍 LANGUAGE 🌍" : "~lang",
-                    "📚 HELP 📚" : "-help|1",
-                    "🔊 CHANNEL 🔊" : "https://github.com/nabilanavab",
-                    "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
-                    " ⚙️ SETTINGS ⚙️" : "!set"
-                },
-                "withOutChannel" : {
-                    "🌍 LANGUAGE 🌍" : "~lang",
-                    "📚 HELP 📚" : "-help|1",
-                    "🌟 SOURCE " : "https://github.com/nabilanavab",                    
-                    " CODE 🌟" : "https://github.com/nabilanavab",
-                    " ⚙️ SETTINGS ⚙️" : "!set"
-                }
+                "🌍 LANGUAGE 🌍" : "~lang",
+                "📚 HELP 📚" : "-help|1",
+                "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
+                "🔊 CHANNEL 🔊" : "https://telegram.dog/ilovepdf_bot",
+                "🤠 ADMIN 🤠" : "https://github.com/nabilanavab",
+                "⚙️ SETTINGS ⚙️" : "!set"
             }
         },
         "1" : {
@@ -98,8 +71,8 @@
         "current" : "A batch job is currently in progress."
     },
     "generate" : {
-        "privLink" : "Generated Private Link..",
-        "publLink" : "Good news! Your file is ready for sharing.\n\nOpen Link: [ 📂 VIEW FILE 📂]\nShare your file effortlessly: [📎 SHARE URL 📎]",
+        "privLink" : "Good news! Your protected link is ready for sharing.\n\nNB: Always remember only the one who knows the password can access this data\n\n",
+        "publLink" : "Good news! Your public link is ready for sharing.\n\nNB: Always remember this is a public link anyone can use this link to fetch data\n\n",
         "button" : {
             "📂 VIEW FILE 📂" : "%s",
             "📎 SHARE URL 📎" : "https://t.me/share/url?url=%s"

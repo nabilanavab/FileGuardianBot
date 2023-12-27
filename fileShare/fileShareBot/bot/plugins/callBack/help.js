@@ -42,15 +42,9 @@ async function helpCbHandler({ client, update }) {
         // Translate message and buttons based on the new page
         let translated = await translate({
             text: `help.${newPage}.message`,
-            button: newPage == 0
-                ? ( CHANNEL_INFO.FORCE_SUB
-                    ? `help.${newPage}.button.withOutChannel`
-                    : `help.${newPage}.button.withChannel` )
-                : `help.${newPage}.button`,
+            button: `help.${newPage}.button`,
             langCode: langCode,
-            order: newPage == 0
-                ? ( CHANNEL_INFO.FORCE_SUB
-                    ? '211' : '221' ) : undefined
+            order: newPage==0 ? 2121 : 2
         });
 
         // Edit the original message with the translated text and buttons

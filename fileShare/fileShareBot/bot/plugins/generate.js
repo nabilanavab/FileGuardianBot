@@ -20,7 +20,6 @@ const author = "@nabilanavab"
 const logger = require("../../logger");
 const { isBatchUser } = require("./localDB/batchData");
 const { generateInfo } = require("./localDB/generData");
-const { LOG_FILE } = require("../../config");
 const encrypt = require("../plugins/cryptoG/encrypt");
 const getLang = require("../../bot/i18n/utils");
 const translate = require("../../bot/i18n/t9n");
@@ -57,7 +56,8 @@ module.exports = async function (client) {
                 dot_message = await client.sendMessage(
                     update.message.chatId, {
                         message : ".",
-                        replyTo : update.message.id
+                        replyTo : update.message.id,
+                        parseMode: "html"
                     }
                 );
                 // await sleep(500);
@@ -103,12 +103,28 @@ module.exports = async function (client) {
                 });
 
                 translated = await translate({
-                    text: getUserInfo.addPassword ? "generate.publLink" : "generate.privLink",
+                    text: !getUserInfo.setPassword ? "generate.publLink" : "generate.privLink",
                     button: "generate.button",
                     asString: true,
                     langCode: lang_code
                 });
 
+                let data = ""
+                for (let [key, value] of Object.entries(getUserInfo)) {
+                    if (key=="setPassword")
+                        data += `${value ? `<i>🔐 ${key} 🔐</i> : <spoiler>${value}</spoiler>` : ''}\n`;
+                    else if (key=="dropAuthor")
+                        data += `${value ? `<i>❗️ ${key} ❗️</i> : <i>${!value}</i>` : ''}\n`;
+                    else if (key=="noforwards")
+                        data += `${value ? `<i>🙅 ${key} 🙅</i> : <i>${value}</i>` : ''}\n`;
+                    else if (key=="duration")
+                        data += `${value ? `<i>⌛️ ${key} ⌛️</i> : <i>${value}</i>` : ''}\n`;
+                    else if (key=="dropMediaCaptions")
+                        data += `${value ? `<i>🥴 ${key} 🥴</i> : <i>${value}</i>` : ''}\n`;
+                    else
+                        data += `${value ? `<i> ${key} </i> : <i>${value}</i>` : ''}\n`;
+                }
+                
                 // Edit the button with the generated URL
                 let newButton = await editDict({
                     inDict: translated.button,
@@ -123,8 +139,9 @@ module.exports = async function (client) {
                     client: client,
                     chatId: update.message.chatId,
                     messageId: dot_message.id,
-                    editedText: translated.text,
-                    editedBtn: newButton
+                    editedText: translated.text + data,
+                    editedBtn: newButton,
+                    parseMode: "html"
                 })
                 return 0;
 

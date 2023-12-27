@@ -64,6 +64,12 @@ module.exports = async function (client) {
                             client: client, update: update, haveCode: haveCode
                         })
                     }
+                    if (haveCode === "waste"){
+                        return await client.deleteMessages(
+                            update.message.chatId,
+                            [ update.message ], {}
+                        )
+                    }
                     return await checkDecCode(
                         { client: client, code: haveCode, userID: update.message.chatId }
                     );
@@ -71,13 +77,10 @@ module.exports = async function (client) {
 
                 // Retrieve translated text and button based on the user's language
                 let translated = await translate({
-                    text: 'start.message',
-                    button: CHANNEL_INFO.FORCE_SUB
-                        ? 'start.button.withOutChannel'
-                        : 'start.button.withChannel',
+                    text: 'help.0.message',
+                    button: 'help.0.button',
                     langCode: lang_code,
-                    order: CHANNEL_INFO.FORCE_SUB
-                        ? "211" : "221",
+                    order: 2121,
                 });
 
                 // If the user is a developer, include a welcome picture;
@@ -107,8 +110,7 @@ module.exports = async function (client) {
 
                 return await client.deleteMessages(
                     update.message.chatId,
-                    [update.message],
-                    {}
+                    [update.message], {}
                 )
 
             } catch (error) {
