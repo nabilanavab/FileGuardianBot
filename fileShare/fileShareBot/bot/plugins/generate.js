@@ -38,12 +38,11 @@ module.exports = async function (client) {
         if (
             update && update.message && !(update.message.message &&
                 (update.message.message.toLowerCase().startsWith("/start") ||
-                    update.message.message.toLowerCase().startsWith("/batch"))) &&
+                    update.message.message.toLowerCase().startsWith("/batch") ||
+                        update.message.message.toLowerCase().startsWith("/approve"))) &&
             update.message.peerId.className === 'PeerUser' &&
             !isBatchUser(update.message.chatId.value)
         ) {
-            logger.log('info', `user ${update.message.chatId} generating new link..`);
-
             try {
                 // Check for force subscription: If the user is required to subscribe forcefully
                 await forceSub({ client, update, checkLimit: true })
@@ -143,10 +142,10 @@ module.exports = async function (client) {
             } catch (error) {
                 // Handle errors, including flood errors
                 if (error instanceof FloodWaitError) {
-                    logger.log("error", `${error.errorMessage} ?generate: ${error.seconds}`);
+                    logger.log('error', `${file_name}: ${userID} : ${error}`);
                     await sleep(error.seconds);
                 } else {
-                    logger.log("error", `?generate: ${error}`);
+                    logger.log('error', `${file_name}: ${userID} : ${error}`);
                 }
             }
         }

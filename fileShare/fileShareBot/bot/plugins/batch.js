@@ -33,7 +33,6 @@ module.exports = async function (client) {
             update.message.peerId.className === 'PeerUser' &&
             update.message.message.toLowerCase().startsWith("/batch")
         ) {
-            logger.log('info', `user ${update.message.chatId} started batching`)
             try {
                 // Check for force subscription & time limit
                 await forceSub({ client, update, checkLimit:true })
@@ -77,14 +76,12 @@ module.exports = async function (client) {
             } catch (error) {
                 // Handle errors, including flood errors
                 if (error instanceof errors.FloodWaitError) {
-                    logger.log(
-                        "error", `Error ${error.errorMessage} in ?batch: ${error.seconds}`
-                    );
+                    logger.log('error', `${file_name}: ${userID} : ${error}`);
                     setTimeout(
                         module.exports(client), error.seconds
                     )
                 } else {
-                    logger.log("error", `Error in ?batch: ${error}`);
+                    logger.log('error', `${file_name}: ${userID} : ${error}`);
                 }
             }
         }

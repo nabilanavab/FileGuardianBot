@@ -138,11 +138,8 @@ class LOG_FILE {
  * Class representing channel information configuration.
  */
 class CHANNEL_INFO {
-    /**
-     * Forced URL for the channel.
-     * @type {null|string}
-     * @static
-     */
+
+    // automatically done
     static FORCE_URL = null;
 
     /**
@@ -150,7 +147,7 @@ class CHANNEL_INFO {
      * @type {number}
      * @static
      */
-    static FORCE_SUB = Number(process.env.FORCE_SUB) ? Number(process.env.FORCE_SUB) : 0;
+    static FORCE_SUB = Number(process.env.FORCE_SUB) ? Number(process.env.FORCE_SUB) : null;
 
     /**
      * String representing the welcome picture for the channel.
@@ -164,14 +161,14 @@ class CHANNEL_INFO {
      * @type {boolean}
      * @static
      */
-    static AUTO_APPROVAL = process.env.AUTO_APPROVAL === 'true' ? true : false;
+    static AUTO_APPROVAL = process.env.AUTO_APPROVAL === 'true';
 
     /**
      * Flag indicating whether the request channel feature is enabled.
      * @type {boolean}
      * @static
      */
-    static REQUEST_CHANNEL = process.env.REQUEST_CHANNEL === 'true' ? true : false;
+    static REQUEST_CHANNEL = process.env.REQUEST_CHANNEL === 'true';
 }
 
 /**
