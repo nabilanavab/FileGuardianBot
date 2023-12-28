@@ -36,10 +36,9 @@ module.exports = async function (client) {
             update.message.peerId.className === 'PeerUser' &&
             update.message.message.toLowerCase().startsWith("/start")
         ) {
-            
             try {
                 // Check for force subscription & time limit
-                if (!REQUESTED_USERS.includes(update.message.chatId))
+                if ( !REQUESTED_USERS.includes(update.message.chatId) )
                     await forceSub({ client, update })
 
                 // Retrieve the user's language from the local database

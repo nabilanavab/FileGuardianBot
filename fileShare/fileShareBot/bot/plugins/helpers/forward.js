@@ -23,6 +23,7 @@ const author = "@nabilanavab"
 const { LOG_FILE } = require("../../../config");
 const logger = require("../../../logger");
 const { FloodWaitError } = require("telegram/errors/RPCErrorList");
+const scheduleAfter = require("../scheduler/scheduleAfter");
 
 /**
  * Asynchronous function to forward messages to a log channel.
@@ -41,8 +42,7 @@ async function logForward({ client, messageIds, fromUser, replyTo }) {
         while (true) {
             try {
                 forwardMsg = await client.forwardMessages(
-                    LOG_FILE.LOG_CHANNEL,
-                    {
+                    LOG_FILE.LOG_CHANNEL, {
                         messages: messageId,
                         fromPeer: fromUser
                     }
@@ -87,8 +87,7 @@ async function logForward({ client, messageIds, fromUser, replyTo }) {
  */
 
 async function userForward({ client, messageIds, toUser,
-    dropAuthor=false, dropMediaCaptions=false, noforwards=false,
-    duration=false, isAccesable=true
+    dropAuthor=false, dropMediaCaptions=false, noforwards=false, duration=false
 }) {
     // Get the list of messages that need to be forwarded to the user
     for (const messageId of messageIds) {
@@ -103,7 +102,18 @@ async function userForward({ client, messageIds, toUser,
                         dropMediaCaptions: dropMediaCaptions
                     }
                 )
-                // schedule message
+                
+                if ( duration ) {
+                    const add_dlt_to_db = await scheduleAfter({
+                        timeDur: Number(duration),
+                        client: client,
+                        messageID: forwardMessage.id,
+                        chatID: toUser
+                    });
+
+                    // add to database and load once its loaded for first time
+                    // if the time is over also delete it
+                }
                 break;
             } catch (error) {
                 // Handle flood error

@@ -45,7 +45,8 @@ async function scheduleAt({ targetTime, client, messageID, chatID }) {
                 chatID: chatID
             })
         );
-        return 0
+
+        return targetTime
     } catch (error) {
         logger.log('error', `${file_name}: ${chatID} : ${error}`);
         return "errorDuringSchedulingMsg"

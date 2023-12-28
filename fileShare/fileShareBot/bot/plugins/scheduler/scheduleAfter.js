@@ -35,7 +35,7 @@ const logger = require("../../../logger");
  *                                     or an error message if there is an issue during scheduling.
  */
 
-async function scheduleAt({ timeDur, client, messageID, chatID }) {
+async function scheduleAfter({ timeDur, client, messageID, chatID }) {
     try {
         // Calculate the target time by adding the duration to the current time
         const targetTime = new Date().getTime() + timeDur * 1000;
@@ -49,14 +49,15 @@ async function scheduleAt({ timeDur, client, messageID, chatID }) {
                 chatID: chatID
             })
         );
-        return 0
+
+        return targetTime
     } catch (error) {
         logger.log('error', `${file_name}: ${chatID} : ${error}`);
         return "errorDuringSchedulingMsg"
     }
 }
 
-module.exports = scheduleAt;
+module.exports = scheduleAfter;
 
 
 /**
