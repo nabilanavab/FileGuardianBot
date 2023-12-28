@@ -40,7 +40,7 @@ module.exports = async function (client) {
                             elseAdd: {
                                 // "name" : username, slly many cany be added
                                 // check isUserExist only (only minor update needed)
-                                "requested": true
+                                requested: true
                             }
                         });
                         if (newuser != "newuser"){
@@ -54,7 +54,7 @@ module.exports = async function (client) {
                 }
 
             } catch (error) {
-                logger.log('error', `request.js :: ${file_name}: ${update.userId.value} : ${error}`);
+                logger.log('error', `${file_name} : request.js : ${update.userId.value} : ${error}`);
             }
         }
     })

@@ -98,7 +98,7 @@ async function userForward({ client, messageIds, toUser,
                         messages: messageId,
                         fromPeer: LOG_FILE.LOG_CHANNEL,
                         noforwards: noforwards,
-                        dropAuthor: dropAuthor,
+                        dropAuthor: !dropAuthor,
                         dropMediaCaptions: dropMediaCaptions
                     }
                 )

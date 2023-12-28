@@ -71,7 +71,7 @@ class Database {
                             if (key !== 'requested')
                                 generateInfo[userId][key] = user[key];
                             else
-                                REQUESTED_USERS.push(userId);
+                                REQUESTED_USERS.push(BigInt(userId));
                     }
                 });
             });
