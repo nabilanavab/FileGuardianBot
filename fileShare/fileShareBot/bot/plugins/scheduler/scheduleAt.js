@@ -17,7 +17,7 @@ const file_name = __filename
 const author = "@nabilanavab"
 
 const cron = require('node-cron');
-const { deleteMsg } = require("./deleteMsg");
+const deleteMsg = require("./deleteMsg");
 const logger = require("../../../logger");
 
 /**
@@ -39,7 +39,7 @@ async function scheduleAt({ targetTime, client, messageID, chatID }) {
         // Schedule the task to be executed at the target time
         cron.schedule(
             new Date(targetTime),
-            await deleteMsg({
+            deleteMsg({
                 client: client,
                 messageID: messageID,
                 chatID: chatID

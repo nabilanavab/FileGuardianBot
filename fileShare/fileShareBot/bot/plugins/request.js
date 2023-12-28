@@ -40,7 +40,7 @@ module.exports = async function (client) {
                             elseAdd: {
                                 // "name" : username, slly many cany be added
                                 // check isUserExist only (only minor update needed)
-                                requested: true
+                                "requested": true
                             }
                         });
                         if (newuser != "newuser"){

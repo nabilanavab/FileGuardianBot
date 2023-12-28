@@ -16,9 +16,11 @@
 const file_name = __filename
 const author = "@nabilanavab"
 
-const cron = require('node-cron');
-const { deleteMsg } = require("./deleteMsg");
+const deleteMsg = require("./deleteMsg");
 const logger = require("../../../logger");
+const { DATABASE } = require("../../../config");
+const database = require("../../monGo/database");
+
 
 /**
  * 
@@ -37,18 +39,29 @@ const logger = require("../../../logger");
 
 async function scheduleAfter({ timeDur, client, messageID, chatID }) {
     try {
-        // Calculate the target time by adding the duration to the current time
-        const targetTime = new Date().getTime() + timeDur * 1000;
-        
         // Schedule the task to be executed at the calculated target time
-        cron.schedule(
-            new Date(targetTime),
+        setTimeout(async () => {
             await deleteMsg({
                 client: client,
                 messageID: messageID,
                 chatID: chatID
-            })
-        );
+            });
+        }, timeDur*1000);
+
+        
+        // Calculate the target time by adding the duration to the current time
+        const targetTime = new Date().getTime() + timeDur * 1000;
+
+        if (DATABASE.MONGODB_URI) {
+            await database.client
+                .db(database.databaseName)
+                .collection(database.scheduler)
+                .insertOne({
+                    targetTime: targetTime,
+                    messageID : messageID,
+                    chatID : chatID.value
+                });
+        }
 
         return targetTime
     } catch (error) {

@@ -38,6 +38,8 @@ class Database {
         );
         this.databaseName = databaseName;
         this.userCollection = 'users';
+        this.chatCollection = 'chat';
+        this.scheduler = 'scheduler';
     }
 
     async connect() {
@@ -45,15 +47,6 @@ class Database {
             await this.client.connect();
 
             let result = await this.client.db(this.databaseName)
-                .collection(this.userCollection)
-                .find({ lang: { $exists: true } })
-                .toArray();
-
-            result.forEach(user => {
-                userLang[user.userID] = user.lang;
-            });
-
-            result = await this.client.db(this.databaseName)
                 .collection(this.userCollection)
                 .find({ userID: { $exists: true } })
                 .toArray();
@@ -66,12 +59,14 @@ class Database {
                 }
 
                 Object.keys(user).forEach(key => {
-                    if ( key !== 'join_date' && key !== 'lang'
-                        && key !== '_id' && key !== 'userID' ) {
-                            if (key !== 'requested')
-                                generateInfo[userId][key] = user[key];
-                            else
-                                REQUESTED_USERS.push(BigInt(userId));
+                    if ( key !== 'join_date' && key !== '_id' && key !== 'userID' ) {
+                        if (key === 'requested'){
+                            REQUESTED_USERS.push(BigInt(userId));
+                        } else if (key === 'lang'){
+                            userLang[userId] = user[key];
+                        } else {
+                            generateInfo[userId][key] = user[key];
+                        }
                     }
                 });
             });
@@ -80,7 +75,9 @@ class Database {
 
         } catch (error) {
             logger.log('error', `Error during Database Connection: ${error}`);
-            throw error; // You might want to throw the error to handle it elsewhere.
+
+            // You might want to throw the error to handle it elsewhere.
+            throw error;
         }
     }
 }

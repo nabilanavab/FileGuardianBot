@@ -104,20 +104,17 @@ async function userForward({ client, messageIds, toUser,
                 )
                 
                 if ( duration ) {
-                    const add_dlt_to_db = await scheduleAfter({
+                    await scheduleAfter({
                         timeDur: Number(duration),
                         client: client,
-                        messageID: forwardMessage.id,
+                        messageID: forwardMessage[0][0]['id'],
                         chatID: toUser
                     });
-
-                    // add to database and load once its loaded for first time
-                    // if the time is over also delete it
                 }
                 break;
             } catch (error) {
                 // Handle flood error
-                if (error instanceof errors.FloodError) {
+                if (error instanceof FloodWaitError) {
                     await sleep(error.seconds);
                 } else {
                     logger.log(`?Error @ userForward: ${error}`)
