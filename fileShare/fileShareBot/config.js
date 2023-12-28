@@ -157,13 +157,6 @@ class CHANNEL_INFO {
     static WELCOME_PIC = String(process.env.WELCOME_PIC);
 
     /**
-     * Flag indicating whether auto approval is enabled.
-     * @type {boolean}
-     * @static
-     */
-    static AUTO_APPROVAL = process.env.AUTO_APPROVAL === 'true';
-
-    /**
      * Flag indicating whether the request channel feature is enabled.
      * @type {boolean}
      * @static

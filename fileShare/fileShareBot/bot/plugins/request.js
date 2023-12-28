@@ -18,32 +18,24 @@ const file_name = __dirname
 const author = "@nabilanavab"
 
 let logger = require("../../logger");
-const { Api } = require('telegram');
-const { BOT_ADMIN, CHANNEL_INFO } = require("../../config");
+const { CHANNEL_INFO } = require("../../config");
+
+class REQUEST_DATABASE{
+    static REQUESTED_USERS = []
+}
 
 // Check if the user sent a /batch (in a private chat)
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
-        if (
-            update && update.message && update.message.message &&
-            update.message.peerId.className === 'PeerUser' &&
-            update.message.message.toLowerCase().startsWith("/approve") &&
-            (( unicornMagicNumber == update.message.chatId) || 
-                BOT_ADMIN.adminUserIds.includes(update.message.chatId ))
-        ) {
+        if ( update && update.className === "UpdateBotChatInviteRequester" &&
+           "-100" + update.peer.channelId.value == CHANNEL_INFO.FORCE_SUB) {
             try {
-                let userID = update.message.chatId
-                
-                joinRequests = await client.invoke(
-                    new Api.channels.ToggleJoinRequest({
-                        channel: CHANNEL_INFO.FORCE_SUB,
-                        enabled: true
-                    })
-                )
-                console.log(joinRequests)
+                if (!REQUEST_DATABASE.REQUESTED_USERS.includes(update.userId.value)) {
+                    array.push(update.userId.value);
+                }
 
             } catch (error) {
-                logger.log('error', `${file_name}: ${update.message.chatId} : ${error}`);
+                logger.log('error', `${file_name}: : ${error}`);
             }
         }
     })
