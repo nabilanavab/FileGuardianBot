@@ -19,9 +19,11 @@ const author = "@nabilanavab"
 
 let logger = require("../../logger");
 const { CHANNEL_INFO } = require("../../config");
-const { REQUESTED_USERS } = require("./localDB/request");
+const REQUESTED_USERS = require("./localDB/request");
+const { coreDbFunctions } = require("../monGo/core");
+const { DATABASE } = require("../../config");
 const { extrasDbFunctions } = require("../monGo/extras");
-const { DATABASE } = require("../../config")
+
 
 // Check if the user sent a /batch (in a private chat)
 module.exports = async function (client) {
@@ -30,18 +32,29 @@ module.exports = async function (client) {
            "-100" + update.peer.channelId.value == CHANNEL_INFO.FORCE_SUB) {
             try {
                 if (!REQUESTED_USERS.includes(update.userId.value)) {
-                    array.push(update.userId.value);
+                    REQUESTED_USERS.push(update.userId.value);
 
-                    if( DATABASE.MONGODB_URI )
-                        await extrasDbFunctions.changeData({
-                            userID : update.userId.value,
-                            key : "requested",
-                            value : true
-                        })
+                    if( DATABASE.MONGODB_URI ){
+                        newuser = await coreDbFunctions.isUserExist({
+                            userID: update.userId.value,
+                            elseAdd: {
+                                // "name" : username, slly many cany be added
+                                // check isUserExist only (only minor update needed)
+                                "requested": true
+                            }
+                        });
+                        if (newuser != "newuser"){
+                            await extrasDbFunctions.changeData({
+                                userID: update.userId.value,
+                                key: "requested",
+                                value: true
+                            })
+                        }
+                    }
                 }
 
             } catch (error) {
-                logger.log('error', `${file_name}: ${update.userId.value} : ${error}`);
+                logger.log('error', `request.js :: ${file_name}: ${update.userId.value} : ${error}`);
             }
         }
     })

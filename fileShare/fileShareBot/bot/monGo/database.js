@@ -21,7 +21,7 @@ const { DATABASE } = require("../../config");
 const logger = require('../../logger');
 const { userLang } = require("../i18n/data");
 const { generateInfo } = require("../plugins/localDB/generData");
-
+const REQUESTED_USERS = require("../plugins/localDB/request");
 
 // uri : "mongodb+srv://<user>:<password>@<cluster-url>?retryWrites=true&w=majority";
 
@@ -68,12 +68,15 @@ class Database {
                 Object.keys(user).forEach(key => {
                     if ( key !== 'join_date' && key !== 'lang'
                         && key !== '_id' && key !== 'userID' ) {
-                        generateInfo[userId][key] = user[key];
+                            if (key !== 'requested')
+                                generateInfo[userId][key] = user[key];
+                            else
+                                REQUESTED_USERS.push(userId);
                     }
                 });
             });
 
-            logger.log('error', 'Database connected perfectly..')
+            logger.log('info', 'Database connected perfectly..')
 
         } catch (error) {
             logger.log('error', `Error during Database Connection: ${error}`);

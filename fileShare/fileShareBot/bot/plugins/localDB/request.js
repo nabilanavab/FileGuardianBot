@@ -17,7 +17,7 @@ const file_name = __dirname
 const author = "@nabilanavab"
 
 
-REQUESTED_USERS = []
+const REQUESTED_USERS = []
 
 module.exports = REQUESTED_USERS;
 

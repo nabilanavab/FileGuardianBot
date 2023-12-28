@@ -29,6 +29,8 @@ const { forceSub } = require("./helpers/forceSub");
 const forward = require("./helpers/forward");
 const reply = require("./helpers/reply");
 const edit = require("./helpers/edit");
+const REQUESTED_USERS = require("./localDB/request");
+const { limitHandler } = require("./helpers/limitHandler");
 
 
 // All messages, except /start or /batch, will be considered as a request &
@@ -45,7 +47,14 @@ module.exports = async function (client) {
         ) {
             try {
                 // Check for force subscription: If the user is required to subscribe forcefully
-                await forceSub({ client, update, checkLimit: true })
+                if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
+                    await limitHandler({
+                        client, userId: update.message.chatId, replyTo:update.message.replyTo
+                    })
+                } else {
+                    // Check for force subscription & time limit
+                    await forceSub({ client, update })
+                }
 
                 // Retrieve user data from the local database to determine
                 // if the link should be password protected or not, etc
@@ -142,10 +151,10 @@ module.exports = async function (client) {
             } catch (error) {
                 // Handle errors, including flood errors
                 if (error instanceof FloodWaitError) {
-                    logger.log('error', `${file_name}: ${userID} : ${error}`);
+                    logger.log('error', `${file_name}: generate.js : ${update.message.chatId} : ${error}`);
                     await sleep(error.seconds);
                 } else {
-                    logger.log('error', `${file_name}: ${userID} : ${error}`);
+                    logger.log('error', `${file_name}: generate.js : ${update.message.chatId} : ${error}`);
                 }
             }
         }

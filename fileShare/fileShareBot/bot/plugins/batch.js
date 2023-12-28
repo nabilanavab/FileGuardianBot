@@ -23,6 +23,8 @@ const translate = require("../../bot/i18n/t9n");
 const errors = require("telegram/errors");
 const { isBatch, isBatchUser } = require("./localDB/batchData");
 const { forceSub } = require("./helpers/forceSub");
+const REQUESTED_USERS = require("./localDB/request");
+const { limitHandler } = require("./helpers/limitHandler");
 
 
 // Check if the user sent a /batch (in a private chat)
@@ -34,8 +36,14 @@ module.exports = async function (client) {
             update.message.message.toLowerCase().startsWith("/batch")
         ) {
             try {
-                // Check for force subscription & time limit
-                await forceSub({ client, update, checkLimit:true })
+                if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
+                    await limitHandler({
+                        client, userId: update.message.chatId, replyTo:update.message.replyTo
+                    })
+                } else {
+                    // Check for force subscription & time limit
+                    await forceSub({ client, update })
+                }
 
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);

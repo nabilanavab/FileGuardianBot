@@ -35,14 +35,17 @@ class coreDb {
                 join_date: moment(new Date()).format('DD:MMM:YYYY')
             };
 
-            if (elseAdd.lang !== LANG_INFO.DEFAULT_LANG) {
+            if (elseAdd.lang && elseAdd.lang !== LANG_INFO.DEFAULT_LANG) {
                 document.lang = elseAdd.lang;
+            }
+            if (elseAdd.requested) {
+                document.requested = elseAdd.requested;
             }
 
             let newUser = await database.client.db(database.databaseName).collection(
                     database.userCollection).insertOne(document);
 
-            return newUser;
+            return "newUser";
         }
     }
 }

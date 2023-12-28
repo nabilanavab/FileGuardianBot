@@ -28,6 +28,7 @@ const translate = require("../i18n/t9n");
 const checkDecCode = require("./util/checkDecCode");
 const setPassword = require("./util/setPassword");
 const REQUESTED_USERS = require("./localDB/request");
+const { limitHandler } = require("./helpers/limitHandler");
 
 // Define welcome message
 module.exports = async function (client) {
@@ -37,23 +38,25 @@ module.exports = async function (client) {
             update.message.message.toLowerCase().startsWith("/start")
         ) {
             try {
-                // Check for force subscription & time limit
-                if ( !REQUESTED_USERS.includes(update.message.chatId) )
-                    await forceSub({ client, update })
-
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                // Add a new user to the database
-                if (DATABASE.MONGODB_URI) {
-                    await coreDbFunctions.isUserExist({
-                        userID: update.message.chatId.value,
-                        elseAdd: {
-                            // "name" : username, slly many cany be added
-                            // check isUserExist only (only minor update needed)
-                            "lang": lang_code
-                        }
-                    });
+                // Check if user in requested list
+                if ( !REQUESTED_USERS.includes(update.message.chatId.value) ){
+                    // Check for force subscription & time limit
+                    await forceSub({ client, update })
+                    
+                    // Add a new user to the database
+                    if (DATABASE.MONGODB_URI) {
+                        await coreDbFunctions.isUserExist({
+                            userID: update.message.chatId.value,
+                            elseAdd: {
+                                // "name" : username, slly many cany be added
+                                // check isUserExist only (only minor update needed)
+                                "lang": lang_code
+                            }
+                        });
+                    }
                 }
 
                 // Check if there is a start message from the user
@@ -118,14 +121,12 @@ module.exports = async function (client) {
             } catch (error) {
                 // Handle errors, including flood errors
                 if (error instanceof FloodWaitError) {
-                    logger.log(
-                        "error", `Error ${error.errorMessage} in ?start: ${error.seconds}`
-                    );
+                    logger.log('error', `start.js :: ${file_name} : ${update.message.chatId} : ${error}`);
                     setTimeout(
                         module.exports(client), error.seconds
                     )
                 } else {
-                    logger.log("error", `Error in ?start: ${error}`);
+                    logger.log('error', `start.js :: ${file_name} : ${update.message.chatId} : ${error}`);
                 }
             }
         }

@@ -49,7 +49,7 @@ class userNotJoined extends Error {
 const forceSub = async ({ client, update, checkLimit = false }) => {
     try{
         // Check if force subscription and request URL are both disabled
-        if (!config.CHANNEL_INFO.FORCE_SUB && !config.CHANNEL_INFO.REQUEST_URL){
+        if (!config.CHANNEL_INFO.FORCE_SUB){
             // Time limit checking
             if (checkLimit){
                 await limitHandler({
