@@ -19,10 +19,9 @@ const author = "@nabilanavab"
 
 let logger = require("../../logger");
 const { CHANNEL_INFO } = require("../../config");
-
-class REQUEST_DATABASE{
-    static REQUESTED_USERS = []
-}
+const { REQUESTED_USERS } = require("./localDB/request");
+const { extrasDbFunctions } = require("../monGo/extras");
+const { DATABASE } = require("../../config")
 
 // Check if the user sent a /batch (in a private chat)
 module.exports = async function (client) {
@@ -30,12 +29,19 @@ module.exports = async function (client) {
         if ( update && update.className === "UpdateBotChatInviteRequester" &&
            "-100" + update.peer.channelId.value == CHANNEL_INFO.FORCE_SUB) {
             try {
-                if (!REQUEST_DATABASE.REQUESTED_USERS.includes(update.userId.value)) {
+                if (!REQUESTED_USERS.includes(update.userId.value)) {
                     array.push(update.userId.value);
+
+                    if( DATABASE.MONGODB_URI )
+                        await extrasDbFunctions.changeData({
+                            userID : update.userId.value,
+                            key : "requested",
+                            value : true
+                        })
                 }
 
             } catch (error) {
-                logger.log('error', `${file_name}: : ${error}`);
+                logger.log('error', `${file_name}: ${update.userId.value} : ${error}`);
             }
         }
     })

@@ -27,6 +27,7 @@ const getLang = require("../i18n/utils");
 const translate = require("../i18n/t9n");
 const checkDecCode = require("./util/checkDecCode");
 const setPassword = require("./util/setPassword");
+const REQUESTED_USERS = require("./localDB/request");
 
 // Define welcome message
 module.exports = async function (client) {
@@ -38,7 +39,8 @@ module.exports = async function (client) {
             
             try {
                 // Check for force subscription & time limit
-                await forceSub({ client, update })
+                if (!REQUESTED_USERS.includes(update.message.chatId))
+                    await forceSub({ client, update })
 
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
