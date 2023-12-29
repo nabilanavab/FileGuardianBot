@@ -73,9 +73,13 @@
         "already" : "Already U are using this Language"
     },
     "batch" : {
-        "new" : "Use 'Batch From Channel' to group a set of messages from a channel. Simply send the first and last message, and it will batch the first 100 messages  if the number of messages between the first and last exceeds 100.\n\nOn the other hand, 'Batch My Message' lets you batch individual messages you send one by one, with a maximum limit of 10 messages",
-        "newButton": { "Batch From Channel" : "@batchChannel", "Batch My Message" : "@batchMessage", "✖️ Close ✖️" : "close"},
-        "inProgress" : "A batch job is currently in progress."
+        "new" : "<i>Use <b>'📢 Batch From Channel 📢'</b> to group a set of messages from a channel. Simply send the first and last message, and it will batch the first 100 messages  if the number of messages between the first and last exceeds 100.\n\nOn the other hand, <b>'👤 Batch My Message 👤'</b> lets you batch individual messages you send one by one, with a maximum limit of 10 messages</i>",
+        "newButton" : { "📢 Batch From Channel 📢" : "@batchChannel", "👤 Batch My Message 👤" : "@batchMessage", "✖️ Close ✖️" : "close"},
+        "inProgress" : "A batch job is currently in progress..",
+        "sendFisrtMsg" : "Now Send Me the First Message of the Batch File",
+        "sendLastMsg" : "Now Send Me the last Message to Get Batched\n\n<b>NB: Both message must be from same channel</b>",
+        "sendMessage" : "Send Messages One By One to get batched..",
+        "batch": { "🤙 Batch Now 🤙" : "@batchNow" }, "cancel" : { "💩 Cancel Batch 💩" : "@cancelBatch"}
     },
     "generate" : {
         "privLink" : "Good news! Your protected link is ready for sharing.\n\nNB: Always remember only the one who knows the password can access this data\n\n",

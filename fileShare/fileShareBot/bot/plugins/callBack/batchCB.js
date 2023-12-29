@@ -16,10 +16,12 @@
 const file_name = __filename
 const author = "@nabilanavab"
 
-const { isBatch, isBatchUser } = require("../localDB/batchData");
+const { batchDB, isBatchUser, deleteBatchUser } = require("../localDB/batchData");
+const logger = require("../../../logger");
+const { Api } = require("telegram");
 
 /**
- * Handles callback queries related to the language setting.
+ * Handles callback queries related to batch functions
  * @param {object} options        - Options object.
  * @param {object} options.client - The Telegram Bot API client.
  * @param {object} options.update - The Telegram update object.
@@ -34,19 +36,65 @@ async function batchManager({ client, update }) {
         // Get the user's language code
         let langCode = await getLang(update.userId);
 
-        if ( cbData=="@batchChannel" ){
+        if ( cbData === "@cancelBatch" ){
+            await client.deleteMessages(
+                update.userId, [update.msgId], {}
+            );
+            deleteBatchUser('id', update.userId.value);
+            return
+        }
 
-        } else if (cbData == "@batchMessage"){
+        if (isBatchUser(update.userId.value)){
+            const translated = await translate({
+                text: "batch.inProgress",
+                langCode: langCode
+            })
 
+            return await client.invoke(
+                new Api.messages.SetBotCallbackAnswer({
+                    alert: true,
+                    queryId: BigInt(update.queryId.value),
+                    message: translated.text,
+                    // url: 'random string here',
+                })
+            );
+        } else {
+            const translated = await translate({
+                text : cbData === "@batchChannel" ?
+                    "batch.sendFisrtMsg" : "batch.sendMessage",
+                button: "batch.cancel",
+                langCode: langCode
+            })
+
+            batchDB.push({
+                "id" : update.userId.value,
+                "userDate" : {},
+                "type" : cbData === "@batchChannel" ? "@batchChannel" : "@batchMessage"
+            });
+
+            await client.sendMessage(
+                update.userId, {
+                    message: translated.text,
+                    buttons: translated.button
+                }
+            )
+            return await client.invoke(
+                new Api.messages.SetBotCallbackAnswer({
+                    alert: true,
+                    queryId: BigInt(update.queryId.value),
+                    message: "",
+                    // url: 'random string here',
+                })
+            );
         }
     } catch (error) {
-        logger.log('error', `${file_name}: ${update.userId} : ${error}`);
+        logger.log('error', `${file_name}\batchCB: ${update.userId} : ${error}`);
         return false
     }
 }
 
 
-exports.module = batchManager;
+module.exports = batchManager;
 
 /**
  * 

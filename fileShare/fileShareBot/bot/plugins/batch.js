@@ -21,7 +21,7 @@ let logger = require("../../logger");
 const getLang = require("../../bot/i18n/utils");
 const translate = require("../../bot/i18n/t9n");
 const errors = require("telegram/errors");
-const { isBatch, isBatchUser } = require("./localDB/batchData");
+const { isBatchUser } = require("./localDB/batchData");
 const { forceSub } = require("./helpers/forceSub");
 const REQUESTED_USERS = require("./localDB/request");
 const { limitHandler } = require("./helpers/limitHandler");
@@ -36,7 +36,7 @@ module.exports = async function (client) {
             ( update.message.message.toLowerCase().startsWith("/batch"))
         ) {
             try {
-                if (isBatchUser.includes(update.message.chatId)){
+                if (isBatchUser(update.message.chatId)){
                     // if userin isBatchUser means send request or joined chat
                 } else if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
                     await limitHandler({
@@ -50,48 +50,31 @@ module.exports = async function (client) {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                if (!isBatchUser(update.message.chatId.value)) {
-                    // If the user is not currently in the batch process
-                    // or workflow, add them to the process
-                    isBatch.push(
-                        { "id": update.message.chatId.value }
-                    );
-                    let translated = await translate({
-                        text: "batch.new",
-                        langCode: lang_code
-                    });
-                    await client.sendMessage(
-                        update.message.chatId,
-                        {
-                            message: translated.text,
-                            replyTo: update.message.id
-                        }
-                    );
-                } else {
-                    // If the user is already in the batch process,
-                    // Make an Option to remove them from the process
-                    let translated = await translate({
-                        text: "batch.current",
-                        langCode: lang_code
-                    });
-                    await client.sendMessage(
-                        update.message.chatId,
-                        {
-                            message: translated.text,
-                            replyTo: update.message.id
-                        }
-                    );
-                }
+                let translated = await translate({
+                    text: "batch.new", button: "batch.newButton",
+                    langCode: lang_code, order: 21
+                });
+                await client.sendMessage(
+                    update.message.chatId, {
+                        message: translated.text,
+                        buttons: translated.button,
+                        parseMode: "html"
+                    }
+                );
+                await client.deleteMessages(
+                    update.message.chatId, [update.message.id], {}
+                )
+
                 return 0;
             } catch (error) {
                 // Handle errors, including flood errors
                 if (error instanceof errors.FloodWaitError) {
-                    logger.log('error', `${file_name}: ${userID} : ${error}`);
+                    logger.log('error', `${file_name}: ${update.message.chatId} : ${error}`);
                     setTimeout(
                         module.exports(client), error.seconds
                     )
                 } else {
-                    logger.log('error', `${file_name}: ${userID} : ${error}`);
+                    logger.log('error', `${file_name}\batch.js ${update.message.chatId} : ${error}`);
                 }
             }
         }

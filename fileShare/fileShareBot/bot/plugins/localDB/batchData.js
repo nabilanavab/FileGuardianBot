@@ -17,18 +17,31 @@ const file_name = __dirname
 const author = "@nabilanavab"
 
 // isBatch saves all users data in /batch queue
-const isBatch = [
+const batchDB = [
     {
         "id" : 786,
+        "type" : "@batchChannel/@batchMessage",
         "userData" : {}
     }
 ];
 
 const isBatchUser = (userId) => {
-    return isBatch.some((user) => user.id === userId);
+    return batchDB.some((user) => user.id === userId);
 };
 
-module.exports = { isBatch, isBatchUser };
+const deleteBatchUser = (dltKey, dltValue) => {
+    for (let key in batchDB) {
+        if (typeof batchDB[key] === 'object' && batchDB[key] !== null) {
+            // Check if the target key-value pair exists in the nested dictionary
+            if (batchDB[key][dltKey] === dltValue) {
+                // Delete the key from the main dictionary
+                delete batchDB[key];
+            }
+        }
+    }
+};
+
+module.exports = { batchDB, isBatchUser, deleteBatchUser };
 
 /**
  * 
