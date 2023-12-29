@@ -23,6 +23,7 @@ const { Api } = require('telegram');
 const { TelegramClient, client } = require("telegram");
 const { StringSession } = require("telegram/sessions");
 const { FloodWaitError } = require("telegram/errors/RPCErrorList");
+const scheduleDB = require("./monGo/shdulFrmDb");
 
 global.botInfo = null;
 
@@ -42,6 +43,9 @@ global.botInfo = null;
             });
 
             botInfo = await client.getMe();
+
+            if (config.DATABASE.MONGODB_URI)
+                await scheduleDB(client);
 
             if ( config.CHANNEL_INFO.FORCE_SUB ) {
                 try {
@@ -125,7 +129,7 @@ global.botInfo = null;
     await loader(client);
 
     // save bot client session
-    client.session.save();
+    await client.session.save();
 
     console.log(`
         

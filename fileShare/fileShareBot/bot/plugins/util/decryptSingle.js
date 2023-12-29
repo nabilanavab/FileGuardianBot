@@ -98,6 +98,7 @@ async function decryptSingle({ client, messageID, userID, code, replyTo }) {
             dropMediaCaptions: jsonData['dropMediaCaptions'] ? true : false,
             noforwards : jsonData['noforwards'] ? true : false,
             duration: jsonData['duration'] ? jsonData['duration'] : false,
+            replyTo: replyTo
         })
         return true
 

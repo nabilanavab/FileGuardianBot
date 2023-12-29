@@ -16,7 +16,6 @@
 const file_name = __filename
 const author = "@nabilanavab"
 
-const cron = require('node-cron');
 const deleteMsg = require("./deleteMsg");
 const logger = require("../../../logger");
 
@@ -36,17 +35,27 @@ const logger = require("../../../logger");
 
 async function scheduleAt({ targetTime, client, messageID, chatID }) {
     try {
-        // Schedule the task to be executed at the target time
-        cron.schedule(
-            new Date(targetTime),
-            deleteMsg({
+        // Calculate the delay until the target time
+        const delay = targetTime - new Date().getTime();
+
+        if ( delay <= 0 ){
+            await deleteMsg({
                 client: client,
                 messageID: messageID,
                 chatID: chatID
-            })
-        );
+            });
+        } else {
+            // Schedule the task with setTimeout
+            setTimeout(async () => {
+                await deleteMsg({
+                    client: client,
+                    messageID: messageID,
+                    chatID: chatID
+                });
+            }, delay);
+        }
 
-        return targetTime
+        return delay
     } catch (error) {
         logger.log('error', `${file_name}: ${chatID} : ${error}`);
         return "errorDuringSchedulingMsg"

@@ -21,21 +21,22 @@ const scheduleAt = require("../plugins/scheduler/scheduleAt");
 
 async function scheduleDB( client ) {
     try {
-        let result = await this.client.db(this.databaseName)
-            .collection(this.scheduler)
+        let result = await database.client
+            .db(database.databaseName)
+            .collection(database.scheduler)
             .find({ targetTime: { $exists: true } })
             .toArray();
 
         for ( const time of result ){
             await scheduleAt({
-                targetTime: result.targetTime,      // time at which its get deleted
+                targetTime: time.targetTime,      // time at which its get deleted
                 client: client,                     // bot instance
-                messageID: result.messageID,        // id of message to be deleted
-                chatID: result.chatID,              // chat id where the message exists
+                messageID: time.messageID,        // id of message to be deleted
+                chatID: time.chatID,              // chat id where the message exists
             })
         }
     } catch ( error ) {
-        
+        console.log(error)
     }
 }
 

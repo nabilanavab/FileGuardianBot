@@ -24,6 +24,7 @@ const { LOG_FILE } = require("../../../config");
 const logger = require("../../../logger");
 const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 const scheduleAfter = require("../scheduler/scheduleAfter");
+const deleteMsg = require("../scheduler/deleteMsg");
 
 /**
  * Asynchronous function to forward messages to a log channel.
@@ -86,7 +87,7 @@ async function logForward({ client, messageIds, fromUser, replyTo }) {
  * @returns {Boolean}               - A Promise that resolves once the messages are forwarded to the user.
  */
 
-async function userForward({ client, messageIds, toUser,
+async function userForward({ client, messageIds, toUser, replyTo,
     dropAuthor=false, dropMediaCaptions=false, noforwards=false, duration=false
 }) {
     // Get the list of messages that need to be forwarded to the user
@@ -104,6 +105,11 @@ async function userForward({ client, messageIds, toUser,
                 )
                 
                 if ( duration ) {
+                    try {
+                        deleteMsg({
+                            client: client, messageID: replyTo, chatID: toUser, frmDB: false
+                        })
+                    } catch (error) {}
                     await scheduleAfter({
                         timeDur: Number(duration),
                         client: client,

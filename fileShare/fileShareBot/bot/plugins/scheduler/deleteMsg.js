@@ -17,6 +17,8 @@ const file_name = __filename
 const author = "@nabilanavab"
 
 const logger = require("../../../logger");
+const { DATABASE } = require("../../../config");
+const database = require("../../monGo/database");
 
 /**
  * @description
@@ -31,11 +33,22 @@ const logger = require("../../../logger");
  *                              or `false` if there is an error during the deletion process.
  */
 
-async function deleteMsg({ client, messageID, chatID }) {
+
+async function deleteMsg({ client, messageID, chatID, frmDB=true}) {
     try{
-        return await client.deleteMessages(
+        await client.deleteMessages(
             chatID, [messageID], {}
         );
+
+        if ( frmDB && DATABASE.MONGODB_URI ) {
+            await database.client
+                .db(database.databaseName)
+                .collection(database.scheduler)
+                .deleteOne({
+                    messageID : messageID
+                });
+        }
+        return "messageDeleted"
     } catch (error) {
         logger.log('error', `${file_name}: ${chatID} : ${error}`);
         return false;
