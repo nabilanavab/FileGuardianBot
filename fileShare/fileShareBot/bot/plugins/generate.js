@@ -112,8 +112,10 @@ module.exports = async function (client) {
 
                 let data = ""
                 for (let [key, value] of Object.entries(getUserInfo)) {
-                    if (key=="setPassword")
+                    if ( key == "setPassword" )
                         data += `${value ? `<i>🔐 ${key}</i> : <spoiler>${value}</spoiler>` : ''}`;
+                    else if ( key == "duration" )
+                        data += `${value ? `<i>⏳ ${key} : ${value}</i>` : ''}`;
                     else 
                         data += `${value ? `<i>🟢 ${key}</i>` : ''}`;
                     data += " | "

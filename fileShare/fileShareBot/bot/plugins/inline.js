@@ -84,8 +84,21 @@ module.exports = async function (client) {
                         }
 
                         if (localCbMessageDataWhichSavePassword[Number(messageId)]['isAccesable']){
-                            // cant access this file now: try later or contact file admin
-                            // return
+                            let translated = await translate({
+                                text: `settings._noAccess`, langCode: langCode
+                            })
+
+                            return await client.invoke(
+                                new Api.messages.SetInlineBotResults({
+                                    queryId: BigInt(update.queryId.value),
+                                    results: [],
+                                    cacheTime: 0,
+                                    switchPm: new Api.InlineBotSwitchPM({
+                                        text: translated.text,
+                                        startParam: "waste"
+                                    }),
+                                })
+                            )
                         }
 
                         if(password === localCbMessageDataWhichSavePassword[Number(messageId)]['password']){

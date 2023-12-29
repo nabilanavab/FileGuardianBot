@@ -53,6 +53,7 @@
         },
         "errorLink" : "Please Check The Link",
         "noAccess" : "Temporarly Admin Disabled This File\n\nContact link creator or Try Again Later",
+        "_noAccess": "Temporarly Admin Disabled This File",
         "noAccessBtn" : { "♻️ Try Again ♻️" : "%s" },
         "setPassword" : "🔒 Set Password As:",
         "bigPassword" : "⛔ Too Big Password..",
