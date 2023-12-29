@@ -68,8 +68,9 @@ async function batchManager({ client, update }) {
 
             batchDB.push({
                 "id" : update.userId.value,
-                "userDate" : {},
-                "type" : cbData === "@batchChannel" ? "@batchChannel" : "@batchMessage"
+                "userData" : [],
+                "type" : cbData === "@batchChannel" ? "@batchChannel" : "@batchMessage",
+                "forwardFrom" : cbData === "@batchChannel" ? null : "id"
             });
 
             await client.sendMessage(

@@ -20,8 +20,14 @@ const author = "@nabilanavab"
 const batchDB = [
     {
         "id" : 786,
-        "type" : "@batchChannel/@batchMessage",
-        "userData" : {}
+        "type" : "@batchMessage",
+        "userData" : [ "messageID1", "messageID2", "messageID3" ],
+        "forwardFrom" : "id"
+    }, {
+        "id" : 123,
+        "type" : "@batchChannel",
+        "userData" : [ "messageID_first", "messageID_last"],
+        "forwardFrom" : "channelId"
     }
 ];
 
@@ -41,7 +47,15 @@ const deleteBatchUser = (dltKey, dltValue) => {
     }
 };
 
-module.exports = { batchDB, isBatchUser, deleteBatchUser };
+const insertDataById = (id, messageID) => {
+    const item = batchDB.find(item => item.id === id);
+    if (item){
+        item.userData = item.userData || [];
+        item.userData.push(messageID);
+    }
+};
+
+module.exports = { batchDB, isBatchUser, deleteBatchUser, insertDataById };
 
 /**
  * 
