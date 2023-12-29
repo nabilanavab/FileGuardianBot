@@ -29,15 +29,51 @@ module.exports = async function (client) {
             isBatchUser(update.message.chatId.value)
         ) {
             try {
+                // Retrieve the user's language from the local database
+                let lang_code = await getLang(update.message.chatId);
+
+                // getting userBatch Info
                 const item = batchDB.find(item => item.id === update.message.chatId.value);
 
                 if ( item.type === "@batchMessage") {
+                    if ( item.userData.length < 10 ){
+                        insertDataById(update.message.chatId.value, update.message.id)
+
+                        const translated = await translate({
+                            text : "batch.sendMessage",
+                            button : "batch.batch",
+                            langCode : lang_code
+                        })
+                        await client.sendMessage(
+                            update.message.chatId, {
+                                message: translated.text,
+                                buttons: translated.button,
+                                parseMode: "html"
+                            }
+                        )
+                    }
+                    // create batch file
 
                 } else if ( item.type === "@batchChannel" ){
                     // public channel, 
+
+                    if ( item.userData.length <= 2 ){
+                        insertDataById(update.message.chatId.value, update.message.id)
+
+                        const translated = await translate({
+                            text : item.userData.length === 1 ? "batch.sendFisrtMsg" : "batch.sendLastMsg",
+                            button : "batch.cancel",
+                            langCode : lang_code
+                        })
+                        await client.sendMessage(
+                            update.message.chatId, {
+                                message: translated.text,
+                                buttons: translated.button,
+                                parseMode: "html"
+                            }
+                        )
+                    }
                 }
-                 
-                insertDataById(update.message.chatId.value, update.message.id)
                 console.log(batchDB)
             } catch (error) {
                 logger.log('error', `start.js :: ${file_name} : ${update.message.chatId} : ${error}`);
