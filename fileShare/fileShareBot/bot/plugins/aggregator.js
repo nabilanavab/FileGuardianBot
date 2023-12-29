@@ -24,12 +24,19 @@ const logger = require("../../logger");
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
-            update && update.message && update.message.message &&
+            update && update.message && update.message &&
             update.message.peerId.className === 'PeerUser' &&
             isBatchUser(update.message.chatId.value)
         ) {
             try {
-                console.log(update.message);
+                const item = batchDB.find(item => item.id === update.message.chatId.value);
+
+                if ( item.type === "@batchMessage") {
+
+                } else if ( item.type === "@batchChannel" ){
+                    // public channel, 
+                }
+                 
                 insertDataById(update.message.chatId.value, update.message.id)
                 console.log(batchDB)
             } catch (error) {
