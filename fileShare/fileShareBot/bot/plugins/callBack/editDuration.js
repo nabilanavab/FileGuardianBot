@@ -24,7 +24,7 @@ const { DATABASE } = require("../../../config");
 const { Api } = require('telegram');
 
 /**
- * Handles callback queries related to the language setting.
+ * Handles callback queries related to the message Duration setting.
  * @param {object} options        - Options object.
  * @param {object} options.client - The Telegram Bot API client.
  * @param {object} options.update - The Telegram update object.

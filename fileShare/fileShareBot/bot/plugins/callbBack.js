@@ -26,6 +26,8 @@ const askLang = require("./callBack/getLang");
 const setDuration = require("./callBack/editDuration");
 const askDuration = require("./callBack/getDuration");
 const refreshPage = require("./callBack/refresh");
+const batchManager = require("./callBack/batchCB")
+
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
@@ -59,6 +61,9 @@ module.exports = async function(client){
                 }
                 else if (data === "=refresh") {
                     return refreshPage({ client: client, update: update });
+                }
+                else if (database.startsWith("@")){
+                    return batchManager({ client: client, update: update })
                 }
             } catch (error) {
                 logger.log(`${file_name}: ${update.userId} : ${error}`);

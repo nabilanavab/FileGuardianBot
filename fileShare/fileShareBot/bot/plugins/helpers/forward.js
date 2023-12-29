@@ -36,41 +36,24 @@ const deleteMsg = require("../scheduler/deleteMsg");
  * @returns {Boolean}               - A Promise that resolves once the messages are forwarded.
  */
 
-async function logForward({ client, messageIds, fromUser, replyTo }) {
+async function logForward({ client, messageId, fromUser, replyTo }) {
     // Get the list of messages that need to be forwarded to the log channel
     let forwardMsg = false;
-    for (const messageId of messageIds) {
-        while (true) {
-            try {
-                forwardMsg = await client.forwardMessages(
-                    LOG_FILE.LOG_CHANNEL, {
-                        messages: messageId,
-                        fromPeer: fromUser
-                    }
-                )
-                break;
-            } catch (error) {
-                // Handle flood error
-                if (error instanceof FloodWaitError) {
-                    await sleep(error.seconds);
-                } else {
-                    let lang_code = await getLang(userID);
-
-                    let translated = await translate({
-                        text : 'settings.messageDeleted',
-                        button : 'settings.closeCB',
-                        langCode : lang_code
-                    })
-
-                    if (messageIds.length == 1){
-                        return await client.sendMesssage({
-                            message: translated.text,
-                            buttons: translated.button,
-                            replyTo: replyTo
-                        })
-                    }
+    while (true) {
+        try {
+            forwardMsg = await client.forwardMessages(
+                LOG_FILE.LOG_CHANNEL, {
+                    messages: messageId,
+                    fromPeer: fromUser
                 }
-            }
+            )
+            break;
+        } catch (error) {
+            // Handle flood error
+            if (error instanceof FloodWaitError)
+                await sleep(error.seconds);
+            else
+                throw "errorInLogMessageForward"
         }
     }
     return forwardMsg;
@@ -123,8 +106,22 @@ async function userForward({ client, messageIds, toUser, replyTo,
                 if (error instanceof FloodWaitError) {
                     await sleep(error.seconds);
                 } else {
-                    logger.log(`?Error @ userForward: ${error}`)
-                    break;
+                    
+                    if (messageIds.length == 1){
+                        let lang_code = await getLang(userID);
+
+                        let translated = await translate({
+                            text : 'settings.messageDeleted',
+                            button : 'settings.closeCB',
+                            langCode : lang_code
+                        })
+
+                        return await client.sendMesssage({
+                            message: translated.text,
+                            buttons: translated.button,
+                            replyTo: replyTo
+                        })
+                    }
                 }
             }
         }

@@ -33,10 +33,12 @@ module.exports = async function (client) {
         if (
             update && update.message && update.message.message &&
             update.message.peerId.className === 'PeerUser' &&
-            update.message.message.toLowerCase().startsWith("/batch")
+            ( update.message.message.toLowerCase().startsWith("/batch"))
         ) {
             try {
-                if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
+                if (isBatchUser.includes(update.message.chatId)){
+                    // if userin isBatchUser means send request or joined chat
+                } else if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
                     await limitHandler({
                         client, userId: update.message.chatId, replyTo:update.message.replyTo
                     })

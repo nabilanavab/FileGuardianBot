@@ -24,7 +24,7 @@ const isBatch = [
     }
 ];
 
-isBatchUser = (userId) => {
+const isBatchUser = (userId) => {
     return isBatch.some((user) => user.id === userId);
 };
 

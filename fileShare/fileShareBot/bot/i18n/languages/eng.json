@@ -73,8 +73,9 @@
         "already" : "Already U are using this Language"
     },
     "batch" : {
-        "new" : "A new batch is being created, and new messages will be added to the queue.",
-        "current" : "A batch job is currently in progress."
+        "new" : "Use 'Batch From Channel' to group a set of messages from a channel. Simply send the first and last message, and it will batch the first 100 messages  if the number of messages between the first and last exceeds 100.\n\nOn the other hand, 'Batch My Message' lets you batch individual messages you send one by one, with a maximum limit of 10 messages",
+        "newButton": { "Batch From Channel" : "@batchChannel", "Batch My Message" : "@batchMessage", "✖️ Close ✖️" : "close"},
+        "inProgress" : "A batch job is currently in progress."
     },
     "generate" : {
         "privLink" : "Good news! Your protected link is ready for sharing.\n\nNB: Always remember only the one who knows the password can access this data\n\n",

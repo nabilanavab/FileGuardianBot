@@ -40,8 +40,7 @@ module.exports = async function (client) {
         if (
             update && update.message && !(update.message.message &&
                 (update.message.message.toLowerCase().startsWith("/start") ||
-                    update.message.message.toLowerCase().startsWith("/batch") ||
-                        update.message.message.toLowerCase().startsWith("/approve"))) &&
+                    update.message.message.toLowerCase().startsWith("/batch"))) &&
             update.message.peerId.className === 'PeerUser' &&
             !isBatchUser(update.message.chatId.value)
         ) {
@@ -76,7 +75,7 @@ module.exports = async function (client) {
                 // Forward the message to the log channel
                 forwardMsg = await forward.logForward({
                     client: client,
-                    messageIds: [update.message.id],
+                    messageId: update.message.id,
                     fromUser: update.message.chatId
                 });
 

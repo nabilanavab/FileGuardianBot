@@ -22,7 +22,7 @@ const translate = require("../../i18n/t9n");
 const { createButton } = require("../../i18n/ba10");
 
 /**
- * Handles callback queries for changing Language
+ * Handles callback queries for changing message delete Duration
  * @param {object} options        - Options object.
  * @param {object} options.client - The Telegram Bot API client.
  * @param {object} options.update - The Telegram update object.
