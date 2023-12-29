@@ -25,6 +25,7 @@ const setLang = require("./callBack/editLang");
 const askLang = require("./callBack/getLang");
 const setDuration = require("./callBack/editDuration");
 const askDuration = require("./callBack/getDuration");
+const refreshPage = require("./callBack/refresh");
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
@@ -54,7 +55,10 @@ module.exports = async function(client){
                     return askDuration({ client: client, update: update});
                 }
                 else if (data.startsWith("$")) {
-                    return setDuration({ client: client, update: update })
+                    return setDuration({ client: client, update: update });
+                }
+                else if (data === "=refresh") {
+                    return refreshPage({ client: client, update: update });
                 }
             } catch (error) {
                 logger.log(`${file_name}: ${update.userId} : ${error}`);

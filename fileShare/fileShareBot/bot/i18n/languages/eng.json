@@ -3,8 +3,9 @@
         "message" : "🚨 Due to overwhelming demand, subscription is now required to manage access.\n\nSubscribe to ensure uninterrupted service",
         "button" : {
             "🪐 JOIN CHANNEL 🪐" : "%s",
-            "♻️ REFRESH ♻️" : "refreshSub"
-        }
+            "♻️ REFRESH ♻️" : "=refresh"
+        },
+        "fool": "Click the above button and join chat to proceed 😎"
     },
     "timeLimit" : {
         "message" : "`You are sending messages too frequently. Please wait for %s seconds.`",

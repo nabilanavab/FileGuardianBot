@@ -16,10 +16,12 @@
 const file_name = __dirname
 const author = "@nabilanavab"
 
-const logger = require("../../../logger");
+const config = require("../../../config");
+const { Api } = require("telegram");
+const REQUESTED_USERS = require("../localDB/request");
 
 /**
- * Handles callback queries related to the help command.
+ * Handles callback queries related to the refresh join button.
  * @param {object} options        - Options object.
  * @param {object} options.client - The Telegram Bot API client.
  * @param {object} options.update - The Telegram update object.
@@ -27,23 +29,30 @@ const logger = require("../../../logger");
  *                                  false if there's an error.
  */
 
-async function helpCbHandler({ client, update }) {
+async function refreshPage({ client, update }) {
+    
+    // Get the user's language code
+    let langCode = await getLang(update.userId);
+
     try {
-        // Decode callback data from base64
-        let cbData = Buffer.from(update.data, 'base64').toString('utf8');
-
-        // Extract the new page from callback data
-        let newPage = cbData.split("|")[1];
-
-        // Get the user's language code
-        let langCode = await getLang(update.userId);
+        if ( !REQUESTED_USERS.includes(BigInt(update.userId)) ){
+            const result = await client.invoke(
+                new Api.channels.GetParticipant({
+                    channel: config.CHANNEL_INFO.FORCE_SUB,
+                    participant: update.userId
+                })
+            );
+        
+            if (result.kicked)
+                throw "userBanned"
+        }
 
         // Translate message and buttons based on the new page
         let translated = await translate({
-            text: `help.${newPage}.message`,
-            button: `help.${newPage}.button`,
+            text: 'help.0.message',
+            button: 'help.0.button',
             langCode: langCode,
-            order: newPage==0 ? 2121 : 2
+            order: 2121
         });
 
         // Edit the original message with the translated text and buttons
@@ -57,12 +66,19 @@ async function helpCbHandler({ client, update }) {
         );
 
     } catch (error) {
-        logger.log(`${file_name}: ${update.userId} : ${error}`);
-        return false;
+        const translated = await translate({text: `force.fool`, langCode: langCode});
+        return await client.invoke(
+            new Api.messages.SetBotCallbackAnswer({
+                alert: true,
+                queryId: BigInt(update.queryId.value),
+                message: translated.text,
+                // url: 'random string here',
+            })
+        );
     }
 }
 
-module.exports = helpCbHandler;
+module.exports = refreshPage;
 
 /**
  * 

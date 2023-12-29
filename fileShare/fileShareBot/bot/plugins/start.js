@@ -28,7 +28,6 @@ const translate = require("../i18n/t9n");
 const checkDecCode = require("./util/checkDecCode");
 const setPassword = require("./util/setPassword");
 const REQUESTED_USERS = require("./localDB/request");
-const { limitHandler } = require("./helpers/limitHandler");
 
 // Define welcome message
 module.exports = async function (client) {

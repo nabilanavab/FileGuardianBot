@@ -4,7 +4,9 @@
   "description": "File Share Bot: A versatile Telegram bot that simplifies file sharing. It effortlessly converts various file types, including text, documents, images, and GIFs, into shareable URLs. Additionally, it offers the option to add password protection to your shared content, ensuring enhanced privacy and security for your files and messages.",
   "main": "index.js",
   "scripts": {
-    "test": "node fileShareBot"
+    "start:fileShareBot": "node fileShare/fileShareBot",
+    "start:webServer": "node fileShare/webServer",
+    "start:both": "concurrently \"npm run start:fileShareBot\" \"npm run start:webServer\""
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,7 @@
   },
   "homepage": "https://github.com/github.com/nabilanavab#readme",
   "dependencies": {
+    "concurrently": "^8.2.2",
     "dotenv": "^16.3.1",
     "moment": "^2.29.4",
     "mongodb": "^6.2.0",
