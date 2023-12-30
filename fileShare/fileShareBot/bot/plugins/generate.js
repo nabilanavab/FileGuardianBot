@@ -18,7 +18,7 @@ const author = "@nabilanavab"
 
 // Import necessary modules
 const logger = require("../../logger");
-const { isBatchUser } = require("./localDB/batchData");
+const { isBatchUser, batchCompleted } = require("./localDB/batchData");
 const { generateInfo } = require("./localDB/generData");
 const encrypt = require("../plugins/cryptoG/encrypt");
 const getLang = require("../../bot/i18n/utils");
@@ -44,6 +44,12 @@ module.exports = async function (client) {
             update.message.peerId.className === 'PeerUser' &&
             !isBatchUser(update.message.chatId.value)
         ) {
+            if (batchCompleted.includes(update.message.chatId.value)){
+                // even if the batch is completed it enters this func. and generate 
+                // link for the last message as !isBatchUser(update.message.chatId.value) == true
+                batchCompleted.pop(update.message.chatId.value)
+                return
+            }
             try {
                 // Check for force subscription: If the user is required to subscribe forcefully
                 if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
@@ -83,12 +89,12 @@ module.exports = async function (client) {
                 let message = `<pre><code class="language-js">{
     "userID"            : ${update.message.chatId},
     "messageID"         : ${forwardMsg[0][0]['id']},
-    "setPassword"       : ${getUserInfo['setPassword'] ? `\"${getUserInfo['setPassword']}\"` : false},
-    "dropAuthor"        : ${getUserInfo['dropAuthor'] === undefined ? false : true},
-    "dropMediaCaptions" : ${getUserInfo['dropMediaCaptions'] ? getUserInfo['dropMediaCaptions'] : false},
-    "isAccesable"       : ${getUserInfo['isAccesable'] ? getUserInfo['isAccesable'] : false},
-    "noforwards"        : ${getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false},
-    "duration"          : ${getUserInfo['duration'] ? getUserInfo['duration'] : false}
+    "setPassword"       : ${getUserInfo && getUserInfo['setPassword'] ? `\"${getUserInfo['setPassword']}\"` : false},
+    "dropAuthor"        : ${getUserInfo && getUserInfo['dropAuthor'] === undefined ? false : true},
+    "dropMediaCaptions" : ${getUserInfo && getUserInfo['dropMediaCaptions'] ? getUserInfo['dropMediaCaptions'] : false},
+    "isAccesable"       : ${getUserInfo && getUserInfo['isAccesable'] ? getUserInfo['isAccesable'] : false},
+    "noforwards"        : ${getUserInfo && getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false},
+    "duration"          : ${getUserInfo && getUserInfo['duration'] ? getUserInfo['duration'] : false}
 }</code></pre>
 
 <a href="tg://user?id=${update.message.chatId}">👤 viewProfile 👤</a>`;
@@ -122,7 +128,7 @@ module.exports = async function (client) {
                 data = data.slice(0, -3);
 
                 translated = await translate({
-                    text: !(getUserInfo['setPassword'] == undefined)
+                    text: !(getUserInfo && getUserInfo['setPassword'] == undefined)
                         ? "generate.publLink" : "generate.privLink",
                     button: "generate.button",
                     asString: true,

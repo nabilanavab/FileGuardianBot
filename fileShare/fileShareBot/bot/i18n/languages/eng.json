@@ -78,7 +78,9 @@
         "inProgress" : "A batch job is currently in progress..",
         "sendFisrtMsg" : "Now Send Me the First Message of the Batch File",
         "sendLastMsg" : "Now Send Me the last Message to Get Batched\n\n<b>NB: Both message must be from same channel</b>",
+        "lastMsgError" : "Send Me The Last Message to Be Forwarded\n\n<b>NB: \n-  must be from same channel\n-  this message must be after the first message",
         "sendMessage" : "Send Messages to get batched..",
+        "forwardIt" : "Ooh, Im waiting For a forward Message From Some Public Channel",
         "batch": { "🤙 Batch Now 🤙" : "@batchNow" }, "cancel" : { "💩 Cancel Batch 💩" : "@cancelBatch"}
     },
     "generate" : {

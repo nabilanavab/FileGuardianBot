@@ -55,7 +55,21 @@ const insertDataById = (id, messageID) => {
     }
 };
 
-module.exports = { batchDB, isBatchUser, deleteBatchUser, insertDataById };
+const insertForwardFromById = (id, channelID) => {
+    const item = batchDB.find(item => item.id === id);
+    if (item)
+        item.forwardFrom = channelID;
+}
+
+const getData = (id) => {
+    const item = batchDB.find(item => item.id === id);
+    return item
+}
+
+const batchCompleted = []
+
+module.exports = { batchDB, isBatchUser, deleteBatchUser, batchCompleted,
+    insertDataById, insertForwardFromById, getData };
 
 /**
  * 

@@ -27,14 +27,17 @@ async function checkDecCode({client, code, userID, replyTo}) {
             code: code, userID: userID
         });
 
-        if ( !isNaN(Number(messageID)) ){
+        if (messageID.startsWith("batch:")){
+            await decryptBatch({
+                client: client, messageID: messageID.replace("batch:", ""),
+                userID: userID, code: code, replyTo: replyTo 
+            })
+        } else if ( !isNaN(Number(messageID)) ){
             // If the result is a valid number and not NaN
             await decryptSingle({
                 client: client, messageID: messageID,
-                userID: userID, code:code, replyTo: replyTo
+                userID: userID, code: code, replyTo: replyTo
             })
-        } else {
-            await decryptBatch()
         }
         return true
 
