@@ -70,19 +70,18 @@ async function logForward({ client, messageId, fromUser, replyTo }) {
  * @returns {Boolean}               - A Promise that resolves once the messages are forwarded to the user.
  */
 
-async function userForward({ client, messageIds, toUser, replyTo,
+async function userForward({ client, messageIds, toUser, replyTo, massForward=false,
     dropAuthor=false, dropMediaCaptions=false, noforwards=false, duration=false
 }) {
-    // Get the list of messages that need to be forwarded to the user
-    for (const messageId of messageIds) {
+
+    if ( !massForward ){
+        // Get the list of messages that need to be forwarded to the user
         while (true) {
             try {
                 forwardMessage = await client.forwardMessages(
                     toUser, {
-                        messages: messageId,
-                        fromPeer: LOG_FILE.LOG_CHANNEL,
-                        noforwards: noforwards,
-                        dropAuthor: !dropAuthor,
+                        messages: messageIds[0], fromPeer: LOG_FILE.LOG_CHANNEL,
+                        noforwards: noforwards, dropAuthor: !dropAuthor,
                         dropMediaCaptions: dropMediaCaptions
                     }
                 )
@@ -90,14 +89,13 @@ async function userForward({ client, messageIds, toUser, replyTo,
                 if ( duration ) {
                     try {
                         deleteMsg({
-                            client: client, messageID: replyTo, chatID: toUser, frmDB: false
+                            client: client, messageID: replyTo,
+                            chatID: toUser, frmDB: false
                         })
                     } catch (error) {}
                     await scheduleAfter({
-                        timeDur: Number(duration),
-                        client: client,
-                        messageID: forwardMessage[0][0]['id'],
-                        chatID: toUser
+                        timeDur: Number(duration), client: client,
+                        messageID: forwardMessage[0][0]['id'], chatID: toUser
                     });
                 }
                 break;
@@ -106,25 +104,22 @@ async function userForward({ client, messageIds, toUser, replyTo,
                 if (error instanceof FloodWaitError) {
                     await sleep(error.seconds);
                 } else {
-                    
-                    if (messageIds.length == 1){
-                        let lang_code = await getLang(userID);
+                    let lang_code = await getLang(userID);
 
-                        let translated = await translate({
-                            text : 'settings.messageDeleted',
-                            button : 'settings.closeCB',
-                            langCode : lang_code
-                        })
+                    let translated = await translate({
+                        text : 'settings.messageDeleted',
+                        button : 'settings.closeCB', langCode : lang_code
+                    })
 
-                        return await client.sendMesssage({
-                            message: translated.text,
-                            buttons: translated.button,
-                            replyTo: replyTo
-                        })
-                    }
+                    return await client.sendMesssage({
+                        message: translated.text,
+                        buttons: translated.button, replyTo: replyTo
+                    })
                 }
             }
         }
+    } else {
+        // mass forward : oor batch file forward
     }
     return true;
 }

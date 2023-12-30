@@ -19,6 +19,7 @@ const author = "@nabilanavab"
 const decrypt = require("../cryptoG/decrypt");
 const decryptSingle = require("./decryptSingle");
 const decryptBatch = require("./decryptBatch");
+const commonCase = require("./commonCase");
 
 
 async function checkDecCode({client, code, userID, replyTo}) {
@@ -26,6 +27,11 @@ async function checkDecCode({client, code, userID, replyTo}) {
         messageID = await decrypt({
             code: code, userID: userID
         });
+
+        await commonCase({
+            client: client, messageID: messageID.replace("batch:", ""),
+            userID: userID, code: code, replyTo: replyTo 
+        })
 
         if (messageID.startsWith("batch:")){
             await decryptBatch({

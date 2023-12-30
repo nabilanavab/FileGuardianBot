@@ -155,9 +155,7 @@ module.exports = async function (client) {
   "setPassword"      : ${getUserInfo && getUserInfo['setPassword'] ? `\"${getUserInfo['setPassword']}\"` : false},
   "dropAuthor"       : ${getUserInfo && getUserInfo['dropAuthor'] === undefined ? false : true},
   "dropMediaCaptions": ${getUserInfo && getUserInfo['dropMediaCaptions'] ? getUserInfo['dropMediaCaptions'] : false},
-  "isAccesable"      : ${getUserInfo && getUserInfo['isAccesable'] ? getUserInfo['isAccesable'] : false},
   "noforwards"       : ${getUserInfo && getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false},
-  "duration"         : ${getUserInfo && getUserInfo['duration'] ? getUserInfo['duration'] : false}
 }</code></pre>
 
 <a href="tg://user?id=${update.message.chatId}">👤 viewProfile 👤</a>`;
@@ -179,8 +177,8 @@ module.exports = async function (client) {
                 for (let [key, value] of Object.entries(getUserInfo)) {
                     if ( key == "setPassword" )
                         data += `${value ? `<i>🔐 ${key}</i> : <spoiler>${value}</spoiler>` : ''}`;
-                    else if ( key == "duration" )
-                        data += `${value ? `<i>⏳ ${key} : ${value}</i>` : ''}`;
+                    else if ( key == "duration" || key == "isAccesable" )
+                        console.log("do nothing here")
                     else 
                         data += `${value ? `<i>🟢 ${key}</i>` : ''}`;
                     data += " | "

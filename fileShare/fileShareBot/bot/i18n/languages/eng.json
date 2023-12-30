@@ -65,7 +65,7 @@
         "passUpdCB" : { "VIEW PASSWORD" : "%s", "✖️ Close ✖️" : "close" },
         "askPassword" : "<b>This file is secure with a password 🔒.</b>\n\n<i>Use the button below if you have the password to access it.</i>",
         "askPswdButon" : { "😎 i know the password 😎" : ":get %s " },
-        "messageDeleted" : "Unfortunately someting went wrong\nI cant accees this data, maybe due to copyright issue"
+        "messageDeleted" : "Unfortunately someting went wrong\n\n"
     },
     "lang" : {
         "select" : "Now, Select Language, Depending On Ur Choice: ",
