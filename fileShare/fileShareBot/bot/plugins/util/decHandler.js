@@ -90,16 +90,21 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
             ) 
         }
 
+        const messageIds = !massForward ?
+            [ data['messages'][0]['replyTo']['replyToMsgId'] ] : 
+            jsonData['batchInfo']['userData']
+
         await userForward({
             client: client,
-            messageIds: [ data['messages'][0]['replyTo']['replyToMsgId'] ],
+            messageIds: messageIds,
             toUser: userID,
             dropAuthor: jsonData['dropAuthor'] ? true : false,
             dropMediaCaptions: jsonData['dropMediaCaptions'] ? true : false,
             noforwards : jsonData['noforwards'] ? true : false,
             duration: jsonData['duration'] ? jsonData['duration'] : false,
             replyTo: replyTo,
-            massForward: massForward
+            massForward: !massForward ? true :
+                [Number(jsonData['forwardFrom']), jsonData['type']]
         })
         return true
 

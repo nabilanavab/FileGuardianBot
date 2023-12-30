@@ -35,10 +35,8 @@ async function checkDecCode({client, code, userID, replyTo}) {
     } catch ( error ){
         let lang_code = await getLang(userID);
         let translated = await translate({
-            text : 'settings.errorLink',
-            button : 'settings.closeCB',
-            langCode : lang_code,
-            order: 1
+            text : 'settings.errorLink',  order: 1,
+            button : 'settings.closeCB', langCode : lang_code,
         })
 
         await client.sendMessage(

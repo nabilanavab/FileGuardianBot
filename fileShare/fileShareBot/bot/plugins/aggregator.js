@@ -177,8 +177,7 @@ module.exports = async function (client) {
                 for (let [key, value] of Object.entries(getUserInfo)) {
                     if ( key == "setPassword" )
                         data += `${value ? `<i>🔐 ${key}</i> : <spoiler>${value}</spoiler>` : ''}`;
-                    else if ( key == "duration" || key == "isAccesable" )
-                        console.log("do nothing here")
+                    else if ( key == "duration" ) {}
                     else 
                         data += `${value ? `<i>🟢 ${key}</i>` : ''}`;
                     data += " | "

@@ -119,7 +119,45 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
             }
         }
     } else {
-        // mass forward : oor batch file forward
+        // batch file forward
+        const fromPeer = massForward[0];
+        const type = massForward[1];
+
+        let messageList = []
+
+        if ( type == "@batchChannel"){
+            let first = messageIds[0], last = messageIds[1];
+            if ( last-first >= 100) last = first+100;
+
+            for (const i=first; i<last; i++){
+                messageList.push(Number(i));
+            }
+        } else if ( type == "@batchChannel" ){
+            messageList = messageIds;
+        } else {
+            return
+        }
+
+        for (const messageID of messageIds){
+            while (true) {
+                try {
+                    forwardMessage = await client.forwardMessages(
+                        toUser, {
+                            messages: messageIds[0], fromPeer: LOG_FILE.LOG_CHANNEL,
+                            noforwards: noforwards, dropAuthor: !dropAuthor,
+                            dropMediaCaptions: dropMediaCaptions
+                        }
+                    );
+                    break;
+                } catch ( error ){
+                    if (error instanceof FloodWaitError) {
+                        await sleep(error.seconds);
+                    } else {
+                        
+                    }
+                }
+            }
+        }
     }
     return true;
 }
