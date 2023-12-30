@@ -60,18 +60,17 @@ module.exports = async function (client) {
                             if (!jsonData['setPassword']){
                                 return await client.invoke(
                                     new Api.messages.SetInlineBotResults({
-                                        queryId: BigInt(update.queryId.value),
-                                        results: [
-                                            // get message by id [but we need to add restriction]
-                                            new Api.InputBotInlineResult({
-                                                title: "This File Is Open For All, Use Link Directly",
-                                                description: "This File Is Open For All, Use Link Directly",
-                                                send_message: "chammy.."
-                                            })
-                                        ]
-                                    })
-                                );
-                            }
+                                            queryId: BigInt(update.queryId.value),
+                                            results: [],
+                                            cacheTime: 0,
+                                            switchPm: new Api.InlineBotSwitchPM({
+                                                text: "This File Is Open For All, Use Link Directly",
+                                                startParam: "waste"
+                                            }),
+                                        })
+                                    );
+                                }
+
                             messagePassData[Number(messageId)] = {
                                 'id' : jsonData['messageID'],
                                 'password' : jsonData['setPassword'],
@@ -112,12 +111,19 @@ module.exports = async function (client) {
                                 dropMediaCaptions: messagePassData[Number(messageId)]['dropMediaCaptions'],
                                 noforwards: messagePassData[Number(messageId)]['noforwards'],
                                 isAccesable: messagePassData[Number(messageId)]['isAccesable'],
-                                duration: messagePassData[Number(messageId)]['duration']
+                                duration: messagePassData[Number(messageId)]['duration'],
+                                massForward: !messagePassData[Number(messageId)]['batchInfo'] ? false :
+                                    [
+                                        messagePassData[Number(messageId)]['batchInfo']['forwardFrom'] == "id" ?
+                                            messagePassData[Number(messageId)]['userID'] : Number(messagePassData[Number(messageId)]['batchInfo']['forwardFrom']),
+                                        messagePassData[Number(messageId)]['batchInfo']['type']
+                                    ],
                             })
                         }
                         return
 
                     } catch (error) {
+                        console.log(error)
                         let translated = await translate({
                             text: `settings.enterPass`, langCode: langCode
                         })
