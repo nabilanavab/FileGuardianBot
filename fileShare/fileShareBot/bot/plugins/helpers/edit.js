@@ -32,7 +32,7 @@ const { FloodWaitError,
  * @returns {Object}                 - A Promise that resolves once the edited reply message is sent.
  */
 
-async function editReply({ client, chatId, editedText, editedBtn, messageId, strict=true }) {
+async function editReply({ client, chatId, editedText, editedBtn, messageId}) {
     // Edit and send the reply message to the log channel
     try {
         let editedMsg = await client.editMessage(
@@ -50,11 +50,9 @@ async function editReply({ client, chatId, editedText, editedBtn, messageId, str
     } catch ( error ) {
         // Handle flood error
         if (error instanceof FloodWaitError) {
-            if (strict){
-                await sleep(error.seconds);
-                // Retry editing and sending the reply after waiting for the flood interval
-                return editReply({ client, editedText, messageId });
-            }
+            await sleep(error.seconds);
+            // Retry editing and sending the reply after waiting for the flood interval
+            return editReply({ client, editedText, messageId });
         // } else if (error instanceof EditMessage){
         //     return editReply({ client, editedText, messageId });
         } else {

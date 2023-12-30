@@ -13,7 +13,7 @@
  * 
  */
 
-const file_name = __dirname
+const file_name = __dirname + __filename
 const author = "@nabilanavab"
 
 const { Api } = require("telegram");
@@ -31,7 +31,7 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
             })
         )
         
-        jsonString = data['messages'][0]['message'].split("\n\n")[0];
+        let jsonString = data['messages'][0]['message'].split("\n\n")[0];
         const jsonData = JSON.parse(`${jsonString}`);
         
         if (jsonData['setPassword']){
@@ -93,7 +93,7 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
         const messageIds = !massForward ?
             [ data['messages'][0]['replyTo']['replyToMsgId'] ] : 
             jsonData['batchInfo']['userData']
-
+            
         await userForward({
             client: client,
             messageIds: messageIds,

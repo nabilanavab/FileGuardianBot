@@ -40,7 +40,7 @@ module.exports = async function (client) {
                 let lang_code = await getLang(update.message.chatId);
 
                 // getting userBatch Info
-                const item = batchDB.find(item => item.id === update.message.chatId.value);
+                const item = batchDB.find(item => item && item.id === update.message.chatId.value);
 
                 if ( item.type === "@batchMessage") {
                     if ( item.userData.length < 10 ){
@@ -61,8 +61,6 @@ module.exports = async function (client) {
                     }
 
                 } else if ( item.type === "@batchChannel" ){
-
-                    // console.log(update.message)
                     if (!( update.message.fwdFrom && update.message.fwdFrom.fromId &&
                         update.message.fwdFrom.fromId.channelId &&
                         update.message.fwdFrom.fromId.className === "PeerChannel" )
@@ -143,19 +141,18 @@ module.exports = async function (client) {
                     getData(update.message.chatId.value),
                     (key, value) => {
                         if (typeof value === 'bigint')
-                            return value.toString();
+                            return Number(value)
                     return value;
                     }, 4
                 );
-                batchInfo = JSON.parse(batchInfo)
 
                 let message = `<pre><code class="language-js">{
   "userID"           : ${update.message.chatId},
-  "batchInfo"        : ${JSON.stringify(batchInfo)},
+  "batchInfo"        : ${batchInfo},
   "setPassword"      : ${getUserInfo && getUserInfo['setPassword'] ? `\"${getUserInfo['setPassword']}\"` : false},
   "dropAuthor"       : ${getUserInfo && getUserInfo['dropAuthor'] === undefined ? false : true},
   "dropMediaCaptions": ${getUserInfo && getUserInfo['dropMediaCaptions'] ? getUserInfo['dropMediaCaptions'] : false},
-  "noforwards"       : ${getUserInfo && getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false},
+  "noforwards"       : ${getUserInfo && getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false}
 }</code></pre>
 
 <a href="tg://user?id=${update.message.chatId}">👤 viewProfile 👤</a>`;
