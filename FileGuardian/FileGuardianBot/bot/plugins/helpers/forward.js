@@ -111,7 +111,7 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
                     if (error instanceof FloodWaitError) {
                         await sleep(error.seconds);
                     } else {
-                        let lang_code = await getLang(userID);
+                        let lang_code = await getLang(toUser);
 
                         let translated = await translate({
                             text : 'settings.messageDeleted',
@@ -120,7 +120,7 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
 
                         return await client.sendMessage(
                             toUser, {
-                                message: translated.text,
+                                message: translated.text + error,
                                 buttons: translated.button, replyTo: replyTo
                             }
                         )

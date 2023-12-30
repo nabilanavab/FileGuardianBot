@@ -25,7 +25,7 @@ const { duration } = require("moment");
 
 // Local database to store passwords for quick access and
 // prevent flooding during frequent requests.
-var localCbMessageDataWhichSavePassword = {
+var messagePassData = {
     786: {
         "id" :785,
         "password" : "BismillahirRahmanirRaheem"
@@ -44,7 +44,7 @@ module.exports = async function (client) {
                         if (messageId == undefined || password == undefined)
                             error = error;
                         
-                        if (localCbMessageDataWhichSavePassword[Number(messageId)] === undefined){
+                        if (messagePassData[Number(messageId)] === undefined){
 
                             let data = await client.invoke(
                                 new Api.channels.GetMessages({
@@ -72,18 +72,19 @@ module.exports = async function (client) {
                                     })
                                 );
                             }
-                            localCbMessageDataWhichSavePassword[Number(messageId)] = {
+                            messagePassData[Number(messageId)] = {
                                 'id' : jsonData['messageID'],
                                 'password' : jsonData['setPassword'],
                                 'dropAuthor' : !jsonData['dropAuthor'],
                                 'dropMediaCaptions' : jsonData['dropMediaCaptions'],
                                 'noforwards' : jsonData['noforwards'],
                                 'isAccesable' : jsonData['isAccesable'],
-                                'duration' : jsonData[duration]
+                                'duration' : jsonData['duration'],
+                                'batchInfo' : jsonData['batchInfo']
                             }
                         }
 
-                        if (localCbMessageDataWhichSavePassword[Number(messageId)]['isAccesable']){
+                        if (messagePassData[Number(messageId)]['isAccesable']){
                             let translated = await translate({
                                 text: `settings._noAccess`, langCode: langCode
                             })
@@ -101,16 +102,17 @@ module.exports = async function (client) {
                             )
                         }
 
-                        if(password === localCbMessageDataWhichSavePassword[Number(messageId)]['password']){
+                        console.log(messagePassData[Number(messageId)])
+                        if(password === messagePassData[Number(messageId)]['password']){
                             await userForward({
                                 client: client,
-                                messageIds: [localCbMessageDataWhichSavePassword[Number(messageId)]['id']],
+                                messageIds: [messagePassData[Number(messageId)]['id']],
                                 toUser: update.userId,
-                                dropAuthor: localCbMessageDataWhichSavePassword[Number(messageId)]['dropAuthor'],
-                                dropMediaCaptions: localCbMessageDataWhichSavePassword[Number(messageId)]['dropMediaCaptions'],
-                                noforwards: localCbMessageDataWhichSavePassword[Number(messageId)]['noforwards'],
-                                isAccesable: localCbMessageDataWhichSavePassword[Number(messageId)]['isAccesable'],
-                                duration: localCbMessageDataWhichSavePassword[Number(messageId)]['duration']
+                                dropAuthor: messagePassData[Number(messageId)]['dropAuthor'],
+                                dropMediaCaptions: messagePassData[Number(messageId)]['dropMediaCaptions'],
+                                noforwards: messagePassData[Number(messageId)]['noforwards'],
+                                isAccesable: messagePassData[Number(messageId)]['isAccesable'],
+                                duration: messagePassData[Number(messageId)]['duration']
                             })
                         }
                         return
