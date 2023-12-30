@@ -103,8 +103,12 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
             noforwards : jsonData['noforwards'] ? true : false,
             duration: jsonData['duration'] ? jsonData['duration'] : false,
             replyTo: replyTo,
-            massForward: !massForward ? true :
-                [Number(jsonData['forwardFrom']), jsonData['type']]
+            massForward: !massForward ? false :
+                [
+                    jsonData['batchInfo']['forwardFrom'] == "id" ?
+                        jsonData['userID'] : Number(jsonData['batchInfo']['forwardFrom']),
+                    jsonData['batchInfo']['type']
+                ],
         })
         return true
 

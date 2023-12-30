@@ -25,6 +25,8 @@ const logger = require("../../../logger");
 const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 const scheduleAfter = require("../scheduler/scheduleAfter");
 const deleteMsg = require("../scheduler/deleteMsg");
+const edit = require("../helpers/edit");
+
 
 /**
  * Asynchronous function to forward messages to a log channel.
@@ -138,12 +140,21 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
             return
         }
 
-        for (const messageID of messageIds){
+        let count = 0, total = messageList.length
+        let lang_code = await getLang(userID);
+        let translated = await translate({
+            text : 'batch.forwarded', langCode : lang_code
+        })
+        let edit_message = await client.sendMesssage({
+            message: translated.text + count + " / " + total, replyTo: replyTo
+        })
+
+        for (const messageID of messageList){
             while (true) {
                 try {
                     forwardMessage = await client.forwardMessages(
                         toUser, {
-                            messages: messageIds[0], fromPeer: LOG_FILE.LOG_CHANNEL,
+                            messages: messageID, fromPeer: fromPeer,
                             noforwards: noforwards, dropAuthor: !dropAuthor,
                             dropMediaCaptions: dropMediaCaptions
                         }
@@ -152,11 +163,13 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
                 } catch ( error ){
                     if (error instanceof FloodWaitError) {
                         await sleep(error.seconds);
-                    } else {
-
-                    }
+                    } else break;
                 }
             }
+            await edit.editReply({
+                client: client, chatId: toUser, messageId: edit_message.id, strict: false,
+                editedText: translated.text  + count + " / " + total, parseMode: "html"
+            })
         }
     }
     return true;
