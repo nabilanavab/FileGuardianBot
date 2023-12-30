@@ -22,7 +22,7 @@ const { LOG_FILE } = require("../../../config");
 const editDict = require("../../i18n/edtB10");
 const logger = require("../../../logger");
 
-async function decryptSingle({ client, messageID, userID, code, replyTo }) {
+async function decryptHandler({ client, messageID, userID, code, replyTo, massForward }) {
     try{
         let data = await client.invoke(
             new Api.channels.GetMessages({
@@ -98,7 +98,8 @@ async function decryptSingle({ client, messageID, userID, code, replyTo }) {
             dropMediaCaptions: jsonData['dropMediaCaptions'] ? true : false,
             noforwards : jsonData['noforwards'] ? true : false,
             duration: jsonData['duration'] ? jsonData['duration'] : false,
-            replyTo: replyTo
+            replyTo: replyTo,
+            massForward: massForward
         })
         return true
 
@@ -110,7 +111,7 @@ async function decryptSingle({ client, messageID, userID, code, replyTo }) {
     }
 }
 
-module.exports = decryptSingle;
+module.exports = decryptHandler;
 
 /**
  * 

@@ -26,8 +26,9 @@ async function checkDecCode({client, code, userID, replyTo}) {
         });
 
         await decHandler({
-            client: client, messageID: messageID.replace("batch:", ""),
-            userID: userID, code: code, replyTo: replyTo 
+            client: client, userID: userID, code: code, replyTo: replyTo,
+            messageID: messageID.startsWith("batch:") ? messageID.replace("batch:", ""): messageID,
+            massForward: messageID.startsWith("batch:") ? true : false
         })
         return true
 
