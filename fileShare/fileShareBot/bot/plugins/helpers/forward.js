@@ -132,7 +132,7 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
             for (const i=first; i<last; i++){
                 messageList.push(Number(i));
             }
-        } else if ( type == "@batchChannel" ){
+        } else if ( type == "@batchMessage" ){
             messageList = messageIds;
         } else {
             return
@@ -153,7 +153,7 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
                     if (error instanceof FloodWaitError) {
                         await sleep(error.seconds);
                     } else {
-                        
+
                     }
                 }
             }
