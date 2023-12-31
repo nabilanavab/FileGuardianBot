@@ -60,8 +60,8 @@ module.exports = async function (client) {
                 }
 
                 if ( item.type === "@batchMessage") {
-                    if ( item.userData.length <= 10 && ( !update.message.message || 
-                        (update.message.message && update.message.message != "/batch"))
+                    if ( item.userData.length==0 || (item.userData.length <= 10 && ( !update.message.message || 
+                        (update.message.message && update.message.message != "/batch")))
                     ){
                         insertDataById(update.message.chatId.value, update.message.id)
 
