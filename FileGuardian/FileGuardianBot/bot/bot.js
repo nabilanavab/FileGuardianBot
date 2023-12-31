@@ -44,35 +44,56 @@ global.botInfo = null;
 
             botInfo = await client.getMe();
             
+            await client.invoke(
+                new Api.bots.SetBotCommands({
+                    scope: new Api.BotCommandScopeDefault({}),
+                    langCode: "en",
+                    commands: [
+                        new Api.BotCommand({
+                            command: "start",
+                            description: "check if the bot is live.. 🤖"
+                        }),
+                        new Api.BotCommand({
+                            command: "batch",
+                            description: "Batch multiple files. 📁"
+                        })
+                    ]
+                })
+            )
+
             try {
-                // Bot Restart Messsage 
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(now);
-                const day = String(now.getDate()).padStart(2, '0');
+                if (config.UPDATE_MESSAGE.MESSAGE_ID && config.UPDATE_MESSAGE.CHANNEL_ID){
+                    // Bot Restart Messsage 
+                    const now = new Date();
+                    const year = now.getFullYear();
+                    const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(now);
+                    const day = String(now.getDate()).padStart(2, '0');
 
-                const formattedDate = `${year}:${month}:${day}`; // Date in the format YYYY:Month:DD
-                const formattedTime = now.toLocaleTimeString(); // Time in the format HH:MM:SS AM/PM
+                    // Date in the format YYYY:Month:DD
+                    const formattedDate = `${year}:${month}:${day}`;
+                    // Time in the format HH:MM:SS AM/PM
+                    const formattedTime = now.toLocaleTimeString();
 
-                await client.editMessage(
-                    config.UPDATE_MESSAGE.CHANNEL_ID, {
-                        message: config.UPDATE_MESSAGE.MESSAGE_ID,
-                        text: `🔄 **Bot Restarted Successfully!**
+                    await client.editMessage(
+                        config.UPDATE_MESSAGE.CHANNEL_ID, {
+                            message: config.UPDATE_MESSAGE.MESSAGE_ID,
+                            text: `🔄 **Bot Restarted Successfully!**
 
-🤖 **Bot Information:**
-   - Bot Name     : ${botInfo.firstName}
-   - Username     : ${botInfo.username}
+    🤖 **Bot Information:**
+    - Bot Name     : ${botInfo.firstName}
+    - Username     : ${botInfo.username}
 
-📅 **Restart Details:**
-   - Restarted Date : ${date}
-   - Restarted Time : ${time}
+    📅 **Restart Details:**
+    - Restarted Date : ${formattedDate}
+    - Restarted Time : ${formattedTime}
 
-👤 **Bot Management:**
-   - Bot Owner    : @nabilanavab
-   - Powered By   : @ilovepdf_bot`,
-                        parseMode: "Markdown"
-                    }
-                )
+    👤 **Bot Management:**
+    - Bot Owner    : @nabilanavab
+    - Powered By   : @ilovepdf_bot`,
+                            parseMode: "Markdown"
+                        }
+                    )
+                }
             } catch (error) {}
 
             if (config.DATABASE.MONGODB_URI)
