@@ -81,8 +81,9 @@
         "lastMsgError" : "Send Me The Last Message to Be Forwarded\n\n<b>NB: \n-  must be from same channel\n-  this message must be after the first message",
         "sendMessage" : "Send Messages to get batched..",
         "forwardIt" : "Ooh, Im waiting For a forward Message From Some Public Channel",
-        "batch": { "🤙 Batch Now 🤙" : "@batchNow" }, "cancel" : { "💩 Cancel Batch 💩" : "@cancelBatch"},
-        "forwarded" : "Frowarded : "
+        "batch": { "🤙 Batch Now 🤙" : "@batchNow", "🙂 Cancel 🙂" : "@cancelBatch" }, "forwarded" : "Total Messages Frowarded : ",
+        "cancel" : { "🙂 Cancel 🙂" : "@cancelBatch"}, "canceled" : { "🙃 Canceled 🙃" : "waste"},
+        "procCancel" : "Current Process Canceled 🙃"
     },
     "generate" : {
         "privLink" : "Good news! Your protected link is ready for sharing.\n\nNB: Always remember only the one who knows the password can access this data\n\n",

@@ -43,6 +43,37 @@ global.botInfo = null;
             });
 
             botInfo = await client.getMe();
+            
+            try {
+                // Bot Restart Messsage 
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(now);
+                const day = String(now.getDate()).padStart(2, '0');
+
+                const formattedDate = `${year}:${month}:${day}`; // Date in the format YYYY:Month:DD
+                const formattedTime = now.toLocaleTimeString(); // Time in the format HH:MM:SS AM/PM
+
+                await client.editMessage(
+                    config.UPDATE_MESSAGE.CHANNEL_ID, {
+                        message: config.UPDATE_MESSAGE.MESSAGE_ID,
+                        text: `🔄 **Bot Restarted Successfully!**
+
+🤖 **Bot Information:**
+   - Bot Name     : ${botInfo.firstName}
+   - Username     : ${botInfo.username}
+
+📅 **Restart Details:**
+   - Restarted Date : ${date}
+   - Restarted Time : ${time}
+
+👤 **Bot Management:**
+   - Bot Owner    : @nabilanavab
+   - Powered By   : @ilovepdf_bot`,
+                        parseMode: "Markdown"
+                    }
+                )
+            } catch (error) {}
 
             if (config.DATABASE.MONGODB_URI)
                 await scheduleDB(client);

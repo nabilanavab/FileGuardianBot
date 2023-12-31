@@ -101,13 +101,14 @@ module.exports = async function (client) {
                             )
                         }
 
-                        console.log(messagePassData[Number(messageId)])
                         if(password === messagePassData[Number(messageId)]['password']){
+                            const messageIds = !messagePassData[Number(messageId)]['batchInfo'] ?
+                                [messagePassData[Number(messageId)]['id']] : 
+                                messagePassData[Number(messageId)]['batchInfo']['userData']
+
                             await userForward({
-                                client: client,
-                                messageIds: [messagePassData[Number(messageId)]['id']],
-                                toUser: update.userId,
-                                dropAuthor: messagePassData[Number(messageId)]['dropAuthor'],
+                                client: client, messageIds: messageIds, toUser: update.userId,
+                                dropAuthor: !messagePassData[Number(messageId)]['dropAuthor'],
                                 dropMediaCaptions: messagePassData[Number(messageId)]['dropMediaCaptions'],
                                 noforwards: messagePassData[Number(messageId)]['noforwards'],
                                 isAccesable: messagePassData[Number(messageId)]['isAccesable'],
@@ -115,7 +116,8 @@ module.exports = async function (client) {
                                 massForward: !messagePassData[Number(messageId)]['batchInfo'] ? false :
                                     [
                                         messagePassData[Number(messageId)]['batchInfo']['forwardFrom'] == "id" ?
-                                            messagePassData[Number(messageId)]['userID'] : Number(messagePassData[Number(messageId)]['batchInfo']['forwardFrom']),
+                                            Number(messagePassData[Number(messageId)]['batchInfo']['id']) :
+                                            Number(messagePassData[Number(messageId)]['batchInfo']['forwardFrom']),
                                         messagePassData[Number(messageId)]['batchInfo']['type']
                                     ],
                             })

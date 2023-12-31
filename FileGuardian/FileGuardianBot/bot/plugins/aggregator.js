@@ -39,19 +39,29 @@ module.exports = async function (client) {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
+                let item = false
                 // getting userBatch Info
-                const item = batchDB.find(item => item && item.id === update.message.chatId.value);
+                for (let i = 0; i < batchDB.length; i++) {
+                    const currentItem = batchDB[i];
+                    console.log(currentItem)
+                    if (!currentItem) continue
+                    // Check if the current item has an 'id' property and its value matches chatIdValue
+                    if (currentItem && typeof currentItem === 'object' && 'id' in currentItem && currentItem.id === update.message.chatId.value) {
+                      item = currentItem;
+                      break;  // Exit the loop once the item is found
+                    }
+                }
 
                 if ( item.type === "@batchMessage") {
-                    if ( item.userData.length < 10 ){
+                    console.log(item.userData.length)
+                    if ( item.userData.length <= 10 ){
                         insertDataById(update.message.chatId.value, update.message.id)
 
                         const translated = await translate({
-                            text : "batch.sendMessage",
-                            button : "batch.batch",
-                            langCode : lang_code
+                            text : "batch.sendMessage", button : "batch.batch",
+                            langCode : lang_code, order: 11
                         })
-                        await client.sendMessage(
+                        return await client.sendMessage(
                             update.message.chatId, {
                                 message: translated.text,
                                 buttons: translated.button,

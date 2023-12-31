@@ -37,11 +37,21 @@ async function batchManager({ client, update }) {
         let langCode = await getLang(update.userId);
 
         if ( cbData === "@cancelBatch" ){
-            await client.deleteMessages(
-                update.userId, [update.msgId], {}
-            );
             deleteBatchUser('id', update.userId.value);
-            return
+
+            const translated = await translate({
+                text: "batch.procCancel",
+                button: "batch.canceled",
+                langCode: langCode
+            })
+            return await client.editMessage(
+                update.userId, {
+                    message: update.msgId,
+                    text: translated.text,
+                    buttons: client.buildReplyMarkup(translated.button),
+                    parseMode: "html",
+                }
+            );
         }
 
         if (isBatchUser(update.userId.value)){

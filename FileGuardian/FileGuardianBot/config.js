@@ -222,6 +222,27 @@ class RATE_LIMIT_INFO {
     static numberLimit = Number(process.env.NUMBER_LIMIT) || 2;
 }
 
+/**
+ * Class representing edit message when the bot get restarted
+ * first Dump a simple Message in any channel make bot admin [with write opt.]
+ * get messageId and ChannelID
+ */
+class UPDATE_MESSAGE {
+    /**
+     * Message Id of channel to be updated
+     * @type {number}
+     * @static
+     */
+    static MESSAGE_ID = Number(process.env.MESSAGE_ID) ? Number(process.env.MESSAGE_ID) : null;
+
+    /**
+     * Channel Id be of message updated
+     * @type {number}
+     * @static
+     */
+    static CHANNEL_ID = Number(process.env.CHANNEL_ID) ? Number(process.env.CHANNEL_ID) : null;
+}
+
 // ===================================================================================
 // Check if all the mandatory environment variables are present
 // ===================================================================================
@@ -244,8 +265,8 @@ console.log(`Currently supported languages: ${Object.keys(LANG_INFO.ENABLED_LANG
 console.log(`Log file: ${LOG_FILE.FILE_NAME}`);
 
 module.exports = {
-    BOT_INFO, LANG_INFO, LOG_FILE, CHANNEL_INFO,
-    DATABASE, BOT_ADMIN, RATE_LIMIT_INFO, SOURCE_INFO
+    BOT_INFO, LANG_INFO, LOG_FILE, CHANNEL_INFO, DATABASE,
+    BOT_ADMIN, RATE_LIMIT_INFO, SOURCE_INFO, UPDATE_MESSAGE
 };
 
 /**

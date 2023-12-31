@@ -17,7 +17,7 @@ const file_name = __dirname
 const author = "@nabilanavab"
 
 // isBatch saves all users data in /batch queue
-const batchDB = [
+let batchDB = [
     {
         "id" : 786,
         "type" : "@batchMessage",

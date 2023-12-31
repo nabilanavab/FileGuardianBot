@@ -131,6 +131,7 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
             // batch file forward
             const fromPeer = massForward[0];
             const type = massForward[1];
+            console.log(fromPeer)
 
             let messageList = []
 
