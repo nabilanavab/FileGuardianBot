@@ -49,29 +49,33 @@ module.exports = async function (client) {
                 // getting userBatch Info
                 for (let i = 0; i < batchDB.length; i++) {
                     const currentItem = batchDB[i];
-                    console.log(currentItem)
                     if (!currentItem) continue
                     // Check if the current item has an 'id' property and its value matches chatIdValue
-                    if (currentItem && typeof currentItem === 'object' && 'id' in currentItem && currentItem.id === update.message.chatId.value) {
-                      item = currentItem;
-                      break;  // Exit the loop once the item is found
+                    if ( currentItem && typeof currentItem === 'object' &&
+                         'id' in currentItem && currentItem.id === update.message.chatId.value
+                     ) {
+                        item = currentItem;
+                        break;  // Exit the loop once the item is found
                     }
                 }
 
                 if ( item.type === "@batchMessage") {
-                    console.log(item.userData.length)
-                    if ( item.userData.length <= 10 ){
+                    if ( item.userData.length <= 10 && ( !update.message.message || 
+                        (update.message.message && update.message.message != "/batch"))
+                    ){
                         insertDataById(update.message.chatId.value, update.message.id)
 
                         const translated = await translate({
-                            text : "batch.sendMessage", button : "batch.batch",
-                            langCode : lang_code, order: 11
+                            text : "batch.sendMessage", button : "batch.cancel",
+                            langCode : lang_code
                         })
+
                         return await client.sendMessage(
                             update.message.chatId, {
-                                message: translated.text,
+                                message: translated.text + item.userData.length,
                                 buttons: translated.button,
-                                parseMode: "html"
+                                parseMode: "html",
+                                replyTo: update.message
                             }
                         )
                     }
@@ -228,7 +232,7 @@ module.exports = async function (client) {
                 batchCompleted.push(update.message.chatId.value)
 
             } catch (error) {
-                logger.log('error', `${file_name}/aggregator.js : ${update.message.chatId} : ${error}`);
+                logger.log('error', `${file_name} : ${update.message.chatId} : ${error}`);
             }
         }
     });

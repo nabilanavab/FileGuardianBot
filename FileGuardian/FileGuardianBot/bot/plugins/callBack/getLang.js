@@ -30,7 +30,7 @@ const { createButton } = require("../../i18n/ba10");
  *                                  false if there's an error.
  */
 
-const maxClmnForButton = 2;
+const maxClmnForButton = 3;
 
 async function askLang({ client, update }) {
     try {

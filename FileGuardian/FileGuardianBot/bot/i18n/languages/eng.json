@@ -1,16 +1,16 @@
 {
     "force" : {
-        "message" : "🚨 Due to overwhelming demand, subscription is now required to manage access.\n\nSubscribe to ensure uninterrupted service",
+        "message" : "🚨 Attention: Increased demand has led to a mandatory subscription for access management..\n\n🔗 Use the below '🪐 JOIN CHANNEL 🪐' button & once you are in use '♻️ REFRESH ♻️'!",
         "button" : {
             "🪐 JOIN CHANNEL 🪐" : "%s",
             "♻️ REFRESH ♻️" : "=refresh"
         },
-        "fool": "Click the above button and join chat to proceed 😎"
+        "fool": "Click the button above and join the chat to proceed! 😎"
     },
     "timeLimit" : {
-        "message" : "`You are sending messages too frequently. Please wait for %s seconds.`",
+        "message" : "`⚠️ You are sending messages too frequently.`\n`Please wait for %s seconds. ⌛🤐`",
         "button" : {
-            "Try Again: %s sec Over" : "generate"
+            "🔄 Try Again: %s seconds Over! 🔄✨" : "generate"
         }
     },
     "help" : {
@@ -51,54 +51,52 @@
             "AUTO-ERASE" : "$duration",
             "🔙 BacK" : "-help|0"
         },
-        "errorLink" : "Please Check The Link",
-        "noAccess" : "Temporarly Admin Disabled This File\n\nContact link creator or Try Again Later",
-        "_noAccess": "Temporarly Admin Disabled This File",
+        "errorLink" : "⚠️ Showing some error!\n\nPlease check the link again. 🚫🌐",
+        "noAccess" : "🚫 Temporarily Admin Disabled This File 📂\n\nContact the link creator or try again later. 🔄📞",
+        "_noAccess": "🚫 Temporarily Admin Disabled This File 📂",
         "noAccessBtn" : { "♻️ Try Again ♻️" : "%s" },
         "setPassword" : "🔒 Set Password As:",
         "bigPassword" : "⛔ Too Big Password..",
         "samePassword" : "🔑 Current Password..",
-        "passUpdated" : "🔒 <b>Password Updated..</b>\n\nClick below button to know 🤫",
+        "passUpdated" : "🔒 <b>Password Updated...</b>\n\nClick the button below to find out! 🤫👇",
         "passworDlt" : "🚫 Delete Password..",
         "enterPass" : "✍️ Now Enter Password..",
-        "closeCB" : { "✖️ Close ✖️" : "close"},
-        "passUpdCB" : { "VIEW PASSWORD" : "%s", "✖️ Close ✖️" : "close" },
-        "askPassword" : "<b>This file is secure with a password 🔒.</b>\n\n<i>Use the button below if you have the password to access it.</i>",
+        "closeCB" : { "🚶‍♀️ Close 🚶‍♀️" : "close"},
+        "passUpdCB" : { "VIEW PASSWORD" : "%s", "🚶‍♀️ Close 🚶‍♀️" : "close" },
+        "askPassword" : "<b>This file is secure with a password 🔒.</b>\n\n<i>Use the button below if you have the password to access it.</i> 👇🔑",
         "askPswdButon" : { "😎 i know the password 😎" : ":get %s " },
-        "messageDeleted" : "Unfortunately someting went wrong\n\n"
+        "messageDeleted" : "Unfortunately, something went wrong. 🤷‍♂️🚫\n\n"
     },
     "lang" : {
-        "select" : "Now, Select Language, Depending On Ur Choice: ",
+        "select" : "Now, select a language depending on your choice: 🌐🗣️",
         "back" : { "🔙 BacK" : "-help|0" },
-        "already" : "Already U are using this Language"
+        "already" : "Already, you are using this Language 🙇🏻"
     },
     "batch" : {
         "new" : "<i>Use <b>'📢 Batch From Channel 📢'</b> to group a set of messages from a channel. Simply send the first and last message, and it will batch the first 100 messages  if the number of messages between the first and last exceeds 100.\n\nOn the other hand, <b>'👤 Batch My Message 👤'</b> lets you batch individual messages you send one by one, with a maximum limit of 10 messages</i>",
         "newButton" : { "📢 Batch From Channel 📢" : "@batchChannel", "👤 Batch My Message 👤" : "@batchMessage", "✖️ Close ✖️" : "close"},
-        "inProgress" : "A batch job is currently in progress..",
-        "sendFisrtMsg" : "Now Send Me the First Message of the Batch File",
-        "sendLastMsg" : "Now Send Me the last Message to Get Batched\n\n<b>NB: Both message must be from same channel</b>",
-        "lastMsgError" : "Send Me The Last Message to Be Forwarded\n\n<b>NB: \n-  must be from same channel\n-  this message must be after the first message",
-        "sendMessage" : "Send Messages to get batched..",
-        "forwardIt" : "Ooh, Im waiting For a forward Message From Some Public Channel",
-        "batch": { "🤙 Batch Now 🤙" : "@batchNow", "🙂 Cancel 🙂" : "@cancelBatch" }, "forwarded" : "Total Messages Frowarded : ",
+        "inProgress" : "A batch job is currently in progress... ⌛🔄",
+        "sendFisrtMsg" : "Now forward me the first message of the batch file from a public channel\n\nor grant me admin access in the channel and forward. 🔄📤",
+        "sendLastMsg" : "Now send me the last message to get batched. 📤\n\n<b>NB: Both messages must be from the same channel.</b> 🔄>",
+        "lastMsgError" : "Send me the last message to be forwarded. 📬\n\n<b>NB:</b>\n- It must be from the same channel.\n- This message must be after the first message. 🔄",
+        "sendMessage" : "Send me some messages to get batched. 📤\n\n/batch: to batch current data\nCurrent data in Queue 🔄: ", "forwarded" : "📬 Total Messages Frowarded : ",
+        "forwardIt" : "Ooh, I'm waiting for a forward message from some public channel\n\nor a channel where I am an admin. ⏳📤",
         "cancel" : { "🙂 Cancel 🙂" : "@cancelBatch"}, "canceled" : { "🙃 Canceled 🙃" : "waste"},
-        "procCancel" : "Current Process Canceled 🙃"
+        "procCancel" : "All queues are cleared,\n\nthe current process is canceled. 🙃"
     },
     "generate" : {
-        "privLink" : "Good news! Your protected link is ready for sharing.\n\nNB: Always remember only the one who knows the password can access this data\n\n",
-        "publLink" : "Good news! Your public link is ready for sharing.\n\nNB: Always remember this is a public link anyone can use this link to fetch data\n\n",
+        "privLink" : "Good news! Your protected link is ready for sharing.. 🌐🔒\n\nNB: Always remember, only the one who knows the password can access this data 🔑\n\n",
+        "publLink" : "Good news! Your public link is ready for sharing.🌐🔗\n\nNB: Always remember this is a public link anyone can use this link to fetch data 🚫🔒\n\n",
         "button" : {
             "📂 VIEW FILE 📂" : "%s",
             "📎 SHARE URL 📎" : "https://t.me/share/url?url=%s"
         }
     },
     "duration" : {
-        "message" : "Now, Selete A Time Duration to The Message,\n\nIt wILL Delete The Message After The Spefied Time",
+        "message" : "Now, select a time duration for the message.\n\nIt will delete the message after the specified time. ⏰🚫",
         "button" : { "Dont Erase" : "$delete", "10 sec" : "$10", "30 sec" : "$30", 
                      "1 min" : "$60", "10 min" : "$600", "15 min" : "$900",
                      "30 min" : "$1800", "1 hr" : "$3600", "3 hr" : "$10800",
-                     "6 hr" : "$21600", "12 hr" : "$43200", "1 day" : "$86400", "🔙 BacK" : "!set" },
-        "already" : "Already U are using this Duration Time"
+                     "6 hr" : "$21600", "12 hr" : "$43200", "1 day" : "$86400", "🔙 BacK" : "!set" }
     }
 }

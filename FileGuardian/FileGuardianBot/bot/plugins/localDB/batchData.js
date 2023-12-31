@@ -31,9 +31,24 @@ let batchDB = [
     }
 ];
 
+
+/**
+ * Check if a user is in the [batch] database.
+ *
+ * @param {string} userId - The ID of the user to check.
+ * @returns {boolean}    - True if the user is in the batch database, otherwise false.
+ */
+
 const isBatchUser = (userId) => {
     return batchDB.some((user) => user.id === userId);
 };
+
+/**
+ * Delete a user from the [batch] database based on a key-value pair.
+ *
+ * @param {string} dltKey - The key to identify the user in the batch database.
+ * @param {any} dltValue  - The value associated with the key to identify the user.
+ */
 
 const deleteBatchUser = (dltKey, dltValue) => {
     for (let key in batchDB) {
@@ -47,22 +62,73 @@ const deleteBatchUser = (dltKey, dltValue) => {
     }
 };
 
+/**
+ * Insert data for a user in the batch database by their ID and message ID.
+ *
+ * @param {string} id        - The ID of the user.
+ * @param {string} messageID - The message ID to insert for the user.
+ */
+
 const insertDataById = (id, messageID) => {
-    const item = batchDB.find(item => item.id === id);
+    let item = false
+    for (let i = 0; i < batchDB.length; i++) {
+        const currentItem = batchDB[i];
+        if (!currentItem) continue
+        if ( currentItem && typeof currentItem === 'object' &&
+                'id' in currentItem && currentItem.id === id
+            ) {
+            item = currentItem;
+            break;
+        }
+    }
     if (item){
         item.userData = item.userData || [];
         item.userData.push(messageID);
     }
 };
 
+/**
+ * Insert a forward-from value for a user in the batch database by their ID.
+ *
+ * @param {string} id        - The ID of the user.
+ * @param {string} channelID - The channel ID to insert as the forward-from value.
+ */
+
 const insertForwardFromById = (id, channelID) => {
-    const item = batchDB.find(item => item.id === id);
+    let item = false
+    for (let i = 0; i < batchDB.length; i++) {
+        const currentItem = batchDB[i];
+        if (!currentItem) continue
+        if ( currentItem && typeof currentItem === 'object' &&
+                'id' in currentItem && currentItem.id === id
+            ) {
+            item = currentItem;
+            break;
+        }
+    }
     if (item)
         item.forwardFrom = channelID;
 }
 
+/**
+ * Get data for a user from the batch database by their ID.
+ *
+ * @param {string} id     - The ID of the user.
+ * @returns {object|null} - The user's data if found, otherwise null.
+ */
+
 const getData = (id) => {
-    const item = batchDB.find(item => item.id === id);
+    let item = false
+    for (let i = 0; i < batchDB.length; i++) {
+        const currentItem = batchDB[i];
+        if (!currentItem) continue
+        if ( currentItem && typeof currentItem === 'object' &&
+                'id' in currentItem && currentItem.id === id
+            ) {
+            item = currentItem;
+            break;
+        }
+    }
     return item
 }
 
