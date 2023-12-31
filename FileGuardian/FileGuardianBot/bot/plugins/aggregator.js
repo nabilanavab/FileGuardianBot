@@ -27,7 +27,13 @@ const editDict = require("../../bot/i18n/edtB10");
 const edit = require("./helpers/edit");
 
 
-// Check if the user in batching files
+/**
+ * Event handler to check if the user is in a batching session and processes relevant messages.
+ *
+ * @param {TelegramBot} client - The Telegram bot instance.
+ * @returns {Promise<void>} - A Promise that resolves when the event handling is completed.
+ */
+
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
@@ -227,3 +233,21 @@ module.exports = async function (client) {
         }
     });
 }
+
+/**
+ * 
+ * @license
+ * FileShareBot is open-source software distributed under the MIT License.
+ * Please see the LICENSE: file for more details.
+ *
+ * @repository
+ * You can find the source code of this bot and contribute on GitHub: 
+ * https://github.com/nabilanavab/filesharebot
+ *
+ * @author
+ * Created with ❤️ by Your Name - Feel free to reach out for questions,
+ * bug reports, or collaboration.
+ * 
+ *                                 Contact: https://telegram.me/nabilanavab
+ * 
+ */

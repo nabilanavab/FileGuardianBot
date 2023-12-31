@@ -28,6 +28,12 @@ const askDuration = require("./callBack/getDuration");
 const refreshPage = require("./callBack/refresh");
 const batchManager = require("./callBack/batchCB");
 
+/**
+ * Event handler to process callback queries from the bot's inline keyboard.
+ *
+ * @param {TelegramBot} client - The Telegram bot instance.
+ * @returns {Promise<void>} - A Promise that resolves when the callback query processing is completed.
+ */
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {

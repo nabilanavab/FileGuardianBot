@@ -32,6 +32,13 @@ var messagePassData = {
     }
 }
 
+/**
+ * Event handler to process inline queries from the bot.
+ *
+ * @param {TelegramBot} client - The Telegram bot instance.
+ * @returns {Promise<void>} - A Promise that resolves when the inline query processing is completed.
+ */
+
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (update  && update.className == "UpdateBotInlineQuery"){

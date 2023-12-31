@@ -24,8 +24,13 @@ const { coreDbFunctions } = require("../monGo/core");
 const { DATABASE } = require("../../config");
 const { extrasDbFunctions } = require("../monGo/extras");
 
+/**
+ * Event handler to process chat invite requester updates for the bot's force subscription channel.
+ *
+ * @param {TelegramBot} client - The Telegram bot instance.
+ * @returns {Promise<void>} - A Promise that resolves when the event handling is completed.
+ */
 
-// Check if the user sent a /batch (in a private chat)
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if ( update && update.className === "UpdateBotChatInviteRequester" &&

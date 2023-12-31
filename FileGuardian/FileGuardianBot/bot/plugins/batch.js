@@ -27,7 +27,14 @@ const REQUESTED_USERS = require("./localDB/request");
 const { limitHandler } = require("./helpers/limitHandler");
 
 
-// Check if the user sent a /batch (in a private chat)
+/**
+ * Adds an event handler to process batch-related messages (in a private chat).
+ *
+ * @param {TelegramBot} client - The Telegram bot instance.
+ * @returns {Promise<number>} - A Promise that resolves to 0 after processing the batch-related message.
+ * @throws {Error} - Throws an error if an exception occurs during the message processing, including FloodWaitError.
+ */
+
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (

@@ -29,7 +29,14 @@ const checkDecCode = require("./util/checkDecCode");
 const setPassword = require("./util/setPassword");
 const REQUESTED_USERS = require("./localDB/request");
 
-// Define welcome message
+
+/**
+ * Event handler to define a welcome message for users sending /start command in a private chat.
+ *
+ * @param {TelegramBot} client - The Telegram bot instance.
+ * @returns {Promise<void>} - A Promise that resolves when the event handling is completed.
+ */
+
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (update && update.message && update.message.message &&

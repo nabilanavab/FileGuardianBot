@@ -33,8 +33,13 @@ const REQUESTED_USERS = require("./localDB/request");
 const { limitHandler } = require("./helpers/limitHandler");
 
 
-// All messages, except /start or /batch, will be considered as a request &
-// It will automatically generate a URL for that message
+/**
+ * Event handler to process messages, generating URLs for requests, excluding /start and /batch commands.
+ *
+ * @param {TelegramBot} client - The Telegram bot instance.
+ * @returns {Promise<void>} - A Promise that resolves when the message processing is completed.
+ */
+
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (

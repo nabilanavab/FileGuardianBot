@@ -22,6 +22,22 @@ const { LOG_FILE } = require("../../../config");
 const editDict = require("../../i18n/edtB10");
 const logger = require("../../../logger");
 
+
+/**
+ * Decrypts a message and handles various scenarios, such as setting a password,
+ * granting or denying access, and forwarding messages to the user.
+ *
+ * @param {Object} params               - The parameters object.
+ * @param {TelegramBot} params.client   - The Telegram bot instance.
+ * @param {number} params.messageID     - The ID of the message to decrypt.
+ * @param {number} params.userID        - The ID of the user to whom the decrypted message will be sent.
+ * @param {string} params.code          - The decryption code.
+ * @param {number} params.replyTo       - The ID of the message to reply to.
+ * @param {boolean} params.massForward  - Indicates whether to perform a mass forward.
+ * @returns {Promise<boolean>}          - A Promise that resolves to true if the decryption and handling are successful, false otherwise.
+ * @throws {Error}                      - Throws an error if an exception occurs during the decryption and handling process.
+ */
+
 async function decryptHandler({ client, messageID, userID, code, replyTo, massForward }) {
     try{
         let data = await client.invoke(

@@ -19,6 +19,18 @@ const author = "@nabilanavab"
 const decrypt = require("../cryptoG/decrypt");
 const decHandler = require("./decHandler");
 
+/**
+ * Checks and processes a decryption code, then invokes the decryption handler.
+ *
+ * @param {Object} params - The parameters object.
+ * @param {TelegramBot} params.client - The Telegram bot instance.
+ * @param {string} params.code - The decryption code to check.
+ * @param {number} params.userID - The ID of the user making the request.
+ * @param {number} params.replyTo - The ID of the message to reply to.
+ * @returns {Promise<boolean|string>} - A Promise that resolves to true if the decryption and handling are successful,
+ *   or a string ("💩") representing an error if decryption or handling fails.
+ */
+
 async function checkDecCode({client, code, userID, replyTo}) {
     try {
         messageID = await decrypt({
