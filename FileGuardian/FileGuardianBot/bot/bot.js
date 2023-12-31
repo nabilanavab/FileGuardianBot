@@ -24,6 +24,8 @@ const { TelegramClient, client } = require("telegram");
 const { StringSession } = require("telegram/sessions");
 const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 const scheduleDB = require("./monGo/shdulFrmDb");
+const { Button } = require("telegram/tl/custom/button");
+
 
 global.botInfo = null;
 
@@ -70,31 +72,41 @@ global.botInfo = null;
                     const day = String(now.getDate()).padStart(2, '0');
 
                     // Date in the format YYYY:Month:DD
-                    const formattedDate = `${year}:${month}:${day}`;
+                    const formattedDate = `${year} : ${month} : ${day}`;
                     // Time in the format HH:MM:SS AM/PM
                     const formattedTime = now.toLocaleTimeString();
 
                     await client.editMessage(
                         config.UPDATE_MESSAGE.CHANNEL_ID, {
                             message: config.UPDATE_MESSAGE.MESSAGE_ID,
-                            text: `🔄 **Bot Restarted Successfully!**
+                            text: `🔄 <b>Bot Restarted Successfully!</b>
 
-    🤖 **Bot Information:**
-    - Bot Name     : ${botInfo.firstName}
-    - Username     : ${botInfo.username}
+🤖 <b>Bot Information:</b>
+    - Bot Name     : <a href="https://telegram.dog/${botInfo.username}">${botInfo.firstName}</a>
+    - Username     : @${botInfo.username}
 
-    📅 **Restart Details:**
-    - Restarted Date : ${formattedDate}
-    - Restarted Time : ${formattedTime}
+📅 <b>Restart Details:</b>
+    - Date : <code>${formattedDate}</code>
+    - Time : <code>${formattedTime}</code>
 
-    👤 **Bot Management:**
-    - Bot Owner    : @nabilanavab
-    - Powered By   : @ilovepdf_bot`,
-                            parseMode: "Markdown"
+👤 <b>Bot Management:</b>
+    - Contact Owner   : @nabilanavab
+    - Powered By      : @ilovepdf_bot`,
+                            buttons: client.buildReplyMarkup([[
+                                    Button.url(text="✨ Source Code ✨", url="github.com/nabilanavab/fileGuardian")
+                                ],[
+                                    Button.url(text="👤 Owner 👤", url="https://telegram.dog/nabilanavab"),
+                                    Button.url(text="🤖 Bot 🤖", url=`https://telegram.dog/${botInfo.username}`)
+                                ]
+                            ]),
+                            noWebpage: true,
+                            parseMode: "html"
                         }
                     )
                 }
-            } catch (error) {}
+            } catch (error) {
+                console.log(error)
+            }
 
             if (config.DATABASE.MONGODB_URI)
                 await scheduleDB(client);

@@ -27,18 +27,50 @@
 
         <link rel="icon" href="URL_to_your_favicon" type="image/x-icon">
         <link rel="stylesheet" href="styles.css">
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f2f2f2;
+                text-align: center;
+                margin-top: 150px;
+            }
+            
+            h1 {
+                color: #333;
+            }
+            
+            .quote {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+    
+            .reload-button {
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 20px;
+                background-color: #333;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+    
+            .reload-button:hover {
+                background-color: #555;
+            }
+    
+        </style>
     </head>
     <body>
-        <main>
-            <section>
-                <h2>Welcome to Your File Share Bot</h2>
-                <p>
-                    Personal File Share Bot, created by nabilanavab, allows you to create permanent links for sharing various types of data, including text, images, documents, and more. With features like password protection and additional data protection options, it's a secure and user-friendly solution for sharing information.
-                </p>
-            </section>
-    
-            <!-- Additional sections, features, and content can be added here -->
-    
-        </main>
+        <h1>Please Don't Say Just Hello In Chat</h1>
+        <div class="quote">Under Development..</div></br></br>
+        <button class="reload-button" onclick="reloadPage()">Reload</button>
+
+        <script>
+            function reloadPage() {
+                location.reload();
+            }
+        </script>
     </body>
 </html>
