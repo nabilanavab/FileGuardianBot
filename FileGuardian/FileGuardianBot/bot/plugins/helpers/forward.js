@@ -22,7 +22,7 @@ const author = "@nabilanavab"
 
 const { LOG_FILE } = require("../../../config");
 const logger = require("../../../logger");
-const { FloodWaitError } = require("telegram/errors/RPCErrorList");
+const { FloodWaitError } = require("telegram/errors");
 const scheduleAfter = require("../scheduler/scheduleAfter");
 const deleteMsg = require("../scheduler/deleteMsg");
 const edit = require("../helpers/edit");
@@ -109,7 +109,8 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
                 } catch (error) {
                     // Handle flood error
                     if (error instanceof FloodWaitError) {
-                        await sleep(error.seconds);
+                        console.log(error.seconds)
+                        await sleep(error.seconds * 1000);
                     } else {
                         let lang_code = await getLang(toUser);
 
@@ -138,7 +139,7 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
                 let first = messageIds[0], last = messageIds[1];
                 if ( last-first >= 100) last = first+100;
 
-                for (let i=first; i<last; i++){
+                for (let i=first; i<=last; i++){
                     messageList.push(Number(i));
                 }
             } else if ( type == "@batchMessage" ){
@@ -159,49 +160,40 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
                 }
             )
 
-            if (type == "@batchMessage"){
-                for (let messageID of messageList){
-                    count++
-                    while (true) {
-                        try {
-                            forwardMessage = await client.forwardMessages(
-                                toUser, {
-                                    messages: messageID, fromPeer: fromPeer,
-                                    noforwards: noforwards, dropAuthor: !dropAuthor,
-                                    dropMediaCaptions: dropMediaCaptions
-                                }
-                            );
-                            try{
-                                await client.editMessage(
-                                    toUser, {
-                                        message: edit_message.id,
-                                        text: translated.text  + count + " / " + total
-                                    }
-                                )
-                                break
-                            } catch (error) {
-                                break
+            for (let messageID of messageList){
+                count++
+                while (true) {
+                    try {
+                        forwardMessage = await client.forwardMessages(
+                            toUser, {
+                                messages: messageID, fromPeer: fromPeer,
+                                noforwards: noforwards, dropAuthor: !dropAuthor,
+                                dropMediaCaptions: dropMediaCaptions
                             }
-                        } catch ( error ){
-                            if (error instanceof FloodWaitError) {
-                                await sleep(error.seconds);
-                            } else {
-                                logger.log('error', `error During Forward : ${error}`)
-                                break
-                            };
+                        );
+                        try{
+                            await client.editMessage(
+                                toUser, {
+                                    message: edit_message.id,
+                                    text: translated.text  + count + " / " + total
+                                }
+                            )
+                            break
+                        } catch (error) {
+                            break
                         }
+                    } catch ( error ){
+                        if (error instanceof FloodWaitError) {
+                            console.log(error.seconds)
+                            await sleep(error.seconds * 1000);
+                        } else {
+                            logger.log('error', `error During Forward : ${error}`)
+                            break
+                        };
                     }
                 }
-            } else {
-                forwardMessage = await client.forwardMessages(
-                    toUser, {
-                        messages: messageList, fromPeer: fromPeer,
-                        noforwards: noforwards, dropAuthor: !dropAuthor,
-                        dropMediaCaptions: dropMediaCaptions
-                    }
-                );
             }
-            try{
+            try {
                 await client.editMessage(
                     toUser, {
                         message: edit_message.id,

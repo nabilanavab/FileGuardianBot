@@ -82,7 +82,8 @@
         "sendMessage" : "Send me some messages to get batched. 📤\n\n/batch: to batch current data\nCurrent data in Queue 🔄: ", "forwarded" : "📬 Total Messages Frowarded : ",
         "forwardIt" : "Ooh, I'm waiting for a forward message from some public channel\n\nor a channel where I am an admin. ⏳📤",
         "cancel" : { "🙂 Cancel 🙂" : "@cancelBatch"}, "canceled" : { "🙃 Canceled 🙃" : "waste"},
-        "procCancel" : "All queues are cleared,\n\nthe current process is canceled. 🙃"
+        "procCancel" : "All queues are cleared,\n\nthe current process is canceled. 🙃",
+        "adminReq" : "Bot must be an admin in the channel; otherwise, it can't access the files. 🤖🚫"
     },
     "generate" : {
         "privLink" : "Good news! Your protected link is ready for sharing.. 🌐🔒\n\nNB: Always remember, only the one who knows the password can access this data 🔑\n\n",

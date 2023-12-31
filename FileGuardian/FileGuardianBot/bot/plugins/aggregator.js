@@ -25,6 +25,7 @@ const encrypt = require("./cryptoG/encrypt");
 const reply = require("./helpers/reply");
 const editDict = require("../../bot/i18n/edtB10");
 const edit = require("./helpers/edit");
+const { Api } = require("telegram")
 
 
 /**
@@ -101,6 +102,27 @@ module.exports = async function (client) {
                     }
                     
                     if ( item.userData.length == 0 ){
+
+                        try{
+                            await client.invoke(
+                                new Api.channels.GetChannels({
+                                    id: [update.message.fwdFrom.fromId.channelId]
+                                })
+                            )
+                        } catch (error){
+                            const translated = await translate({
+                                text : "batch.adminReq",
+                                button : "batch.cancel",
+                                langCode : lang_code
+                            })
+                            return await client.sendMessage(
+                                update.message.chatId, {
+                                    message: 'ERROR: CHANNEL_PRIVATE\n\n' + translated.text,
+                                    buttons: translated.button,
+                                    parseMode: "html"
+                                }
+                            )
+                        }
                         
                         insertForwardFromById(
                             update.message.chatId.value, update.message.fwdFrom.fromId.channelId.value
