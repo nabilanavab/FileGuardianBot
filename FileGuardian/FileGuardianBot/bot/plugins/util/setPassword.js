@@ -12,7 +12,7 @@
  * 
  */
 
-const file_name = __filename
+const file_name = __dirname + __filename
 const author = "@nabilanavab"
 
 const logger = require("../../../logger");

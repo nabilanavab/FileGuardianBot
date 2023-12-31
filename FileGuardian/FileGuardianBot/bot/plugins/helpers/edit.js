@@ -13,7 +13,7 @@
  * 
  */
 
-const file_name = __dirname
+const file_name = __dirname + __filename
 const author = "@nabilanavab"
 
 // This snippet helps to edit user messages, primarily aimed at addressing the flood issue.
@@ -56,7 +56,7 @@ async function editReply({ client, chatId, editedText, editedBtn, messageId}) {
         // } else if (error instanceof EditMessage){
         //     return editReply({ client, editedText, messageId });
         } else {
-            logger.log(`?Error @ editReplyInLog: ${error}`);
+            logger.log('error', `${file_name}: ${chatId} : ${error}`);
             return null;
         }
     }

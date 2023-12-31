@@ -13,7 +13,7 @@
  * 
  */
 
-const file_name = __dirname
+const file_name = __dirname + __filename
 const author = "@nabilanavab"
 
 const logger = require("../../../logger");
@@ -108,8 +108,7 @@ const forceSub = async ({ client, update, checkLimit = false }) => {
                 replyTo: update.message.id
             });
 
-            logger.log('info', `${update.message.chatId} cause error: ${error.message}`);
-
+            logger.log('error', `${file_name}: ${update.message.chatId.value} : ${error}`);
             throw new userNotJoined("USER_NOT_JOINED")
         }
     }

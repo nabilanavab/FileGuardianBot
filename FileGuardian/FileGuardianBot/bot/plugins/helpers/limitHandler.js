@@ -8,14 +8,14 @@
  * making a pull request. [ All contributions are highly appreciated ]
  *
  * @version 1.0.0
- * @author NabilANavab [ @nabilanavab ]
+ * @author NabilANavab
  * @copyright 2023 ©️ nabilanavab
  * @date December 12, 2023
  * @description : This file contains functions for handling user requests with a
  *                rate-limiting mechanism.
  */
 
-const file_name = __dirname
+const file_name = __dirname + __filename
 const author = "@nabilanavab"
 
 const userRequests = new Map();

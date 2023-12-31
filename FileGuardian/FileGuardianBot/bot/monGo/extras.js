@@ -13,7 +13,7 @@
  * 
  */
 
-const file_name = __dirname
+const file_name = __dirname + __filename
 const author = "@nabilanavab"
 
 // features that are not crucial for the core functionality

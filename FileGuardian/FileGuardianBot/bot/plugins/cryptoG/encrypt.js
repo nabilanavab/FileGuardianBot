@@ -13,7 +13,7 @@
  * 
  */
 
-const file_name = __dirname
+const file_name = __dirname + __filename
 const author = "@nabilanavab"
 
 const crypto = require("crypto");
@@ -49,7 +49,7 @@ async function encrypt({ text, userID }) {
         
     } catch (error) {
         // Handle errors
-        logger.log('error', `Error in Encrypting: ${error.message}`);
+        logger.log('error', `${file_name}: ${userID} : ${error}`);
         return false
     }
 }

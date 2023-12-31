@@ -13,7 +13,7 @@
  * 
  */
 
-const file_name = __dirname
+const file_name = __dirname + __filename
 const author = "@nabilanavab"
 
 const crypto = require("crypto");
@@ -46,6 +46,7 @@ async function decrypt({ code, userID }){
         let decrypted = decipher.update(code, 'hex', 'utf8') + decipher.final('utf8');
         return decrypted;
     } catch (error) {
+        logger.log('error', `${file_name}: ${userID} : ${error}`);
         throw "error in code";
     }
 }
