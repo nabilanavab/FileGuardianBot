@@ -44,9 +44,6 @@ module.exports = async function (client) {
             update.message.message.toLowerCase().startsWith("/start")
         ) {
             try {
-                console.log(update.message.chatId.value);
-                console.log(botInfo.id.value)
-                console.log(botInfo.id.value === update.message.chatId.value)
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
