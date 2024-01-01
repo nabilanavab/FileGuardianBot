@@ -15,7 +15,7 @@
     },
     "help" : {
         "0" : {
-            "message" : "👋 <i>Welcome to the</i> <b>File Guardian Bot!</b> 📁\n\n<i>With FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.</i>\n\n<i>Get started, by simply sending a file you want to share</i>\n\n<i>powered by:</i> @ilovepdf_bot ❤️",
+            "message" : "👋 <i>Welcome to the</i> <b>FileShare Bot!</b> 📁\n\n<i>With FileShare Bot, you can easily share and manage files, documents, and more. Whether you want to send a document, a photo, or any other file, our bot has got you covered. You can also add password protection for extra security.</i>\n\n<i>Get started, by simply sending a file you want to share</i>\n\n<i>powered by:</i> @ilovepdf_bot ❤️",
             "button" : {
                 "🌍 LANGUAGE 🌍" : "~lang",
                 "📚 HELP 📚" : "-help|1",
