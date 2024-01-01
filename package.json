@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "fileGuardian": "node FileGuardian/FileGuardianBot",
-    "webServer": "node FileGuardian/webServer",
+    "webServer": "node FileGuardian/webServer/index.js",
     "start": "concurrently \"npm run fileGuardian\" \"npm run webServer\""
   },
   "repository": {
