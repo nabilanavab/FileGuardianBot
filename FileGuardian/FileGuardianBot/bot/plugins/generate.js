@@ -46,7 +46,7 @@ module.exports = async function (client) {
             update && update.message && !(update.message.message &&
                 (update.message.message.toLowerCase().startsWith("/start") ||
                     update.message.message.toLowerCase().startsWith("/batch"))) &&
-            update.message.peerId.className === 'PeerUser' && update.message.chatId.value !== botInfo.id.value &&
+            update.message.peerId.className === 'PeerUser' && !(update.message.out) &&
             !isBatchUser(update.message.chatId.value)
         ) {
             if (batchCompleted.includes(update.message.chatId.value)){
