@@ -99,7 +99,7 @@ Things go wrong sometimes, and we get it. If you find yourself facing unexpected
   <a href="https://github.com/nabilanavab/FileGuardianBot/stargazers">
     <img src="https://img.shields.io/github/stars/nabilanavab/FileGuardianBot?style=social">
   </a>
-  <a href="https://github.com/CodeXBotz/FileGuardianBot/fork">
+  <a href="https://github.com/nabilanavab/FileGuardianBot/fork">
     <img src="https://img.shields.io/github/forks/nabilanavab/FileGuardianBot?label=Fork&style=social">
   </a>  
 </div>
