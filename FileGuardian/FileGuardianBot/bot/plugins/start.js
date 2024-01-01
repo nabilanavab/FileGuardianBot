@@ -50,7 +50,8 @@ module.exports = async function (client) {
                 // Check if user in requested list
                 if ( !REQUESTED_USERS.includes(update.message.chatId.value) ){
                     // Check for force subscription & time limit
-                    await forceSub({ client, update })
+                    await forceSub({ client, update,
+                        haveCode: update.message.message.replace('/start ', '')})
                     
                     // Add a new user to the database
                     if (DATABASE.MONGODB_URI) {

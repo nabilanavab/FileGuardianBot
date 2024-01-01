@@ -154,7 +154,7 @@ class CHANNEL_INFO {
      * @type {string}
      * @static
      */
-    static WELCOME_PIC = String(process.env.WELCOME_PIC);
+    static WELCOME_PIC = process.env.WELCOME_PIC ? String(process.env.WELCOME_PIC).trim() : false;
 
     /**
      * Flag indicating whether the request channel feature is enabled.
@@ -199,7 +199,7 @@ class DATABASE {
      * @type {string}
      * @static
      */
-    static MONGODB_URI = String(process.env.MONGODB_URI);
+    static MONGODB_URI = process.env.MONGODB_URI ? String(process.env.MONGODB_URI).trim() : false;
 }
 
 /**

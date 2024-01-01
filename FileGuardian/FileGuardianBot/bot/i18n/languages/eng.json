@@ -3,7 +3,7 @@
         "message" : "🚨 Attention: Increased demand has led to a mandatory subscription for access management..\n\n🔗 Use the below '🪐 JOIN CHANNEL 🪐' button & once you are in use '♻️ REFRESH ♻️'!",
         "button" : {
             "🪐 JOIN CHANNEL 🪐" : "%s",
-            "♻️ REFRESH ♻️" : "=refresh"
+            "♻️ REFRESH ♻️" : "%s"
         },
         "fool": "Click the button above and join the chat to proceed! 😎"
     },

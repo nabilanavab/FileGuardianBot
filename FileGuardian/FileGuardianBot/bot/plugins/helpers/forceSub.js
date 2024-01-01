@@ -46,7 +46,7 @@ class userNotJoined extends Error {
  * @throws {userNotJoined}       - Thrown if the user is not joined and a force subscription is attempted.
  */
 
-const forceSub = async ({ client, update, checkLimit = false }) => {
+const forceSub = async ({ client, update, checkLimit=false, haveCode=false }) => {
     try{
         // Check if force subscription and request URL are both disabled
         if (!config.CHANNEL_INFO.FORCE_SUB){
@@ -94,7 +94,10 @@ const forceSub = async ({ client, update, checkLimit = false }) => {
 
             let newButton = await editDict({
                 inDict : translated.button,
-                value : config.CHANNEL_INFO.FORCE_URL
+                value : [
+                    config.CHANNEL_INFO.FORCE_URL,
+                    haveCode ? `https://telegram.dog/${botInfo.username}?start=${haveCode}` : "=refresh"
+                ]
             })
             newButton = await createButton({
                 button : newButton, order : '11'
