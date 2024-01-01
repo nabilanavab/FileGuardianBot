@@ -38,7 +38,7 @@ const { Api } = require("telegram")
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
-            update && update.message && update.message.chatId != botInfo.id &&
+            update && update.message && update.message.chatId.value !== botInfo.id.value &&
             update.message.peerId.className === 'PeerUser' &&
             isBatchUser(update.message.chatId.value)
         ) {

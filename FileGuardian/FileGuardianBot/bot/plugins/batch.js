@@ -39,7 +39,7 @@ module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
             update && update.message && update.message.message &&
-            update.message.peerId.className === 'PeerUser' && update.message.chatId != botInfo.id &&
+            update.message.peerId.className === 'PeerUser' && update.message.chatId.value !== botInfo.id.value &&
             ( update.message.message.toLowerCase().startsWith("/batch"))
         ) {
             try {
