@@ -72,6 +72,14 @@ Remembering all the things, let's breeze through deployment.
      ```bash
      git clone https://github.com/nabilanavab/FileGuardianBot.git
      ```
+   - Install the required packages using `npm`:
+     ```bash
+     npm install
+     ```
+     or using `yarn`:
+     ```bash
+     yarn install
+     ```
    - Initiate the server enchantment using:
      ```bash
      node FileGuardian/FileGuardianBot
