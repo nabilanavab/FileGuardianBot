@@ -40,7 +40,7 @@ const REQUESTED_USERS = require("./localDB/request");
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (update && update.message && update.message.message &&
-            update.message.peerId.className === 'PeerUser' && update.message.chatId.value !== botInfo.id.value &&
+            update.message.peerId.className === 'PeerUser' && !(update.message.out) &&
             update.message.message.toLowerCase().startsWith("/start")
         ) {
             try {
