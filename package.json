@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/github.com/nabilanavab.git"
+    "url": "git+https://github.com/nabilanavab/fileGuardianBot.git"
   },
   "keywords": [
     "nabil a navab",
@@ -22,9 +22,9 @@
   "author": "nabilanavab",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/github.com/nabilanavab/issues"
+    "url": "https://github.com/nabilanavab/fileGuardianBot/issues"
   },
-  "homepage": "https://github.com/github.com/nabilanavab#readme",
+  "homepage": "https://github.com/nabilanavab/fileGuardianBot#readme",
   "dependencies": {
     "concurrently": "^8.2.2",
     "dotenv": "^16.3.1",
