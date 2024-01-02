@@ -96,7 +96,7 @@ const forceSub = async ({ client, update, checkLimit=false, haveCode=false }) =>
                 inDict : translated.button,
                 value : [
                     config.CHANNEL_INFO.FORCE_URL,
-                    haveCode ? `https://telegram.dog/${botInfo.username}?start=${haveCode}` : "=refresh"
+                    haveCode.length > 8 ? `https://telegram.dog/${botInfo.username}?start=${haveCode}` : "=refresh"
                 ]
             })
             newButton = await createButton({

@@ -133,7 +133,7 @@ module.exports = async function (client) {
                 data = data.slice(0, -3);
 
                 translated = await translate({
-                    text: !(getUserInfo && getUserInfo['setPassword'] == undefined)
+                    text: !(getUserInfo && getUserInfo['setPassword'])
                         ? "generate.publLink" : "generate.privLink",
                     button: "generate.button",
                     asString: true,
