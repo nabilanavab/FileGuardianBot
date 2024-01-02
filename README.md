@@ -96,6 +96,29 @@ Remembering all the things, let's breeze through deployment.
    - One thread for web requests, one for the bot - they dance together! 💃🤖
    - (Render, Koyeb, etc.)
 
+## Environment Variables
+
+Before deploying your Telegram bot, don't forget to review and configure the environment variables to ensure the smooth operation
+
+### Mandatory Variables ( it just won't function properly without them! 🍪 )
+- **API_HASH:** Your Telegram API hash. From: `my.telegram.org`
+- **API_ID:** Your Telegram API ID. From: `my.telegram.org`
+- **API_TOKEN:** Your Telegram bot token. From: `telegram.dog/botfather`
+- **LOG_CHANNEL:** Telegram channel ID where logs messages will be sent. Example: `-100xxxxxxxxx`
+
+### Highly Suggested (but not Mandatory)
+- **MONGODB_URI:** If you want to keep customized data, consider setting up a [MongoDB](https://cloud.mongodb.com/) database.
+  Example: `"mongodb+srv://your-username:your-password@your-cluster.mongodb.net/your-database-name"`
+
+### Optional Variables
+- **TIME_LIMIT:** The time (in mins) within which a user's message count will be considered for rate limiting.
+- **NUMBER_LIMIT:** The maximum number of messages a user can send within the specified time limit.
+- **WELCOME_PIC:** A URL pointing to a welcome picture that will be displayed when users starts the bot.
+- **MULTIPLE_LANG:** Set this variable to `true` if you want to enable support for multiple languages in your bot.
+- **FORCE_SUB:** Set Channel Id, if you want to enforce subscription to a specific channel.
+- **REQUEST_CHANNEL:** If `FORCE_SUB` & its a private channel, this variable send join requests.
+- **CHANNEL_ID:** If you want to broadcast a restart message, set this variable to the channel ID
+- **MESSAGE_ID:** If `CHANNEL_ID` is specified, set this variable to the message ID of the restart message.
 
 ## Troubleshooting (Because We Can't Predict Everything)
 Things go wrong sometimes, and we get it. If you find yourself facing unexpected challenges or quirks while using File Guardian Bot, fret not. We're here to help, and your feedback is gold.

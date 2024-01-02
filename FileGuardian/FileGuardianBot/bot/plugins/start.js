@@ -40,13 +40,10 @@ const REQUESTED_USERS = require("./localDB/request");
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (update && update.message && update.message.message &&
-            update.message.peerId.className === 'PeerUser' && update.message.chatId.value !== botInfo.id.value &&
+            update.message.peerId.className === 'PeerUser' && !(update.message.out) &&
             update.message.message.toLowerCase().startsWith("/start")
         ) {
             try {
-                console.log(update.message.chatId.value);
-                console.log(botInfo.id.value)
-                console.log(botInfo.id.value === update.message.chatId.value)
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
