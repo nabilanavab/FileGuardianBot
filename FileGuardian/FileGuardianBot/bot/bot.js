@@ -86,17 +86,17 @@ global.botInfo = null;
     - Username      : @${botInfo.username}
 
 📅 <b>Restart Details:</b>
-    - Date               : <code>${formattedDate}</code>
-    - Time               : <code>${formattedTime}</code>
+    - Date                   : <code>${formattedDate}</code>
+    - Time                   : <code>${formattedTime}</code>
 
 👤 <b>Bot Management:</b>
     - Contact Owner : @nabilanavab
     - Powered By       : @ilovepdf_bot`,
                             buttons: client.buildReplyMarkup([[
-                                    Button.url(text="✨ Source Code ✨", url="github.com/nabilanavab/fileGuardian")
+                                    Button.url(text="✨ SOURCE CODE ✨", url="github.com/nabilanavab/fileGuardianBot")
                                 ],[
-                                    Button.url(text="👤 Owner 👤", url="https://telegram.dog/nabilanavab"),
-                                    Button.url(text="🤖 Bot 🤖", url=`https://telegram.dog/${botInfo.username}`)
+                                    Button.url(text="👤 OWNED BY 👤", url="https://telegram.dog/nabilanavab"),
+                                    Button.url(text="🤖 START BOT 🤖", url=`https://telegram.dog/${botInfo.username}`)
                                 ]
                             ]),
                             noWebpage: true,
