@@ -27,6 +27,7 @@ const setDuration = require("./callBack/editDuration");
 const askDuration = require("./callBack/getDuration");
 const refreshPage = require("./callBack/refresh");
 const batchManager = require("./callBack/batchCB");
+const captButton = require("./callBack/askCapBut");
 
 /**
  * Event handler to process callback queries from the bot's inline keyboard.
@@ -70,6 +71,9 @@ module.exports = async function(client){
                 }
                 else if (data.startsWith("@")){
                     return batchManager({ client: client, update: update });
+                }
+                else if (data.startsWith("+")){
+                    return captButton({ client: client, update: update });
                 }
             } catch (error) {
                 logger.log(`${file_name}: ${update.userId} : ${error}`);

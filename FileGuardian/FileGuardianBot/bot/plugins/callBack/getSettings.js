@@ -61,7 +61,7 @@ async function settingsCbHandler({ client, update }) {
                 
                 newButton[replacementKey] = value;
             
-            } else if ( value.startsWith("$")){
+            } else if (value.startsWith("$")){
                 // callBack Button for setting file duration
                 let replacementValue = generateInfo[update.userId]['duration'];
 
@@ -72,7 +72,20 @@ async function settingsCbHandler({ client, update }) {
                 
                 newButton[replacementKey] = value;
 
-            } else {
+            } else if (value.startsWith("+")){
+                let modifiedValue = value.replace("+", "");
+                replacementValue = generateInfo[update.userId][modifiedValue]
+
+                let replacementKey =  replacementValue == false 
+                    ? "☑️ " + key + " ☑️"
+                    : "✅ " + key + " ✅";
+                
+                if (replacementValue) value = `${value}|true`
+                else value = `${value}|false`
+
+                newButton[replacementKey] = value;
+            }
+            else {
                 // callback with true false value
                 "!{name} : corresponts to generateInfo[user][name]"
                 let modifiedValue = value.replace("!", "");
@@ -96,7 +109,7 @@ async function settingsCbHandler({ client, update }) {
 
         newButton = await createButton({
             button: newButton,
-            order: 2221
+            order: 22221
         })
         return await client.editMessage(
             update.userId, {

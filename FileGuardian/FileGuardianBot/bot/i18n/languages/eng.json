@@ -49,6 +49,8 @@
             "WITHOUT QUOTES" : "!dropAuthor",
             "CANT ACCESS" : "!isAccesable",
             "AUTO-ERASE" : "$duration",
+            "CAPTION" : "+caption",
+            "BUTTON" : "+button",
             "🔙 BacK" : "-help|0"
         },
         "errorLink" : "⚠️ Showing some error!\n\nPlease check the link again. 🚫🌐",
