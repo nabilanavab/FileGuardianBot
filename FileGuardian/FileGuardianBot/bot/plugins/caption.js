@@ -22,10 +22,9 @@ const { generateInfo } = require("./localDB/generData");
 const logger = require("../../logger");
 
 /**
- * Event handler /addCaption in a private chat.
- *
- * @param {TelegramBot} client - The Telegram bot instance.
- * @returns {Promise<void>}    - A Promise that resolves when the event handling is completed.
+ * Asynchronous function to handle the addition of captions based on specific Telegram commands.
+ * @param {TelegramClient} client - The Telegram client instance.
+ * @returns {Promise<void>}       - A promise that resolves once the caption is added or an error occurs.
  */
 
 async function addCaption(client) {
@@ -47,15 +46,18 @@ async function addCaption(client) {
                             value: caption
                         })
                     }
-                    if ( !generateInfo?.[update.message.chatId]?.['caption'] ){
+
+                    if ( !generateInfo?.[update.message.chatId] ){
                         generateInfo[update.message.chatId] = {}
-                        generateInfo[update.message.chatId][caption] = caption;
                     }
+                    generateInfo[update.message.chatId]['caption'] = caption;
+
                     translated = await translate({
                         text: "capButton.addedCap",
-                        button: "settings.close",
+                        button: "settings.closeCB",
                         langCode: lang_code
                     })
+
                     return await client.sendMessage(
                         update.message.chatId, {
                             message: translated.text + caption,
@@ -66,7 +68,8 @@ async function addCaption(client) {
                 } else {
                     translated = await translate({
                         text: "capButton.checkSyntax",
-                        button: "settings.close"
+                        button: "settings.closeCB",
+                        langCode: lang_code
                     })
                     return await client.sendMessage(
                         update.message.chatId, {
@@ -83,6 +86,13 @@ async function addCaption(client) {
     })
 }
 
+
+/**
+ * Asynchronous function to handle the deletion of captions based on specific Telegram commands.
+ * @param {TelegramClient} client - The Telegram client instance.
+ * @returns {Promise<void>}       - A promise that resolves once the caption is deleted or an error occurs.
+ */
+
 async function deleteCaption(client) {
     client.addEventHandler(async (update) => {
         if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
@@ -94,17 +104,19 @@ async function deleteCaption(client) {
 
                 if (generateInfo?.[update.message.chatId]?.['caption']){
                     delete generateInfo[update.message.chatId]['caption'];
+                
+                    if ( DATABASE.MONGODB_URI ) {
+                        await extrasDbFunctions.changeData({
+                            userID: update.message.chatId,
+                            key: "caption",
+                            deleteIt: true
+                        })
+                    }
                 }
-                if ( DATABASE.MONGODB_URI ) {
-                    await extrasDbFunctions.changeData({
-                        userID: update.message.chatId,
-                        key: "caption",
-                        deleteIt: true
-                    })
-                }
+
                 translated = await translate({
                     text: "capButton.deletedCap",
-                    button: "settings.close",
+                    button: "settings.closeCB",
                     langCode: lang_code
                 })
                 return await client.sendMessage(
@@ -121,6 +133,13 @@ async function deleteCaption(client) {
     })
 }
 
+
+/**
+ * Asynchronous function to handle requests to view the current caption associated with a user's account.
+ * @param {TelegramClient} client - The Telegram client instance.
+ * @returns {Promise<void>}       - A promise that resolves once the caption is displayed or an error occurs.
+ */
+
 async function viewCaption(client) {
     client.addEventHandler(async (update) => {
         if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
@@ -131,6 +150,7 @@ async function viewCaption(client) {
                 if (generateInfo?.[update.message.chatId]?.['caption']){
                     caption = generateInfo[update.message.chatId]['caption']
                 }
+
                 return await client.sendMessage(
                     update.message.chatId, {
                         message: caption,
@@ -143,6 +163,13 @@ async function viewCaption(client) {
         }
     })
 }
+
+
+/**
+ * Function to set up event handlers for adding, viewing, and deleting captions.
+ * @param {TelegramClient} client - The Telegram client instance.
+ * @returns {Promise<void>}       - A promise that resolves once all event handlers are set up or an error occurs.
+ */
 
 async function captButton(client) {
     await addCaption(client);
