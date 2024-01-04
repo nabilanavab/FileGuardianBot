@@ -36,6 +36,9 @@ async function parseAndValidateText(text) {
             .filter(([key, value]) => key && value)
             .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
+        if (Object.keys(keyValuePairs).length === 0)
+            return false
+
         // Check if "order" exists in the object
         if ('order' in keyValuePairs) {
             const orderValue = parseInt(keyValuePairs['order'], 10);
@@ -50,7 +53,7 @@ async function parseAndValidateText(text) {
             }
         }
         return keyValuePairs;
-        
+
     } catch ( error ) {
         // Return false if the pattern does not match
         return false;
@@ -74,7 +77,6 @@ async function addButton(client) {
                 let lang_code = await getLang(update.message.chatId);
 
                 let button = update.message.message.replace('/addButton ', '').substring(0, 200);
-                
                 console.log(await parseAndValidateText(button))
 
                 if (button !== "/addButton" && await parseAndValidateText(button)){
@@ -92,7 +94,7 @@ async function addButton(client) {
                     generateInfo[update.message.chatId]['button'] = button;
 
                     translated = await translate({
-                        text: "capButton.addedButton",
+                        text: "capButton.addedBut",
                         button: "settings.closeCB",
                         langCode: lang_code
                     })

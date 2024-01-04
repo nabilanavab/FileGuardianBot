@@ -107,6 +107,6 @@
         "button" : "Now you have the power to customize your forwarded message button effortlessly, making it simpler to include your channel link in bot messages.\n🌡  Just use the command /addButton with the following format:\n/addButton {\n\"  button1\": \"url1\",\n  \"button2\": \"url2\",\n  \"button3\": \"url3\"}\n\n🌡 Plus, managing buttons is a breeze with the /deleteButton command..\n\n<b>NB: This only works if the file is forwarded without quotes.</b>",
         "checkSyntax": "Please Check The Syntax, Currently i cant understand what you are trying to do..",
         "addedCap" : "Added new Custom Caption : ", "deletedCap" : "Deleted Current Password\n\nNow No caption will be added", "viewCap" : "Your Current Caption is : ",
-        "addedBut" : "Added new Custom Button ", "deleteBut" : "Deleted Your Custom Button\n\nNow No Buttons will be displayed", "viewBut" : "Check The Below Button"
+        "addedBut" : "Added new Custom Button\n\nuse /viewButton", "deleteBut" : "Deleted Your Custom Button\n\nNow No Buttons will be displayed", "viewBut" : "Check The Below Button"
     }
 }
