@@ -101,5 +101,9 @@
                      "1 min" : "$60", "10 min" : "$600", "15 min" : "$900",
                      "30 min" : "$1800", "1 hr" : "$3600", "3 hr" : "$10800",
                      "6 hr" : "$21600", "12 hr" : "$43200", "1 day" : "$86400", "🔙 BacK" : "!set" }
+    },
+    "capButton" : {
+        "caption" : "<b>You can now customize your message captions in 4 different ways:</b>\n\n1. <b>Drop Media Caption:</b>\n   - <u>/dropMediaCaption true</u>: This will delete the current caption.\n   - <u>/dropMediaCaption false</u>: Retains the current caption.\n\n2. <b>Custom Caption:</b>\n   - `/customCaption {your_caption}`: Adds {your_caption} to the caption if `dropMediaCaption` is set to false. If `dropMediaCaption` is set to true, only the custom caption will be added.\n\n🚀 Make your messages stand out with personalized captions! Use /addCaption to add a caption and /deleteCaption to remove it.",
+        "button" : "Now you have the power to customize your forwarded message button effortlessly, making it simpler to include your channel link in bot messages.\n🌡  Just use the command /addButton with the following format:\n/addButton {\n\"  button1\": \"url1\",\n  \"button2\": \"url2\",\n  \"button3\": \"url3\"}\n\n🌡 Plus, managing buttons is a breeze with the /deleteButton command.."
     }
 }

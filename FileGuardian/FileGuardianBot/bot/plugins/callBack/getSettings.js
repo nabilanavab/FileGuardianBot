@@ -76,12 +76,9 @@ async function settingsCbHandler({ client, update }) {
                 let modifiedValue = value.replace("+", "");
                 replacementValue = generateInfo[update.userId][modifiedValue]
 
-                let replacementKey =  replacementValue == false 
-                    ? "☑️ " + key + " ☑️"
-                    : "✅ " + key + " ✅";
-                
-                if (replacementValue) value = `${value}|true`
-                else value = `${value}|false`
+                let replacementKey = replacementValue 
+                    ? "✅ " + key + " ✅"
+                    : "☑️ " + key + " ☑️";
 
                 newButton[replacementKey] = value;
             }
