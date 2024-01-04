@@ -37,10 +37,8 @@ const { Api } = require("telegram")
 
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
-        if (
-            update && update.message && !(update.message.out) &&
-            update.message.peerId.className === 'PeerUser' &&
-            isBatchUser(update.message.chatId.value)
+        if ( update?.message && !update.message.out &&
+            update.message.peerId.className === 'PeerUser' && isBatchUser(update.message.chatId.value)
         ) {
             try {
                 // Retrieve the user's language from the local database

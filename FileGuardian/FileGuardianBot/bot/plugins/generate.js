@@ -40,13 +40,15 @@ const { limitHandler } = require("./helpers/limitHandler");
  * @returns {Promise<void>} - A Promise that resolves when the message processing is completed.
  */
 
+const validCommands = [
+    '/start', '/batch', '/addcaption',
+    '/deletecaption', '/addbutton', '/deletebutton'
+];
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
-            update && update.message && !(update.message.message &&
-                (update.message.message.toLowerCase().startsWith("/start") ||
-                    update.message.message.toLowerCase().startsWith("/batch"))) &&
-            update.message.peerId.className === 'PeerUser' && !(update.message.out) &&
+            update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
+            !validCommands.some(cmd => update?.message?.message?.toLowerCase()?.startsWith(cmd)) &&
             !isBatchUser(update.message.chatId.value)
         ) {
             if (batchCompleted.includes(update.message.chatId.value)){

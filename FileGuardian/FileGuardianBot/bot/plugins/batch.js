@@ -38,9 +38,8 @@ const { limitHandler } = require("./helpers/limitHandler");
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
-            update && update.message && update.message.message &&
-            update.message.peerId.className === 'PeerUser' && !(update.message.out) &&
-            ( update.message.message.toLowerCase().startsWith("/batch"))
+            update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
+            update?.message?.message?.toLowerCase()?.startsWith("/batch")
         ) {
             try {
                 if (isBatchUser(update.message.chatId)){
