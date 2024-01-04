@@ -127,12 +127,12 @@ module.exports = async function (client) {
             } catch (error) {
                 // Handle errors, including flood errors
                 if (error instanceof FloodWaitError) {
-                    logger.log('error', `start.js :: ${file_name} : ${update.message.chatId} : ${error}`);
+                    logger.log('error', `${file_name} : ${update.message.chatId} : ${error}`);
                     setTimeout(
                         module.exports(client), error.seconds
                     )
                 } else {
-                    logger.log('error', `start.js :: ${file_name} : ${update.message.chatId} : ${error}`);
+                    logger.log('error', `${file_name} : ${update.message.chatId} : ${error}`);
                 }
             }
         }
