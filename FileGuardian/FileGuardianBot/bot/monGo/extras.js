@@ -51,7 +51,7 @@ class extrasDb {
         return updateData;
     }
 
-    async changeData({ userID, key, value = false, deleteIt = false }) {
+    async changeData({ userID, key, value=false, deleteIt=false }) {
         // [impo] please dont use deleteIt it delete user completely 
         let updateData;
 

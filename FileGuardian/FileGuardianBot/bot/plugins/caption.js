@@ -135,45 +135,13 @@ async function deleteCaption(client) {
 
 
 /**
- * Asynchronous function to handle requests to view the current caption associated with a user's account.
- * @param {TelegramClient} client - The Telegram client instance.
- * @returns {Promise<void>}       - A promise that resolves once the caption is displayed or an error occurs.
- */
-
-async function viewCaption(client) {
-    client.addEventHandler(async (update) => {
-        if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
-            update?.message?.message?.startsWith("/viewCaption")
-        ) {
-            try {
-                let caption = "none";
-                if (generateInfo?.[update.message.chatId]?.['caption']){
-                    caption = generateInfo[update.message.chatId]['caption']
-                }
-
-                return await client.sendMessage(
-                    update.message.chatId, {
-                        message: caption,
-                        replyTo: update.message
-                    }
-                ) 
-            } catch (error) {
-                logger.log('error', `${file_name} : ${update.message.chatId} : ${error}`);
-            }
-        }
-    })
-}
-
-
-/**
- * Function to set up event handlers for adding, viewing, and deleting captions.
+ * Function to set up event handlers for adding, and deleting captions.
  * @param {TelegramClient} client - The Telegram client instance.
  * @returns {Promise<void>}       - A promise that resolves once all event handlers are set up or an error occurs.
  */
 
 async function captButton(client) {
     await addCaption(client);
-    await viewCaption(client);
     await deleteCaption(client);
 }
 

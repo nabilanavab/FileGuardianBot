@@ -34,7 +34,7 @@ async function parseAndValidateText(text) {
         const keyValuePairs = text.split('\n')
             .map(line => line.split(':').map(item => item.trim()))
             .filter(([key, value]) => key && value)
-            .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
+            .reduce((obj, [key, value]) => ({ ...obj, [`${key}`]: `${value}` }), {});
 
         if (Object.keys(keyValuePairs).length === 0)
             return false
@@ -77,21 +77,19 @@ async function addButton(client) {
                 let lang_code = await getLang(update.message.chatId);
 
                 let button = update.message.message.replace('/addButton ', '').substring(0, 200);
-                console.log(await parseAndValidateText(button))
 
                 if (button !== "/addButton" && await parseAndValidateText(button)){
                     if ( DATABASE.MONGODB_URI ) {
                         await extrasDbFunctions.changeData({
                             userID: update.message.chatId,
-                            key: "button",
-                            value: button
+                            key: "button", value: await parseAndValidateText(button) 
                         })
                     }
 
                     if ( !generateInfo?.[update.message.chatId] ){
                         generateInfo[update.message.chatId] = {}
                     }
-                    generateInfo[update.message.chatId]['button'] = button;
+                    generateInfo[update.message.chatId]['button'] = await parseAndValidateText(button);
 
                     translated = await translate({
                         text: "capButton.addedBut",
@@ -175,26 +173,53 @@ async function deleteButton(client) {
 }
 
 
+async function genButtonUrl(button){
+    for (const key in button) {
+        if (Object.prototype.hasOwnProperty.call(button, key)) {
+            if (!button[key].startsWith("http://") && !button[key].startsWith("https://")) {
+                button[key] = 'https://' + button[key];
+            }
+        }
+    }
+    return button
+}
+
 /**
  * Asynchronous function to handle requests to view the current button associated with a user's account.
  * @param {TelegramClient} client - The Telegram client instance.
  * @returns {Promise<void>}       - A promise that resolves once the button is displayed or an error occurs.
  */
 
-async function viewbutton(client) {
+async function view(client) {
     client.addEventHandler(async (update) => {
         if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
-            update?.message?.message?.startsWith("/viewbutton")
+            update?.message?.message?.startsWith("/view")
         ) {
             try {
-                let button = "none";
+                let button = null;
                 if (generateInfo?.[update.message.chatId]?.['button']){
                     button = generateInfo[update.message.chatId]['button']
                 }
 
+                let caption = "none";
+                if (generateInfo?.[update.message.chatId]?.['caption']){
+                    caption = generateInfo[update.message.chatId]['caption']
+                }
+
+                if ( button !== null ){
+                    button = await genButtonUrl(
+                        generateInfo[update.message.chatId]['button']
+                    );
+                    button = await createButton({
+                        button : button,
+                        order : generateInfo[update.message.chatId]['button']['order']
+                    })
+                }
+
                 return await client.sendMessage(
                     update.message.chatId, {
-                        message: button,
+                        message: caption,
+                        buttons: button === null ? null: client.buildReplyMarkup(button),
                         replyTo: update.message
                     }
                 ) 
@@ -213,8 +238,8 @@ async function viewbutton(client) {
  */
 
 async function captButton(client) {
+    await view(client);
     await addButton(client);
-    await viewbutton(client);
     await deleteButton(client);
 }
 
