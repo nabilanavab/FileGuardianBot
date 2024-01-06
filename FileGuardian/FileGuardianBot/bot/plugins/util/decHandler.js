@@ -47,7 +47,8 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
             })
         )
         
-        let jsonString = data['messages'][0]['message'].split("\n\n")[0];
+        let jsonString = data['messages'][0]['message'].split(":: data ::")[1];
+        let caption = data['messages'][0]['message'].split(":: data ::")[1];
         const jsonData = JSON.parse(`${jsonString}`);
         
         if (jsonData['setPassword']){
@@ -125,6 +126,7 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
                         jsonData['userID'] : Number(jsonData['batchInfo']['forwardFrom']),
                     jsonData['batchInfo']['type']
                 ],
+            caption: caption != "" ? caption : false
         })
         return true
 

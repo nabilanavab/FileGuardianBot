@@ -94,7 +94,11 @@ module.exports = async function (client) {
                 });
 
                 // Set some service message for later use
-                let message = `<pre><code class="language-js">{
+                let message = `
+${getUserInfo && getUserInfo['caption'] ? `${getUserInfo['caption']}` : ""}
+
+:: data ::
+<pre><code class="language-js">{
     "userID"            : ${update.message.chatId},
     "messageID"         : ${forwardMsg[0][0]['id']},
     "setPassword"       : ${getUserInfo && getUserInfo['setPassword'] ? `\"${getUserInfo['setPassword']}\"` : false},
@@ -102,8 +106,10 @@ module.exports = async function (client) {
     "dropMediaCaptions" : ${getUserInfo && getUserInfo['dropMediaCaptions'] ? getUserInfo['dropMediaCaptions'] : false},
     "isAccesable"       : ${getUserInfo && getUserInfo['isAccesable'] ? getUserInfo['isAccesable'] : false},
     "noforwards"        : ${getUserInfo && getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false},
-    "duration"          : ${getUserInfo && getUserInfo['duration'] ? getUserInfo['duration'] : false}
+    "duration"          : ${getUserInfo && getUserInfo['duration'] ? getUserInfo['duration'] : false},
+    "button"            : ${getUserInfo && getUserInfo['button'] ? JSON.stringify(getUserInfo['button']) : false}
 }</code></pre>
+:: data ::
 
 <a href="tg://user?id=${update.message.chatId}">👤 viewProfile 👤</a>`;
 

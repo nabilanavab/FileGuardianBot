@@ -78,7 +78,7 @@ async function logForward({ client, messageId, fromUser, replyTo }) {
  */
 
 async function userForward({ client, messageIds, toUser, replyTo, massForward=false,
-    dropAuthor=false, dropMediaCaptions=false, noforwards=false, duration=false
+    dropAuthor=false, dropMediaCaptions=false, noforwards=false, duration=false, caption=false, replyMarkup=false
 }) {
     try {
         if ( !massForward ){
@@ -92,6 +92,15 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
                             dropMediaCaptions: dropMediaCaptions
                         }
                     )
+                    if (caption ||replyMarkup){
+                        await edit.editReply({
+                            client: client, 
+                            chatID: toUser,
+                            editedText: caption ? caption : "",
+                            // editedBtn: replyMarkup ? replyMarkup : null,
+                            messageId: forwardMessage[0][0]['id']
+                        })
+                    }
                     
                     if ( duration ) {
                         try {

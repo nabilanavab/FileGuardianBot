@@ -186,7 +186,9 @@ module.exports = async function (client) {
                     }, 4
                 );
 
-                let message = `<pre><code class="language-js">{
+                let message = `
+:: data ::
+<pre><code class="language-js">{
   "userID"           : ${update.message.chatId},
   "batchInfo"        : ${batchInfo},
   "setPassword"      : ${getUserInfo && getUserInfo['setPassword'] ? `\"${getUserInfo['setPassword']}\"` : false},
@@ -194,6 +196,7 @@ module.exports = async function (client) {
   "dropMediaCaptions": ${getUserInfo && getUserInfo['dropMediaCaptions'] ? getUserInfo['dropMediaCaptions'] : false},
   "noforwards"       : ${getUserInfo && getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false}
 }</code></pre>
+:: data ::
 
 <a href="tg://user?id=${update.message.chatId}">👤 viewProfile 👤</a>`;
                 
