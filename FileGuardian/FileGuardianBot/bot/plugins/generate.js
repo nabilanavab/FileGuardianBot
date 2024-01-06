@@ -41,8 +41,8 @@ const { limitHandler } = require("./helpers/limitHandler");
  */
 
 const validCommands = [
-    '/start', '/batch', '/addcaption', '/viewcaption',
-    '/deletecaption', '/addbutton', '/deletebutton', '/viewbutton'
+    '/start', '/batch', '/addcaption', '/view',
+    '/deletecaption', '/addbutton', '/deletebutton'
 ];
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
@@ -61,9 +61,10 @@ module.exports = async function (client) {
                 // Check for force subscription: If the user is required to subscribe forcefully
                 if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
                     await limitHandler({
-                        client, userId: update.message.chatId, replyTo:update.message.replyTo
+                        client, userId: update.message.chatId.value, replyTo:update.message.replyTo
                     })
                 } else {
+                    console.log("here")
                     // Check for force subscription & time limit
                     await forceSub({ client, update })
                 }

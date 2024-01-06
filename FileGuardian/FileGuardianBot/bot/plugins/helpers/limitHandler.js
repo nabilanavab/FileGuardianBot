@@ -96,10 +96,7 @@ async function limitHandler({ client, userId, replyTo=null, check=false }) {
         }
 
         throw new timeLimitError("LIMIT_EXCEEDED", remainingTime);
-    }
-
-    // Update user request information
-    if ( !check )
+    } else {
         userRequests
             .set(
                 userId, {
@@ -107,7 +104,9 @@ async function limitHandler({ client, userId, replyTo=null, check=false }) {
                     lastTimestamp: currentTime
                 }
             );
-    
+        let _userRequestInfo = userRequests
+    }
+
     return {
         message: "canPerformAdditionalTask",
         seconds: 0

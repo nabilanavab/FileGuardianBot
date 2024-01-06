@@ -46,7 +46,7 @@ module.exports = async function (client) {
                     // if userin isBatchUser means send request or joined chat
                 } else if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
                     await limitHandler({
-                        client, userId: update.message.chatId, replyTo:update.message.replyTo
+                        client, userId: update.message.chatId.value, replyTo:update.message.replyTo
                     })
                 } else {
                     // Check for force subscription & time limit

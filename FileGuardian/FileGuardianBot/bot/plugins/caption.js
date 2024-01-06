@@ -36,7 +36,7 @@ async function addCaption(client) {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                let caption = update.message.message.replace('/addCaption ', '').substring(0, 200);
+                let caption = update.message.message.replace('/addCaption ', '').substring(0, 100);
 
                 if (caption !== "/addCaption"){
                     if ( DATABASE.MONGODB_URI ) {

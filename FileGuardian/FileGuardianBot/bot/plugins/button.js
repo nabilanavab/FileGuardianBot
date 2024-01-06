@@ -76,7 +76,7 @@ async function addButton(client) {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                let button = update.message.message.replace('/addButton ', '').substring(0, 200);
+                let button = update.message.message.replace('/addButton ', '');
 
                 if (button !== "/addButton" && await parseAndValidateText(button)){
                     if ( DATABASE.MONGODB_URI ) {
