@@ -60,25 +60,25 @@ global.botInfo = null;
                             description: "Batch multiple files. 📁"
                         }),
                         new Api.BotCommand({
-                            command: "addCaption",
-                            description: "add custom caption ☕"
-                        }),
-                        new Api.BotCommand({
-                            command: "deleteCaption",
-                            description: "delete current caption 😆"
-                        }),
-                        new Api.BotCommand({
-                            command: "addButton",
+                            command: "add_button",
                             description: "add custion butttton 🥴"
                         }),
                         new Api.BotCommand({
-                            command: "deleteButton",
+                            command: "delete_button",
                             description: "delete current button 🤕"
+                        }),
+                        new Api.BotCommand({
+                            command: "add_caption",
+                            description: "add custom caption ☕"
+                        }),
+                        new Api.BotCommand({
+                            command: "delete_caption",
+                            description: "delete current caption 😆"
                         }),
                         new Api.BotCommand({
                             command: "view",
                             description: "view current button, caption 😵"
-                        }),
+                        })
                     ]
                 })
             )
