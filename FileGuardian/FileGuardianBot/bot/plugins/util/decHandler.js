@@ -48,7 +48,7 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
         )
         
         let jsonString = data['messages'][0]['message'].split(":: data ::")[1];
-        let caption = data['messages'][0]['message'].split(":: data ::")[1];
+        let caption = data['messages'][0]['message'].split(":: data ::")[0];
         const jsonData = JSON.parse(`${jsonString}`);
         
         if (jsonData['setPassword']){
@@ -110,6 +110,13 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
         const messageIds = !massForward ?
             [ data['messages'][0]['replyTo']['replyToMsgId'] ] : 
             jsonData['batchInfo']['userData']
+        
+        let replyMarkup = false
+        if (jsonData['button']){
+            replyMarkup = await createButton({
+                button: jsonData['button']
+            })
+        }
             
         await userForward({
             client: client,
@@ -126,7 +133,8 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
                         jsonData['userID'] : Number(jsonData['batchInfo']['forwardFrom']),
                     jsonData['batchInfo']['type']
                 ],
-            caption: caption != "" ? caption : false
+            caption: caption != "" ? caption : false,
+            replyMarkup: replyMarkup ? replyMarkup: false
         })
         return true
 

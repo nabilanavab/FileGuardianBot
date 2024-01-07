@@ -25,7 +25,7 @@ const logger = require("../../../logger");
 const { FloodWaitError } = require("telegram/errors");
 const scheduleAfter = require("../scheduler/scheduleAfter");
 const deleteMsg = require("../scheduler/deleteMsg");
-const edit = require("../helpers/edit");
+const { Api } = require("telegram");
 
 
 /**
@@ -92,14 +92,16 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
                             dropMediaCaptions: dropMediaCaptions
                         }
                     )
-                    if (caption ||replyMarkup){
-                        await edit.editReply({
-                            client: client, 
-                            chatID: toUser,
-                            editedText: caption ? caption : "",
-                            // editedBtn: replyMarkup ? replyMarkup : null,
-                            messageId: forwardMessage[0][0]['id']
-                        })
+                    if (caption ||replyMarkup || dropMediaCaptions){
+                        await client.invoke(
+                            new Api.messages.EditMessage({
+                                peer: toUser,
+                                id: forwardMessage[0][0]['id'],
+                                message: dropMediaCaptions ? "" : caption,
+                                replyMarkup: replyMarkup ? 
+                                    client.buildReplyMarkup(replyMarkup) : false
+                            })
+                        )
                     }
                     
                     if ( duration ) {

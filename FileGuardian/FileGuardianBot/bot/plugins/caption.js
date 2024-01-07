@@ -103,7 +103,7 @@ async function deleteCaption(client) {
                 let lang_code = await getLang(update.message.chatId);
 
                 if (generateInfo?.[update.message.chatId]?.['caption']){
-                    delete generateInfo[update.message.chatId]['caption'];
+                    generateInfo[update.message.chatId]['caption'] = false;
                 
                     if ( DATABASE.MONGODB_URI ) {
                         await extrasDbFunctions.changeData({

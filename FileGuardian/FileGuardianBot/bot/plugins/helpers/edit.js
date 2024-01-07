@@ -40,8 +40,9 @@ async function editReply({ client, chatId, editedText, editedBtn, messageId}) {
             {
                 message: messageId,
                 text: editedText,
-                buttons: editedBtn ?
-                    client.buildReplyMarkup(editedBtn) : null,
+                buttons: client.buildReplyMarkup(
+                    editedBtn
+                ),
                 parseMode: "html"
             }
         );
