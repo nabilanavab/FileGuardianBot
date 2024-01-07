@@ -58,7 +58,27 @@ global.botInfo = null;
                         new Api.BotCommand({
                             command: "batch",
                             description: "Batch multiple files. 📁"
-                        })
+                        }),
+                        new Api.BotCommand({
+                            command: "addCaption",
+                            description: "add custom caption ☕"
+                        }),
+                        new Api.BotCommand({
+                            command: "deleteCaption",
+                            description: "delete current caption 😆"
+                        }),
+                        new Api.BotCommand({
+                            command: "addButton",
+                            description: "add custion butttton 🥴"
+                        }),
+                        new Api.BotCommand({
+                            command: "deleteButton",
+                            description: "delete current button 🤕"
+                        }),
+                        new Api.BotCommand({
+                            command: "view",
+                            description: "view current button, caption 😵"
+                        }),
                     ]
                 })
             )
