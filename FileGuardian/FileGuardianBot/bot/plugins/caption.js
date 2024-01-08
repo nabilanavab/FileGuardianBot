@@ -47,9 +47,6 @@ async function addCaption(client) {
                         })
                     }
 
-                    if ( !generateInfo?.[update.message.chatId] ){
-                        generateInfo[update.message.chatId] = {}
-                    }
                     generateInfo[update.message.chatId]['caption'] = caption;
 
                     translated = await translate({
@@ -104,6 +101,7 @@ async function deleteCaption(client) {
 
                 if (generateInfo?.[update.message.chatId]?.['caption']){
                     generateInfo[update.message.chatId]['caption'] = false;
+                    console.log(generateInfo[update.message.chatId]['caption']);
                 
                     if ( DATABASE.MONGODB_URI ) {
                         await extrasDbFunctions.changeData({

@@ -86,9 +86,6 @@ async function addButton(client) {
                         })
                     }
 
-                    if ( !generateInfo?.[update.message.chatId] ){
-                        generateInfo[update.message.chatId] = {}
-                    }
                     generateInfo[update.message.chatId]['button'] = await parseAndValidateText(button);
 
                     translated = await translate({
