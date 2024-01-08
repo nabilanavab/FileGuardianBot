@@ -8,7 +8,7 @@
 
 Welcome to File Guardian Bot – your powerful and versatile file-sharing companion! This bot is designed to make file sharing a seamless experience, allowing you to create both private and public URLs for various file types, including messages, text, stickers, and more.
 
-##  The Ultimate Guide (No, Seriously, It's Great) - Version 1.0.0 🚀
+##  The Ultimate Guide (No, Seriously, It's Great) - Version 2.0.0 🚀
 - **🌐 Guardian of All Things Data :** ready to protect and serve any kind of your data with a side of charm.
 - **⏰ Time-Traveling Data :** Delete Timer, Set a timer for shared files to automatically delete after a specified duration, ensuring data privacy and security.
 - **🛡️ Password Protection - Because Files Have Secrets Too :** Private and Public URLs, Easily generate links for your files, ensuring flexible sharing options for both private and public audiences. By Adding an extra layer of  password protection.
