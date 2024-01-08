@@ -4,7 +4,7 @@
 
 <img src="https://graph.org/file/ce45266da8d8aed7aa3ef.jpg" alt="Buy Me A Coffee" width="50%" align="right">
 
-# File Guardian bot [ ver: 1.0.0 ]
+# File Guardian bot [ ver: 2.0.0 ]
 
 Welcome to File Guardian Bot – your powerful and versatile file-sharing companion! This bot is designed to make file sharing a seamless experience, allowing you to create both private and public URLs for various file types, including messages, text, stickers, and more.
 
@@ -15,6 +15,8 @@ Welcome to File Guardian Bot – your powerful and versatile file-sharing compan
 - **🚫 The No-Forwarding Forcefield :** Prevent file forwarding to maintain control over the dissemination of your shared content
 - **🔃 No Forward Quotes :** have the power to hide the owner of their content.
 - **🔃 Multiple Language Support:** File Guardian Bot caters to a global audience with support for multiple languages.
+- **✏ Add Custom Caption:** Set Custom Caption For Files saperately
+- **😎 Add Custom Buttom:** Set Custom Button For Files saperately
 - But hold on... That's not all! 🛑✨ Our Telegram bot doesn't stop there. In addition to the amazing features that we've already mentioned, **it supports batching multiple files as one**! 📦🚀 #NextLevelFileSharing"
 
 ## How to Use, The Basics (Because We Have to Start Somewhere)
