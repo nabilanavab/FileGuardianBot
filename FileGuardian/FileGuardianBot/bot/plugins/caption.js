@@ -30,15 +30,15 @@ const logger = require("../../logger");
 async function addCaption(client) {
     client.addEventHandler(async (update) => {
         if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
-            update?.message?.message?.startsWith("/addCaption")
+            update?.message?.message?.startsWith("/add_caption")
         ) {
             try {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                let caption = update.message.message.replace('/addCaption ', '').substring(0, 100);
+                let caption = update.message.message.replace('/add_caption ', '').substring(0, 100);
 
-                if (caption !== "/addCaption"){
+                if (caption !== "/add_caption"){
                     if ( DATABASE.MONGODB_URI ) {
                         await extrasDbFunctions.changeData({
                             userID: update.message.chatId,
@@ -96,7 +96,7 @@ async function addCaption(client) {
 async function deleteCaption(client) {
     client.addEventHandler(async (update) => {
         if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
-            update?.message?.message?.startsWith("/deleteCaption")
+            update?.message?.message?.startsWith("/delete_caption")
         ) {
             try {
                 // Retrieve the user's language from the local database

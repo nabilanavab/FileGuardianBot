@@ -41,8 +41,8 @@ const { limitHandler } = require("./helpers/limitHandler");
  */
 
 const validCommands = [
-    '/start', '/batch', '/addcaption', '/view',
-    '/deletecaption', '/addbutton', '/deletebutton'
+    '/start', '/batch', '/add_caption', '/view',
+    '/delete_caption', '/add_button', '/delete_button'
 ];
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {

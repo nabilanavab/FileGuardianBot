@@ -70,15 +70,15 @@ async function parseAndValidateText(text) {
 async function addButton(client) {
     client.addEventHandler(async (update) => {
         if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
-            update?.message?.message?.startsWith("/addButton")
+            update?.message?.message?.startsWith("/add_button")
         ) {
             try {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                let button = update.message.message.replace('/addButton ', '');
+                let button = update.message.message.replace('/add_button ', '');
 
-                if (button !== "/addButton" && await parseAndValidateText(button)){
+                if (button !== "/add_button" && await parseAndValidateText(button)){
                     if ( DATABASE.MONGODB_URI ) {
                         await extrasDbFunctions.changeData({
                             userID: update.message.chatId,
@@ -135,7 +135,7 @@ async function addButton(client) {
 async function deleteButton(client) {
     client.addEventHandler(async (update) => {
         if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
-            update?.message?.message?.startsWith("/deleteButton")
+            update?.message?.message?.startsWith("/delete_button")
         ) {
             try {
                 // Retrieve the user's language from the local database
