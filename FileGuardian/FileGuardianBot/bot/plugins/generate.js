@@ -95,7 +95,7 @@ module.exports = async function (client) {
 
                 // Set some service message for later use
                 let message = `
-${getUserInfo && getUserInfo['caption'] ? `${getUserInfo['caption']}` : ""}
+${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['caption'] ? `${getUserInfo['caption']}` : ""}
 
 :: data ::
 <pre><code class="language-js">{
@@ -107,7 +107,7 @@ ${getUserInfo && getUserInfo['caption'] ? `${getUserInfo['caption']}` : ""}
     "isAccesable"       : ${getUserInfo && getUserInfo['isAccesable'] ? getUserInfo['isAccesable'] : false},
     "noforwards"        : ${getUserInfo && getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false},
     "duration"          : ${getUserInfo && getUserInfo['duration'] ? getUserInfo['duration'] : false},
-    "button"            : ${getUserInfo && getUserInfo['button'] ? JSON.stringify(getUserInfo['button']) : false}
+    "button"            : ${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['button'] ? JSON.stringify(getUserInfo['button']) : false}
 }</code></pre>
 :: data ::
 
