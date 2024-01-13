@@ -1,4 +1,10 @@
 {
+    "onlyAdmin" : {
+        "message" : "Unfortunately ONly Bot Admins Can Use This Botn\n\nTry the below buttton to create your own, Its Super Easy",
+        "button" : {
+            "Create My Own Bot" : "https://github.com/nabilanavab/FileGuardianBot"
+        }
+    },
     "force" : {
         "message" : "🚨 Attention: Increased demand has led to a mandatory subscription for access management..\n\n🔗 Use the below '🪐 JOIN CHANNEL 🪐' button & once you are in use '♻️ REFRESH ♻️'!",
         "button" : {
@@ -19,7 +25,7 @@
             "button" : {
                 "🌍 LANGUAGE 🌍" : "~lang",
                 "📚 HELP 📚" : "-help|1",
-                "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab",
+                "🌟 SOURCE CODE 🌟" : "https://github.com/nabilanavab/FileGuardianBot",
                 "🔊 CHANNEL 🔊" : "https://telegram.dog/ilovepdf_bot",
                 "🤠 ADMIN 🤠" : "https://github.com/nabilanavab",
                 "⚙️ SETTINGS ⚙️" : "!set"
