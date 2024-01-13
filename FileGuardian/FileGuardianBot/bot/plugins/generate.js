@@ -64,7 +64,6 @@ module.exports = async function (client) {
                         client, userId: update.message.chatId.value, replyTo:update.message.replyTo
                     })
                 } else {
-                    console.log("here")
                     // Check for force subscription & time limit
                     await forceSub({ client, update })
                 }
