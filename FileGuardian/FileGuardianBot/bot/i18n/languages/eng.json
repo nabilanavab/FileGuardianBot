@@ -1,6 +1,6 @@
 {
     "onlyAdmin" : {
-        "message" : "Unfortunately ONly Bot Admins Can Use This Botn\n\nTry the below buttton to create your own, Its Super Easy",
+        "message" : "Unfortunately, only Bot Admins can use this bot.\n\nTry the button below to create your own. It's super easy!",
         "button" : {
             "Create My Own Bot" : "https://github.com/nabilanavab/FileGuardianBot"
         }
