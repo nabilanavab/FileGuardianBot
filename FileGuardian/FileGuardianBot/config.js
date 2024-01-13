@@ -30,6 +30,14 @@ global.sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, wait
  * Store information about bot administrators, specifically their user IDs.
  */
 class BOT_ADMIN {
+
+    /**
+     * Bot Only For Bot Admins if "ADMIN_ONLY = true"
+     * @type {boolean}
+     * @static
+     */
+    static ADMIN_ONLY = process.env.ADMIN_ONLY == 'true' ? true : false;
+
     /**
      * String containing a comma-separated list of admin user IDs from .env
      * @type {string}
