@@ -129,16 +129,18 @@ ${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['caption'] ? `${
                 });
 
                 let data = ""
-                for (let [key, value] of Object.entries(getUserInfo)) {
-                    if ( key == "setPassword" )
-                        data += `${value ? `<i>🔐 ${key}</i> : <spoiler>${value}</spoiler>` : ''}`;
-                    else if ( key == "duration" )
-                        data += `${value ? `<i>⏳ ${key} : ${value}</i>` : ''}`;
-                    else 
-                        data += `${value ? `<i>🟢 ${key}</i>` : ''}`;
-                    data += " | "
+                if (getUserInfo) {
+                    for (let [key, value] of Object.entries(getUserInfo)) {
+                        if ( key == "setPassword" )
+                            data += `${value ? `<i>🔐 ${key}</i> : <spoiler>${value}</spoiler>` : ''}`;
+                        else if ( key == "duration" )
+                            data += `${value ? `<i>⏳ ${key} : ${value}</i>` : ''}`;
+                        else 
+                            data += `${value ? `<i>🟢 ${key}</i>` : ''}`;
+                        data += " | "
+                    }
+                    data = data.slice(0, -3);
                 }
-                data = data.slice(0, -3);
 
                 translated = await translate({
                     text: !(getUserInfo && getUserInfo['setPassword'])
@@ -180,6 +182,7 @@ ${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['caption'] ? `${
         }
     });
 };
+
 
 /**
  * 

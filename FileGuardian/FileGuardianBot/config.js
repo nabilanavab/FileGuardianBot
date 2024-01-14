@@ -254,7 +254,7 @@ class UPDATE_MESSAGE {
 // ===================================================================================
 // Check if all the mandatory environment variables are present
 // ===================================================================================
-const mandatoryVariables = ['API_ID', 'API_HASH', 'API_TOKEN', 'LOG_CHANNEL'];
+const mandatoryVariables = ['API_ID', 'API_HASH', 'API_TOKEN', 'LOG_CHANNEL', 'MONGODB_URI'];
 
 // Filter out missing mandatory variables
 const missingVariables = mandatoryVariables.filter(
