@@ -42,6 +42,28 @@ module.exports = async function (client) {
             update?.message?.message?.toLowerCase()?.startsWith("/batch")
         ) {
             try {
+                // Retrieve the user's language from the local database
+                let lang_code = await getLang(update.message.chatId);
+
+                if ( BOT_ADMIN.ADMIN_ONLY && !BOT_ADMIN.adminUserIds.includes(update.message.chatId.value)){
+                    translated = await translate({
+                        text: "onlyAdmin.message",
+                        button: "onlyAdmin.button",
+                        langCode: lang_code
+                    });
+                    await client.sendMessage(
+                        update.message.chatId, {
+                            message : translated.text,
+                            replyTo : update.message.id,
+                            buttons: client.buildReplyMarkup(
+                                translated.button
+                            ),
+                            parseMode: "html"
+                        }
+                    );
+                    return 
+                }
+
                 if (isBatchUser(update.message.chatId)){
                     // if userin isBatchUser means send request or joined chat
                 } else if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
@@ -52,9 +74,6 @@ module.exports = async function (client) {
                     // Check for force subscription & time limit
                     await forceSub({ client, update })
                 }
-
-                // Retrieve the user's language from the local database
-                let lang_code = await getLang(update.message.chatId);
 
                 let translated = await translate({
                     text: "batch.new", button: "batch.newButton",

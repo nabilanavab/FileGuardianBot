@@ -21,7 +21,6 @@ const logger = require("../../logger");
 const { generateInfo } = require("./localDB/generData");
 const { LOG_FILE } = require("../../config");
 const { userForward } = require("./helpers/forward");
-const { duration } = require("moment");
 
 // Local database to store passwords for quick access and
 // prevent flooding during frequent requests.

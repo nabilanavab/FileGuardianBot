@@ -31,6 +31,7 @@ const reply = require("./helpers/reply");
 const edit = require("./helpers/edit");
 const REQUESTED_USERS = require("./localDB/request");
 const { limitHandler } = require("./helpers/limitHandler");
+const { BOT_ADMIN } = require("../../config");
 
 
 /**
@@ -58,6 +59,29 @@ module.exports = async function (client) {
                 return
             }
             try {
+
+                // Retrieve the user's language from the local database
+                let lang_code = await getLang(update.message.chatId);
+
+                if ( BOT_ADMIN.ADMIN_ONLY && !BOT_ADMIN.adminUserIds.includes(update.message.chatId.value)){
+                    translated = await translate({
+                        text: "onlyAdmin.message",
+                        button: "onlyAdmin.button",
+                        langCode: lang_code
+                    });
+                    await client.sendMessage(
+                        update.message.chatId, {
+                            message : translated.text,
+                            replyTo : update.message.id,
+                            buttons: client.buildReplyMarkup(
+                                translated.button
+                            ),
+                            parseMode: "html"
+                        }
+                    );
+                    return 
+                }
+
                 // Check for force subscription: If the user is required to subscribe forcefully
                 if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
                     await limitHandler({
@@ -81,9 +105,6 @@ module.exports = async function (client) {
                     }
                 );
                 // await sleep(500);
-
-                // Retrieve the user's language from the local database
-                let lang_code = await getLang(update.message.chatId);
 
                 // Forward the message to the log channel
                 forwardMsg = await forward.logForward({
