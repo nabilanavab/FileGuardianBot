@@ -251,6 +251,52 @@ class UPDATE_MESSAGE {
     static CHANNEL_ID = Number(process.env.CHANNEL_ID) ? Number(process.env.CHANNEL_ID) : null;
 }
 
+/**
+ * Class representing a add token for all or 24-hour expiration
+ * Set the token, expiration time, and related variables.
+ */
+class TOKEN_SUPPORT {
+    /**
+     * Advertisement token value
+     * @type {string}
+     * @static
+     */
+    static ADV_TOKEN = process.env.ADV_TOKEN || null;
+
+    /**
+     * Expiration time in hours (24 hours by default)
+     * @type {number}
+     * @static
+     */
+    static EXPIRATION_TIME = Number(process.env.EXPIRATION_TIME) * 3600000 || false;
+
+    /**
+     * Static variable to store the split domain
+     * @type {string}
+     * @static
+     */
+    static DOMAIN = null;
+
+    /**
+     * Static variable to store the split API
+     * @type {string}
+     * @static
+     */
+    static API = null;
+
+    /**
+     * Split the domain and API from ADV_TOKEN and store them in static variables
+     * @static
+     */
+    static splitDomainAndApi() {
+        const [domain, api] = (this.ADV_TOKEN || '').split(' ');
+        this.DOMAIN = domain;
+        this.API = api;
+    }
+}
+
+
+
 // ===================================================================================
 // Check if all the mandatory environment variables are present
 // ===================================================================================
@@ -274,7 +320,7 @@ console.log(`Log file: ${LOG_FILE.FILE_NAME}`);
 
 module.exports = {
     BOT_INFO, LANG_INFO, LOG_FILE, CHANNEL_INFO, DATABASE,
-    BOT_ADMIN, RATE_LIMIT_INFO, SOURCE_INFO, UPDATE_MESSAGE
+    BOT_ADMIN, RATE_LIMIT_INFO, SOURCE_INFO, UPDATE_MESSAGE, TOKEN_SUPPORT
 };
 
 /**

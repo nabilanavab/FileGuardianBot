@@ -31,7 +31,8 @@ const reply = require("./helpers/reply");
 const edit = require("./helpers/edit");
 const REQUESTED_USERS = require("./localDB/request");
 const { limitHandler } = require("./helpers/limitHandler");
-const { BOT_ADMIN } = require("../../config");
+const { BOT_ADMIN, TOKEN_SUPPORT } = require("../../config");
+const https = require('https');
 
 
 /**
@@ -163,6 +164,18 @@ ${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['caption'] ? `${
                     data = data.slice(0, -3);
                 }
 
+                let url = `https://telegram.dog/${botInfo.username}?start=${code}`
+                if ( TOKEN_SUPPORT.ADV_TOKEN && !TOKEN_SUPPORT.EXPIRATION_TIME ) {
+                    try {
+                        _url = `https://${TOKEN_SUPPORT.DOMAIN}/st?api=${TOKEN_SUPPORT.API}&url=${url}`
+                        https.get(_url, (response) => {
+                            console.log(response.headers.location);
+                            url = response.headers.location
+                        })
+                    } catch (error) {
+                        url = `https://telegram.dog/${botInfo.username}?start=${code}`
+                    }
+                }
                 translated = await translate({
                     text: !(getUserInfo && getUserInfo['setPassword'])
                         ? "generate.publLink" : "generate.privLink",
@@ -174,7 +187,7 @@ ${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['caption'] ? `${
                 // Edit the button with the generated URL
                 let newButton = await editDict({
                     inDict: translated.button,
-                    value: `https://telegram.dog/${botInfo.username}?start=${code}`
+                    value: url
                 })
                 newButton = await createButton({
                     button: newButton, order: '11'
