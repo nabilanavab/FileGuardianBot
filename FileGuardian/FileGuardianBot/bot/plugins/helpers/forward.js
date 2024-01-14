@@ -92,7 +92,7 @@ async function userForward({ client, messageIds, toUser, replyTo, massForward=fa
                             dropMediaCaptions: dropMediaCaptions
                         }
                     )
-                    if (caption ||replyMarkup || dropMediaCaptions){
+                    if (caption || replyMarkup || dropMediaCaptions){
                         await client.invoke(
                             new Api.messages.EditMessage({
                                 peer: toUser,

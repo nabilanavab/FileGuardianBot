@@ -102,7 +102,7 @@ ${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['caption'] ? `${
     "messageID"         : ${forwardMsg[0][0]['id']},
     "setPassword"       : ${getUserInfo && getUserInfo['setPassword'] ? `\"${getUserInfo['setPassword']}\"` : false},
     "dropAuthor"        : ${getUserInfo && getUserInfo['dropAuthor'] === undefined ? false : true},
-    "dropMediaCaptions" : ${getUserInfo && getUserInfo['dropMediaCaptions'] ? getUserInfo['dropMediaCaptions'] : false},
+    "dropMediaCaptions" : ${getUserInfo && getUserInfo['dropMediaCaptions'] === undefined ? false : true},
     "isAccesable"       : ${getUserInfo && getUserInfo['isAccesable'] ? getUserInfo['isAccesable'] : false},
     "noforwards"        : ${getUserInfo && getUserInfo['noforwards'] ? getUserInfo['noforwards'] : false},
     "duration"          : ${getUserInfo && getUserInfo['duration'] ? getUserInfo['duration'] : false},
