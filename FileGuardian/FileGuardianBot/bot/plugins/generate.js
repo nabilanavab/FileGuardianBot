@@ -64,7 +64,7 @@ module.exports = async function (client) {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                if ( BOT_ADMIN.ADMIN_ONLY && !BOT_ADMIN.adminUserIds.includes(update.message.chatId.value)){
+                if ( BOT_ADMIN.ADMIN_ONLY && !BOT_ADMIN.adminUserIds.includes(Number(update.message.chatId))){
                     translated = await translate({
                         text: "onlyAdmin.message",
                         button: "onlyAdmin.button",
@@ -166,15 +166,7 @@ ${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['caption'] ? `${
 
                 let url = `https://telegram.dog/${botInfo.username}?start=${code}`
                 if ( TOKEN_SUPPORT.ADV_TOKEN && !TOKEN_SUPPORT.EXPIRATION_TIME ) {
-                    try {
-                        _url = `https://${TOKEN_SUPPORT.DOMAIN}/st?api=${TOKEN_SUPPORT.API}&url=${url}`
-                        https.get(_url, (response) => {
-                            console.log(response.headers.location);
-                            url = response.headers.location
-                        })
-                    } catch (error) {
-                        url = `https://telegram.dog/${botInfo.username}?start=${code}`
-                    }
+                    url = `https://${TOKEN_SUPPORT.DOMAIN}/st?api=${TOKEN_SUPPORT.API}&url=${url}`
                 }
                 translated = await translate({
                     text: !(getUserInfo && getUserInfo['setPassword'])

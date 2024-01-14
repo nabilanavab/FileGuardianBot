@@ -25,6 +25,7 @@ const { isBatchUser } = require("./localDB/batchData");
 const { forceSub } = require("./helpers/forceSub");
 const REQUESTED_USERS = require("./localDB/request");
 const { limitHandler } = require("./helpers/limitHandler");
+const { BOT_ADMIN } = require("../../config");
 
 
 /**
@@ -45,8 +46,8 @@ module.exports = async function (client) {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                if ( BOT_ADMIN.ADMIN_ONLY && !BOT_ADMIN.adminUserIds.includes(update.message.chatId.value)){
-                    translated = await translate({
+                if ( BOT_ADMIN.ADMIN_ONLY && !BOT_ADMIN.adminUserIds.includes(Number(update.message.chatId))){
+                    let translated = await translate({
                         text: "onlyAdmin.message",
                         button: "onlyAdmin.button",
                         langCode: lang_code

