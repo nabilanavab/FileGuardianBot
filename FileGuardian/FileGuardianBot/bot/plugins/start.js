@@ -19,7 +19,7 @@ const author = "@nabilanavab"
 // Import necessary modules
 let logger = require("../../logger");
 const { DATABASE } = require("../../config");
-const { CHANNEL_INFO } = require("../../config");
+const { CHANNEL_INFO, TOKEN_SUPPORT } = require("../../config");
 const { coreDbFunctions } = require("../monGo/core");
 const { FloodWaitError } = require("telegram/errors/RPCErrorList");
 const { forceSub } = require("./helpers/forceSub");
@@ -90,6 +90,13 @@ module.exports = async function (client) {
                             {}
                         )
                     }
+                    if (TOKEN_SUPPORT.EXPIRATION_TIME){
+
+                    }
+                    // if user in last 24 hr list
+                    // else add the user
+                    // use refresh buttn
+
                     return await checkDecCode(
                         { 
                             client: client,

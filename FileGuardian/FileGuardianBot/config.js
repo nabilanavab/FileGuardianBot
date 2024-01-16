@@ -264,7 +264,7 @@ class TOKEN_SUPPORT {
     static ADV_TOKEN = process.env.ADV_TOKEN || null;
 
     /**
-     * Expiration time in hours (24 hours by default)
+     * Expiration time in hours
      * @type {number}
      * @static
      */
