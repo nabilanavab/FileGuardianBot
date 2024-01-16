@@ -40,7 +40,10 @@ var messagePassData = {
 
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
-        if (update  && update.className == "UpdateBotInlineQuery"){
+        if (
+            update &&
+            update.className == "UpdateBotInlineQuery"
+        ){
             try {
                 let langCode = await getLang(update.userId);
 

@@ -117,7 +117,7 @@ async function decryptHandler({ client, messageID, userID, code, replyTo, massFo
                 button: jsonData['button']
             })
         }
-            
+
         await userForward({
             client: client,
             messageIds: messageIds,

@@ -39,14 +39,18 @@ const { BOT_ADMIN } = require("../../config");
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
-            update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
+            update?.message?.peerId?.className === 'PeerUser' &&
+            !update?.message?.out &&
             update?.message?.message?.toLowerCase()?.startsWith("/batch")
         ) {
             try {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                if ( BOT_ADMIN.ADMIN_ONLY && !BOT_ADMIN.adminUserIds.includes(Number(update.message.chatId))){
+                if ( 
+                    BOT_ADMIN.ADMIN_ONLY &&
+                    !BOT_ADMIN.adminUserIds.includes(Number(update.message.chatId))
+                ){
                     let translated = await translate({
                         text: "onlyAdmin.message",
                         button: "onlyAdmin.button",
@@ -69,16 +73,23 @@ module.exports = async function (client) {
                     // if userin isBatchUser means send request or joined chat
                 } else if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
                     await limitHandler({
-                        client, userId: update.message.chatId.value, replyTo:update.message.replyTo
+                        client: client,
+                        userId: update.message.chatId.value,
+                        replyTo:update.message.replyTo
                     })
                 } else {
                     // Check for force subscription & time limit
-                    await forceSub({ client, update })
+                    await forceSub({
+                        client: client,
+                        update: update
+                    })
                 }
 
                 let translated = await translate({
-                    text: "batch.new", button: "batch.newButton",
-                    langCode: lang_code, order: 21
+                    text: "batch.new",
+                    button: "batch.newButton",
+                    langCode: lang_code,
+                    order: 21
                 });
                 await client.sendMessage(
                     update.message.chatId, {
@@ -88,7 +99,9 @@ module.exports = async function (client) {
                     }
                 );
                 await client.deleteMessages(
-                    update.message.chatId, [update.message.id], {}
+                    update.message.chatId,
+                    [update.message.id],
+                    {}
                 )
 
                 return 0;
@@ -97,7 +110,8 @@ module.exports = async function (client) {
                 if (error instanceof errors.FloodWaitError) {
                     logger.log('error', `${file_name}: ${update.message.chatId} : ${error}`);
                     setTimeout(
-                        module.exports(client), error.seconds
+                        module.exports(client),
+                        error.seconds
                     )
                 } else {
                     logger.log('error', `${file_name}\batch.js ${update.message.chatId} : ${error}`);

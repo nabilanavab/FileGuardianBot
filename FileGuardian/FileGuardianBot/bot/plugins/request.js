@@ -33,8 +33,11 @@ const { extrasDbFunctions } = require("../monGo/extras");
 
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
-        if ( update && update.className === "UpdateBotChatInviteRequester" &&
-           "-100" + update.peer.channelId.value == CHANNEL_INFO.FORCE_SUB) {
+        if ( 
+            update &&
+            update.className === "UpdateBotChatInviteRequester" &&
+           "-100" + update.peer.channelId.value == CHANNEL_INFO.FORCE_SUB
+        ) {
             try {
                 if (!REQUESTED_USERS.includes(update.userId.value)) {
                     REQUESTED_USERS.push(update.userId.value);

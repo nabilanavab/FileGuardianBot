@@ -29,7 +29,9 @@ const logger = require("../../logger");
 
 async function addCaption(client) {
     client.addEventHandler(async (update) => {
-        if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
+        if (
+            update?.message?.peerId?.className === 'PeerUser' &&
+            !update?.message?.out &&
             update?.message?.message?.startsWith("/add_caption")
         ) {
             try {
@@ -92,7 +94,9 @@ async function addCaption(client) {
 
 async function deleteCaption(client) {
     client.addEventHandler(async (update) => {
-        if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
+        if (
+            update?.message?.peerId?.className === 'PeerUser' &&
+            !update?.message?.out &&
             update?.message?.message?.startsWith("/delete_caption")
         ) {
             try {

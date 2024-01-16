@@ -39,7 +39,9 @@ const REQUESTED_USERS = require("./localDB/request");
 
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
-        if ( update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
+        if (
+            update?.message?.peerId?.className === 'PeerUser' &&
+            !update?.message?.out &&
             update?.message?.message?.toLowerCase()?.startsWith("/start")
         ) {
             try {
@@ -49,8 +51,13 @@ module.exports = async function (client) {
                 // Check if user in requested list
                 if ( !REQUESTED_USERS.includes(update.message.chatId.value) ){
                     // Check for force subscription & time limit
-                    await forceSub({ client, update,
-                        haveCode: update.message.message.replace('/start ', '')})
+                    await forceSub(
+                        {
+                            client: client,
+                            update: update,
+                            haveCode: update.message.message.replace('/start ', '')
+                        }
+                    )
                     
                     // Add a new user to the database
                     if (DATABASE.MONGODB_URI) {
@@ -71,18 +78,25 @@ module.exports = async function (client) {
                 if (haveCode !== '/start') {
                     if (haveCode.startsWith("password")){
                         return await setPassword({
-                            client: client, update: update, haveCode: haveCode
+                            client: client,
+                            update: update,
+                            haveCode: haveCode
                         })
                     }
                     if (haveCode === "waste"){
                         return await client.deleteMessages(
                             update.message.chatId,
-                            [ update.message ], {}
+                            [ update.message ],
+                            {}
                         )
                     }
                     return await checkDecCode(
-                        { client: client, code: haveCode,
-                          userID: update.message.chatId, replyTo: update.message }
+                        { 
+                            client: client,
+                            code: haveCode,
+                            userID: update.message.chatId,
+                            replyTo: update.message
+                        }
                     );
                 }
 

@@ -37,8 +37,11 @@ const { Api } = require("telegram")
 
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
-        if ( update?.message && !update.message.out &&
-            update.message.peerId.className === 'PeerUser' && isBatchUser(update.message.chatId.value)
+        if (
+            update?.message &&
+            !update.message.out &&
+            update.message.peerId.className === 'PeerUser' &&
+            isBatchUser(update.message.chatId.value)
         ) {
             try {
                 // Retrieve the user's language from the local database
@@ -59,8 +62,11 @@ module.exports = async function (client) {
                 }
 
                 if ( item.type === "@batchMessage") {
-                    if ( item.userData.length==0 || (item.userData.length <= 25 && ( !update.message.message || 
-                        (update.message.message && update.message.message != "/batch")))
+                    if (
+                        item.userData.length==0 || (
+                            item.userData.length <= 25 && ( !update.message.message || 
+                            (update.message.message && update.message.message != "/batch")
+                        ))
                     ){
                         insertDataById(update.message.chatId.value, update.message.id)
 
@@ -80,7 +86,9 @@ module.exports = async function (client) {
                     }
 
                 } else if ( item.type === "@batchChannel" ){
-                    if (!( update.message.fwdFrom && update.message.fwdFrom.fromId &&
+                    if (!(
+                        update.message.fwdFrom &&
+                        update.message.fwdFrom.fromId &&
                         update.message.fwdFrom.fromId.channelId &&
                         update.message.fwdFrom.fromId.className === "PeerChannel" )
                     ){
@@ -123,9 +131,13 @@ module.exports = async function (client) {
                         }
                         
                         insertForwardFromById(
-                            update.message.chatId.value, update.message.fwdFrom.fromId.channelId.value
+                            update.message.chatId.value,
+                            update.message.fwdFrom.fromId.channelId.value
                         )
-                        insertDataById(update.message.chatId.value, update.message.fwdFrom.channelPost)
+                        insertDataById(
+                            update.message.chatId.value,
+                            update.message.fwdFrom.channelPost
+                        )
 
                         const translated = await translate({
                             text : "batch.sendLastMsg",
@@ -159,7 +171,10 @@ module.exports = async function (client) {
                             }
                         )
                     } else if ( item.userData.length == 1 ) {
-                        insertDataById(update.message.chatId.value, update.message.fwdFrom.channelPost)
+                        insertDataById(
+                            update.message.chatId.value,
+                            update.message.fwdFrom.channelPost
+                        )
                     }
                 }
 

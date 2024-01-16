@@ -38,7 +38,10 @@ const captButton = require("./callBack/askCapBut");
 
 module.exports = async function(client){
     client.addEventHandler(async (update) => {
-        if (update  && update.className == "UpdateBotCallbackQuery"){
+        if (
+            update &&
+            update.className == "UpdateBotCallbackQuery"
+        ){
             try {
                 let data = Buffer.from(update.data).toString('utf8');
                 

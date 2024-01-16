@@ -49,8 +49,11 @@ const validCommands = [
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
         if (
-            update?.message?.peerId?.className === 'PeerUser' && !update?.message?.out &&
-            !validCommands.some(cmd => update?.message?.message?.toLowerCase()?.startsWith(cmd)) &&
+            update?.message?.peerId?.className === 'PeerUser' &&
+            !update?.message?.out &&
+            !validCommands.some(
+                cmd => update?.message?.message?.toLowerCase()?.startsWith(cmd)
+            ) &&
             !isBatchUser(update.message.chatId.value)
         ) {
             if (batchCompleted.includes(update.message.chatId.value)){
@@ -64,7 +67,10 @@ module.exports = async function (client) {
                 // Retrieve the user's language from the local database
                 let lang_code = await getLang(update.message.chatId);
 
-                if ( BOT_ADMIN.ADMIN_ONLY && !BOT_ADMIN.adminUserIds.includes(Number(update.message.chatId))){
+                if ( 
+                    BOT_ADMIN.ADMIN_ONLY &&
+                    !BOT_ADMIN.adminUserIds.includes(Number(update.message.chatId))
+                ){
                     translated = await translate({
                         text: "onlyAdmin.message",
                         button: "onlyAdmin.button",
@@ -86,7 +92,9 @@ module.exports = async function (client) {
                 // Check for force subscription: If the user is required to subscribe forcefully
                 if ( REQUESTED_USERS.includes(update.message.chatId.value) ){
                     await limitHandler({
-                        client, userId: update.message.chatId.value, replyTo:update.message.replyTo
+                        client,
+                        userId: update.message.chatId.value,
+                        replyTo:update.message.replyTo
                     })
                 } else {
                     // Check for force subscription & time limit
