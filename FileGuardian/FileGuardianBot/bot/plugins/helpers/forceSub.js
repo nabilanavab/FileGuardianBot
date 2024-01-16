@@ -88,19 +88,23 @@ const forceSub = async ({ client, update, checkLimit=false, haveCode=false }) =>
         } else {
             let lang_code = await getLang(update.message.chatId);
             let translated = await translate({
-                text: 'force.message', button: 'force.button',
-                langCode: lang_code, asString: true
+                text: 'force.message',
+                button: 'force.button',
+                langCode: lang_code,
+                asString: true
             });
 
             let newButton = await editDict({
                 inDict : translated.button,
                 value : [
                     config.CHANNEL_INFO.FORCE_URL,
-                    haveCode.length > 8 ? `https://telegram.dog/${botInfo.username}?start=${haveCode}` : "=refresh"
+                    haveCode.length > 8 ?
+                        `https://telegram.dog/${botInfo.username}?start=${haveCode}` : "=refresh"
                 ]
             })
             newButton = await createButton({
-                button : newButton, order : '11'
+                button : newButton,
+                order : '11'
             })
 
             await client.sendMessage(update.message.chatId, {
