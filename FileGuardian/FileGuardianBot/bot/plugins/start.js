@@ -32,6 +32,7 @@ const user_activity = require("./token/user_activity");
 const editDict = require("../i18n/edtB10");
 const shortLink = require("../plugins/token/shortenLink");
 const enterData = require("./token/enter_data");
+const check_activity = require("./token/check_activity");
 
 
 /**
@@ -73,7 +74,7 @@ module.exports = async function (client) {
                                 "lang": lang_code
                             }
                         });
-                    }
+                    };
                 }
 
                 // Check if there is a start message from the user
@@ -102,11 +103,10 @@ module.exports = async function (client) {
                             )
                         }
 
-                        console.log(user_activity)
-                        await enterData({
-                            userId: Number(update.message.chatId)
-                        });
-                        console.log(user_activity)
+                        if (!check_activity(Number(update.message.chatId)))
+                            await enterData({
+                                userId: Number(update.message.chatId)
+                            });
 
                         return await client.deleteMessages(
                             update.message.chatId,
@@ -122,7 +122,7 @@ module.exports = async function (client) {
                         )
                     }
                     if (TOKEN_SUPPORT.EXPIRATION_TIME &&
-                        !user_activity.includes(Number(update.message.chatId))){
+                        !check_activity(Number(update.message.chatId))){
                             let translated = await translate({
                                 text: 'force.message',
                                 button: 'force.button',

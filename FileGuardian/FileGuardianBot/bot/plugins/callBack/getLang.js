@@ -20,6 +20,7 @@ const logger = require("../../../logger");
 const { enabledLang } = require("../../i18n/data");
 const translate = require("../../i18n/t9n");
 const { createButton } = require("../../i18n/ba10");
+const { LANG_INFO } = require("../../../config")
 
 /**
  * Handles callback queries for changing Language
@@ -34,6 +35,11 @@ const maxClmnForButton = 3;
 
 async function askLang({ client, update }) {
     try {
+        console.log(LANG_INFO.MULTIPLE_LANG)
+        if (!LANG_INFO.MULTIPLE_LANG){
+            return
+        }
+
         // Get the user's language code
         let langCode = await getLang(update.userId);
 
