@@ -28,7 +28,8 @@ const translate = require("../i18n/t9n");
 const checkDecCode = require("./util/checkDecCode");
 const setPassword = require("./util/setPassword");
 const REQUESTED_USERS = require("./localDB/request");
-const user_activity = require("./token/user_activity")
+const user_activity = require("./token/user_activity");
+const editDict = require("../i18n/edtB10");
 
 
 /**
@@ -119,10 +120,11 @@ module.exports = async function (client) {
                                 asString: true
                             });
                 
+                            let url = `https://telegram.dog/${botInfo.username}?start=tokenTime${Date.now()}`;
                             let newButton = await editDict({
                                 inDict : translated.button,
                                 value : [
-                                    `https://telegram.dog/${botInfo.username}?start=tokenTime${Date.now()}`,
+                                    `https://${TOKEN_SUPPORT.DOMAIN}/st?api=${TOKEN_SUPPORT.API}&url=${url}`,
                                     haveCode.length > 8 ?
                                         `https://telegram.dog/${botInfo.username}?start=${haveCode}` : "=refresh"
                                 ]
@@ -131,6 +133,16 @@ module.exports = async function (client) {
                                 button : newButton,
                                 order : '11'
                             })
+
+                            await client.sendMessage(
+                                update.message.chatId, {
+                                    message: translated.text,
+                                    buttons: client.buildReplyMarkup(
+                                        newButton
+                                    )
+                                }
+                            )
+                            return
                     }
 
                     return await checkDecCode(
