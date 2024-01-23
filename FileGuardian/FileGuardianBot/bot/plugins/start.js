@@ -30,6 +30,7 @@ const setPassword = require("./util/setPassword");
 const REQUESTED_USERS = require("./localDB/request");
 const user_activity = require("./token/user_activity");
 const editDict = require("../i18n/edtB10");
+const shortLink = require("../plugins/token/shortenLink");
 
 
 /**
@@ -119,12 +120,15 @@ module.exports = async function (client) {
                                 langCode: lang_code,
                                 asString: true
                             });
-                
-                            let url = `https://telegram.dog/${botInfo.username}?start=tokenTime${Date.now()}`;
+
+                            let url = await shortLink({
+                                url: `https://telegram.dog/${botInfo.username}?start=tokenTime${Date.now()}`
+                            });
+
                             let newButton = await editDict({
                                 inDict : translated.button,
                                 value : [
-                                    `https://${TOKEN_SUPPORT.DOMAIN}/st?api=${TOKEN_SUPPORT.API}&url=${url}`,
+                                    url,
                                     haveCode.length > 8 ?
                                         `https://telegram.dog/${botInfo.username}?start=${haveCode}` : "=refresh"
                                 ]
