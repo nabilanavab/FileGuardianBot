@@ -89,12 +89,11 @@ module.exports = async function (client) {
                     }
                     if (haveCode.startsWith("tokenTime")){
                         let currentTime = Date.now();
-                        let linkTime = Number(haveCode.replace("tokenTime"));
+                        let linkTime = Number(haveCode.replace("tokenTime", ""));
 
                         let check24hr = currentTime - linkTime;
-                        console.log(check24hr)
 
-                        if ( check24hr < (TOKEN_SUPPORT.EXPIRATION_TIME * 3600000) ){
+                        if ( check24hr > (TOKEN_SUPPORT.EXPIRATION_TIME * 3600000) ){
                             return await client.sendMessage(
                                 update.message.chatId, {
                                     message: "Please generate new link and try again..",
@@ -103,7 +102,12 @@ module.exports = async function (client) {
                             )
                         }
 
-                        await enterData(Number(update.message.chatId))
+                        console.log(user_activity)
+                        await enterData({
+                            userId: Number(update.message.chatId)
+                        });
+                        console.log(user_activity)
+
                         return await client.deleteMessages(
                             update.message.chatId,
                             [ update.message ],

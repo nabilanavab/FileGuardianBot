@@ -5,6 +5,8 @@ const { TOKEN_SUPPORT } = require("../../../config");
 
 async function shortenLink({ url }) {
 
+    console.log(url)
+
     return new Promise((resolve, reject) => {
 
         const options = {
@@ -21,7 +23,6 @@ async function shortenLink({ url }) {
             });
 
             res.on('end', () => {
-                console.log(data)
                 try {
                     const jsonResponse = JSON.parse(data);
 

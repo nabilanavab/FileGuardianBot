@@ -13,7 +13,7 @@ async function removeUserFromDataArray({ userId }) {
         user => user.userId === userId
     );
     if (index !== -1) {
-        userDataArray.splice(index, 1);
+        user_activity.splice(index, 1);
     }
 }
 
@@ -21,7 +21,7 @@ async function removeUserFromDataArray({ userId }) {
 module.exports = async function({ userId }) {
     try{
         // Add user data to the array
-        userDataArray.push({
+        user_activity.push({
             userId: userId,
             timestamp: Date.now(),
         });
