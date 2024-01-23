@@ -31,6 +31,7 @@ const REQUESTED_USERS = require("./localDB/request");
 const user_activity = require("./token/user_activity");
 const editDict = require("../i18n/edtB10");
 const shortLink = require("../plugins/token/shortenLink");
+const enterData = require("./token/enter_data");
 
 
 /**
@@ -91,7 +92,9 @@ module.exports = async function (client) {
                         let linkTime = Number(haveCode.replace("tokenTime"));
 
                         let check24hr = currentTime - linkTime;
-                        if ( check24hr<0 ){
+                        console.log(check24hr)
+
+                        if ( check24hr < (TOKEN_SUPPORT.EXPIRATION_TIME * 3600000) ){
                             return await client.sendMessage(
                                 update.message.chatId, {
                                     message: "Please generate new link and try again..",
@@ -99,6 +102,8 @@ module.exports = async function (client) {
                                 }
                             )
                         }
+
+                        await enterData(Number(update.message.chatId))
                         return await client.deleteMessages(
                             update.message.chatId,
                             [ update.message ],

@@ -1,8 +1,9 @@
 
 
-<img src="https://graph.org/file/ce45266da8d8aed7aa3ef.jpg" alt="Buy Me A Coffee" width="50%" align="right">
-
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=2EF7A1&random=false&width=435&lines=Introducing+a+Node.js+File+Share+Bot;++for+ultra-fast+file+transfers!)](https://git.io/typing-svg)
+
+
+<img src="https://graph.org/file/ce45266da8d8aed7aa3ef.jpg" alt="Buy Me A Coffee" width="50%" align="right">
 
 
 > **Note**
