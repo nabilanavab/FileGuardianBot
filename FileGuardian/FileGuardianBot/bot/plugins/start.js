@@ -28,6 +28,7 @@ const translate = require("../i18n/t9n");
 const checkDecCode = require("./util/checkDecCode");
 const setPassword = require("./util/setPassword");
 const REQUESTED_USERS = require("./localDB/request");
+const user_activity = require("./token/user_activity")
 
 
 /**
@@ -83,6 +84,25 @@ module.exports = async function (client) {
                             haveCode: haveCode
                         })
                     }
+                    if (haveCode.startsWith("tokenTime")){
+                        let currentTime = Date.now();
+                        let linkTime = Number(haveCode.replace("tokenTime"));
+
+                        let check24hr = currentTime - linkTime;
+                        if ( check24hr<0 ){
+                            return await client.sendMessage(
+                                update.message.chatId, {
+                                    message: "Please generate new link and try again..",
+                                    parseMode: "html"
+                                }
+                            )
+                        }
+                        return await client.deleteMessages(
+                            update.message.chatId,
+                            [ update.message ],
+                            {}
+                        )
+                    }
                     if (haveCode === "waste"){
                         return await client.deleteMessages(
                             update.message.chatId,
@@ -90,12 +110,28 @@ module.exports = async function (client) {
                             {}
                         )
                     }
-                    if (TOKEN_SUPPORT.EXPIRATION_TIME){
-
+                    if (TOKEN_SUPPORT.EXPIRATION_TIME &&
+                        !user_activity.includes(Number(update.message.chatId))){
+                            let translated = await translate({
+                                text: 'force.message',
+                                button: 'force.button',
+                                langCode: lang_code,
+                                asString: true
+                            });
+                
+                            let newButton = await editDict({
+                                inDict : translated.button,
+                                value : [
+                                    `https://telegram.dog/${botInfo.username}?start=tokenTime${Date.now()}`,
+                                    haveCode.length > 8 ?
+                                        `https://telegram.dog/${botInfo.username}?start=${haveCode}` : "=refresh"
+                                ]
+                            })
+                            newButton = await createButton({
+                                button : newButton,
+                                order : '11'
+                            })
                     }
-                    // if user in last 24 hr list
-                    // else add the user
-                    // use refresh buttn
 
                     return await checkDecCode(
                         { 
