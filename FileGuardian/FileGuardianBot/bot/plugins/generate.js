@@ -32,7 +32,8 @@ const edit = require("./helpers/edit");
 const REQUESTED_USERS = require("./localDB/request");
 const { limitHandler } = require("./helpers/limitHandler");
 const { BOT_ADMIN, TOKEN_SUPPORT } = require("../../config");
-const https = require('https');
+const shortLink = require("../plugins/token/shortenLink");
+
 
 
 /**
@@ -174,7 +175,7 @@ ${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['caption'] ? `${
 
                 let url = `https://telegram.dog/${botInfo.username}?start=${code}`
                 if ( TOKEN_SUPPORT.ADV_TOKEN && !TOKEN_SUPPORT.EXPIRATION_TIME ) {
-                    url = `https://${TOKEN_SUPPORT.DOMAIN}/st?api=${TOKEN_SUPPORT.API}&url=${url}`
+                    url = await shortLink(url);
                 }
                 translated = await translate({
                     text: !(getUserInfo && getUserInfo['setPassword'])
