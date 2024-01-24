@@ -42,22 +42,26 @@ module.exports = async function (client) {
                 if (!REQUESTED_USERS.includes(update.userId.value)) {
                     REQUESTED_USERS.push(update.userId.value);
 
-                    if( DATABASE.MONGODB_URI ){
-                        newuser = await coreDbFunctions.isUserExist({
-                            userID: update.userId.value,
-                            elseAdd: {
-                                // "name" : username, slly many cany be added
-                                // check isUserExist only (only minor update needed)
-                                "requested": true
-                            }
-                        });
-                        if (newuser != "newuser"){
-                            await extrasDbFunctions.changeData({
+                    if ( !CHANNEL_INFO.AUTO_APPROVE ){
+                        if( DATABASE.MONGODB_URI ){
+                            newuser = await coreDbFunctions.isUserExist({
                                 userID: update.userId.value,
-                                key: "requested",
-                                value: true
-                            })
+                                elseAdd: {
+                                    // "name" : username, slly many cany be added
+                                    // check isUserExist only (only minor update needed)
+                                    "requested": true
+                                }
+                            });
+                            if (newuser != "newuser"){
+                                await extrasDbFunctions.changeData({
+                                    userID: update.userId.value,
+                                    key: "requested",
+                                    value: true
+                                })
+                            }
                         }
+                    } else {
+                        // auto approve
                     }
                 }
 

@@ -170,6 +170,13 @@ class CHANNEL_INFO {
      * @static
      */
     static REQUEST_CHANNEL = process.env.REQUEST_CHANNEL === 'true';
+
+    /**
+     * Flag Indicating whether the request must be approved automatically
+     * @type {boolean}
+     * @static
+     */
+    static AUTO_APPROVE = process.env.AUTO_APPROVE === 'true' && REQUEST_CHANNEL;
 }
 
 /**

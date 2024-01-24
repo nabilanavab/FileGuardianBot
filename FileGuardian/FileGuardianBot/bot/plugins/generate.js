@@ -45,7 +45,7 @@ const shortLink = require("../plugins/token/shortenLink");
 
 const validCommands = [
     '/start', '/batch', '/add_caption', '/view',
-    '/delete_caption', '/add_button', '/delete_button'
+    '/delete_caption', '/add_button', '/delete_button', '/approve'
 ];
 module.exports = async function (client) {
     client.addEventHandler(async (update) => {
