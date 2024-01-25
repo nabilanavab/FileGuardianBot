@@ -23,6 +23,7 @@ const REQUESTED_USERS = require("./localDB/request");
 const { coreDbFunctions } = require("../monGo/core");
 const { DATABASE } = require("../../config");
 const { extrasDbFunctions } = require("../monGo/extras");
+const approveChatJoinRequest = require("./util/acceptUser");
 
 /**
  * Event handler to process chat invite requester updates for the bot's force subscription channel.
@@ -57,11 +58,31 @@ module.exports = async function (client) {
                                     userID: update.userId.value,
                                     key: "requested",
                                     value: true
-                                })
+                                });
                             }
                         }
                     } else {
-                        // auto approve
+                        try {
+                            await approveChatJoinRequest(update.userId.value);
+                        } catch (error) {
+                            if( DATABASE.MONGODB_URI ){
+                                newuser = await coreDbFunctions.isUserExist({
+                                    userID: update.userId.value,
+                                    elseAdd: {
+                                        // "name" : username, slly many cany be added
+                                        // check isUserExist only (only minor update needed)
+                                        "requested": true
+                                    }
+                                });
+                                if (newuser != "newuser"){
+                                    await extrasDbFunctions.changeData({
+                                        userID: update.userId.value,
+                                        key: "requested",
+                                        value: true
+                                    });
+                                };
+                            }
+                        }
                     }
                 }
 
