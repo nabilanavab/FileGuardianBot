@@ -7,5 +7,8 @@ WORKDIR /FileGuardianBot
 # Copy the rest of your project files to the container
 COPY . .
 
+# Install all node packages
+RUN npm install
+
 # Command to start your Node.js application
 CMD ["node", "FileGuardian/FileGuardianBot"]
