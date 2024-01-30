@@ -127,6 +127,13 @@ Before deploying your Telegram bot, don't forget to review and configure the env
 - **CHANNEL_ID:** If you want to broadcast a restart message, set this variable to the channel ID
 - **MESSAGE_ID:** If `CHANNEL_ID` is specified, set this variable to the message ID of the restart message.
 
+
+## Welcome to Version 3.0.0 and beyond!
+- ADV_TOKEN Integration: Use ADV_TOKEN for personalized advertisement, separating domains with your API token. Maximize your earning potential with this innovative advertising approach.
+- EXPIRATION_TIME: Set time limits with EXPIRATION_TIME (in hours). Add 24 to create a 24-hour window for users to visit the specified website, enhancing engagement and rewards.
+> - Dual Shortening Modes:
+>   - Shorten All Links: Automatically shorten every URL, optimizing monetization across your bot.
+>   - 24-Hour One-Time Shortening: Encourage user visits within a 24-hour period for select URLs, creating a focused and time-sensitive earning opportunity.
 ## Troubleshooting (Because We Can't Predict Everything)
 Things go wrong sometimes, and we get it. If you find yourself facing unexpected challenges or quirks while using File Guardian Bot, fret not. We're here to help, and your feedback is gold.
 - **Suggestions or Changes :** If you have suggestions or ideas for improvements, or if you spot something that needs fixing, feel free to create an issue on GitHub. We love hearing from you!
