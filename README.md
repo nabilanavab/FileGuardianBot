@@ -129,7 +129,7 @@ Before deploying your Telegram bot, don't forget to review and configure the env
 
 
 ## Welcome to Version 3.0.0 and beyond!
-- ADV_TOKEN: Use ADV_TOKEN for personalized advertisement separating domains with your API token.
+- ADV_TOKEN: for personalized advertisement separating domains & API token with space.
 - EXPIRATION_TIME: Set time limits with EXPIRATION_TIME (in hours).
 > - Dual Shortening Modes:
 >   - Shorten All Links: Automatically shorten every URL
