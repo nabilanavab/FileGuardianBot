@@ -130,7 +130,7 @@ Before deploying your Telegram bot, don't forget to review and configure the env
 
 ## Welcome to Version 3.0.0 and beyond!
 - ADV_TOKEN: for personalized advertisement separating domains & API token with space.
-`urlshortx.com f36086d0aa5d8c51aebb829165d05ab6b0a62cb1`
+> `urlshortx.com f36086d0aa5d8c51aebb829165d05ab6b0a62cb1`
 - EXPIRATION_TIME: Set time limits with EXPIRATION_TIME (in hours).
 > - Dual Shortening Modes:
 >   - Shorten All Links: Automatically shorten every URL
