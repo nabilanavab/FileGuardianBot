@@ -132,10 +132,6 @@ Before deploying your Telegram bot, don't forget to review and configure the env
 - ADV_TOKEN: for personalized advertisement separating domains & API token with space.
 > `urlshortx.com f36086d0aa5d8c51aebb829165d05ab6b0a62cb1`
 - EXPIRATION_TIME: Set time limits with EXPIRATION_TIME (in hours).
-> - Dual Shortening Modes:
->   - Shorten All Links: Automatically shorten every URL
->   - 24-Hour One-Time Shortening: Encourage user visits within a 24-hour period for select URLs
-
 
 ## Troubleshooting (Because We Can't Predict Everything)
 Things go wrong sometimes, and we get it. If you find yourself facing unexpected challenges or quirks while using File Guardian Bot, fret not. We're here to help, and your feedback is gold.
