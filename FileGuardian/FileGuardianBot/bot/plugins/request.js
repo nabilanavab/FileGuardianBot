@@ -40,10 +40,39 @@ module.exports = async function (client) {
            "-100" + update.peer.channelId.value == CHANNEL_INFO.FORCE_SUB
         ) {
             try {
-                if (!REQUESTED_USERS.includes(update.userId.value)) {
-                    REQUESTED_USERS.push(update.userId.value);
+                if ( !CHANNEL_INFO.AUTO_APPROVE ){
 
-                    if ( !CHANNEL_INFO.AUTO_APPROVE ){
+                    if (!REQUESTED_USERS.includes(update.userId.value)) {
+                        REQUESTED_USERS.push(update.userId.value);
+                    }
+
+                    if( DATABASE.MONGODB_URI ){
+                        newuser = await coreDbFunctions.isUserExist({
+                            userID: update.userId.value,
+                            elseAdd: {
+                                // "name" : username, slly many cany be added
+                                // check isUserExist only (only minor update needed)
+                                "requested": true
+                            }
+                        });
+                        if (newuser != "newuser"){
+                            await extrasDbFunctions.changeData({
+                                userID: update.userId.value,
+                                key: "requested",
+                                value: true
+                            });
+                        }
+                    }
+
+                } else {
+                    try {
+                        await approveChatJoinRequest(update.userId.value);
+                    } catch (error) {
+                        
+                        if (!REQUESTED_USERS.includes(update.userId.value)) {
+                            REQUESTED_USERS.push(update.userId.value);
+                        }
+
                         if( DATABASE.MONGODB_URI ){
                             newuser = await coreDbFunctions.isUserExist({
                                 userID: update.userId.value,
@@ -59,33 +88,10 @@ module.exports = async function (client) {
                                     key: "requested",
                                     value: true
                                 });
-                            }
-                        }
-                    } else {
-                        try {
-                            await approveChatJoinRequest(update.userId.value);
-                        } catch (error) {
-                            if( DATABASE.MONGODB_URI ){
-                                newuser = await coreDbFunctions.isUserExist({
-                                    userID: update.userId.value,
-                                    elseAdd: {
-                                        // "name" : username, slly many cany be added
-                                        // check isUserExist only (only minor update needed)
-                                        "requested": true
-                                    }
-                                });
-                                if (newuser != "newuser"){
-                                    await extrasDbFunctions.changeData({
-                                        userID: update.userId.value,
-                                        key: "requested",
-                                        value: true
-                                    });
-                                };
-                            }
+                            };
                         }
                     }
                 }
-
             } catch (error) {
                 logger.log('error', `${file_name} : request.js : ${update.userId.value} : ${error}`);
             }
