@@ -105,7 +105,6 @@ async function deleteCaption(client) {
 
                 if (generateInfo?.[update.message.chatId]?.['caption']){
                     generateInfo[update.message.chatId]['caption'] = false;
-                    console.log(generateInfo[update.message.chatId]['caption']);
                 
                     if ( DATABASE.MONGODB_URI ) {
                         await extrasDbFunctions.changeData({

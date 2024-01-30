@@ -177,9 +177,6 @@ ${forwardMsg[0][0]['media']!=null && getUserInfo && getUserInfo['caption'] ? `${
                 if ( TOKEN_SUPPORT.ADV_TOKEN && !TOKEN_SUPPORT.EXPIRATION_TIME ) {
                     url = await shortLink({ url : url });
                 }
-                console.log(`token: ${TOKEN_SUPPORT.ADV_TOKEN}`);
-                console.log(TOKEN_SUPPORT.EXPIRATION_TIME);
-                console.log(url);
                 translated = await translate({
                     text: !(getUserInfo && getUserInfo['setPassword'])
                         ? "generate.publLink" : "generate.privLink",
