@@ -39,7 +39,7 @@ const check_activity = require("./token/check_activity");
  * Event handler to define a welcome message for users sending /start command in a private chat.
  *
  * @param {TelegramBot} client - The Telegram bot instance.
- * @returns {Promise<void>} - A Promise that resolves when the event handling is completed.
+ * @returns {Promise<void>}    - A Promise that resolves when the event handling is completed.
  */
 
 module.exports = async function (client) {

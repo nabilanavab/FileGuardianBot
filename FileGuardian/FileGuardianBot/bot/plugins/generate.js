@@ -44,7 +44,7 @@ const shortLink = require("../plugins/token/shortenLink");
  */
 
 const validCommands = [
-    '/start', '/batch', '/add_caption', '/view',
+    '/start', '/batch', '/add_caption', '/view', '/stat',
     '/delete_caption', '/add_button', '/delete_button', '/approve'
 ];
 module.exports = async function (client) {
