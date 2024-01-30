@@ -315,9 +315,7 @@ if (!(missingVariables.length === 0)) {
 console.log(`Currently supported languages: ${Object.keys(LANG_INFO.ENABLED_LANG).join(', ')}`);
 console.log(`Log file: ${LOG_FILE.FILE_NAME}`);
 
-console.log(`ADD API: ${TOKEN_SUPPORT.ADV_TOKEN}`)
-console.log(`ADD API: ${TOKEN_SUPPORT.DOMAIN}`)
-console.log(`ADD API: ${TOKEN_SUPPORT.API}`)
+console.log(`ADD API: ${TOKEN_SUPPORT.ADV_TOKEN}`);
 
 
 

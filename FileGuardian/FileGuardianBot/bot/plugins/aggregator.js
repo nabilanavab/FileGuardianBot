@@ -25,7 +25,9 @@ const encrypt = require("./cryptoG/encrypt");
 const reply = require("./helpers/reply");
 const editDict = require("../../bot/i18n/edtB10");
 const edit = require("./helpers/edit");
-const { Api } = require("telegram")
+const { Api } = require("telegram");
+const { TOKEN_SUPPORT } = require("../../config");
+const shortLink = require("../plugins/token/shortenLink");
 
 
 /**
@@ -227,6 +229,13 @@ module.exports = async function (client) {
                     text: messageInfo,
                     userID: update.message.chatId.value
                 });
+                if ( TOKEN_SUPPORT.ADV_TOKEN && !TOKEN_SUPPORT.EXPIRATION_TIME ) {
+                    code = await shortLink(
+                        { url : `https://telegram.dog/${botInfo.username}?start=${code}` }
+                    );
+                } else {
+                    code = `https://telegram.dog/${botInfo.username}?start=${code}`
+                }
 
                 let data = ""
                 for (let [key, value] of Object.entries(getUserInfo)) {
@@ -250,7 +259,7 @@ module.exports = async function (client) {
                 // Edit the button with the generated URL
                 let newButton = await editDict({
                     inDict: translated.button,
-                    value: `https://telegram.dog/${botInfo.username}?start=${code}`
+                    value: code
                 })
                 newButton = await createButton({
                     button: newButton, order: '11'
