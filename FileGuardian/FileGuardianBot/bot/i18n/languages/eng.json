@@ -5,6 +5,13 @@
             "Create My Own Bot" : "https://github.com/nabilanavab/FileGuardianBot"
         }
     },
+    "addToken" : {
+        "message": "Unfortunately, direct access to the file isn't available on this website. However, don't worry! You can obtain the URL that enables fetching the file for the next 24 hours starting from now. Simply click the link below to get the access you need",
+        "button": {
+            "🪐 GET ACCESS 🪐" : "%s",
+            "♻️ REFRESH ♻️" : "%s"
+        }
+    },
     "force" : {
         "message" : "🚨 Attention: Increased demand has led to a mandatory subscription for access management..\n\n🔗 Use the below '🪐 JOIN CHANNEL 🪐' button & once you are in use '♻️ REFRESH ♻️'!",
         "button" : {

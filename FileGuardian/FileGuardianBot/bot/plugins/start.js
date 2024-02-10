@@ -124,8 +124,8 @@ module.exports = async function (client) {
                     if (TOKEN_SUPPORT.EXPIRATION_TIME &&
                         !check_activity(Number(update.message.chatId))){
                             let translated = await translate({
-                                text: 'force.message',
-                                button: 'force.button',
+                                text: 'addToken.message',
+                                button: 'addToken.button',
                                 langCode: lang_code,
                                 asString: true
                             });
