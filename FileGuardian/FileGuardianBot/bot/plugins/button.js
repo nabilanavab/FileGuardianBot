@@ -32,7 +32,7 @@ async function parseAndValidateText(text) {
     try{
         // Split lines, then split each line into key and value, and create an object
         const keyValuePairs = text.split('\n')
-            .map(line => line.split(':').map(item => item.trim()))
+            .map(line => line.split('-').map(item => item.trim()))
             .filter(([key, value]) => key && value)
             .reduce((obj, [key, value]) => ({ ...obj, [`${key}`]: `${value}` }), {});
 
