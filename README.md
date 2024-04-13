@@ -6,7 +6,8 @@
 <img src="https://graph.org/file/ce45266da8d8aed7aa3ef.jpg" alt="Buy Me A Coffee" width="50%" align="right">
 
 > [!NOTE]
-> I had big plans to add more features to this bot, but I had to stop due to guilt. Too many people were using it for unethical purposes, so I removed it from Telegram completely. However, I still love this project :shipit:
+> I had big plans to add more features to this bot, but I had to stop due to guilt. Too many people were using it for unethical purposes, so I removed it from Telegram completely. 
+ owever, I still love this project.. :electron:
 
 # File Guardian bot [ ver: 2.0.0 ]
 
