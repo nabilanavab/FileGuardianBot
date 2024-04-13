@@ -111,8 +111,6 @@ Before deploying your Telegram bot, don't forget to review and configure the env
 - **API_ID:** Your Telegram API ID. From: `my.telegram.org`
 - **API_TOKEN:** Your Telegram bot token. From: `telegram.dog/botfather`
 - **LOG_CHANNEL:** Telegram channel ID where logs messages will be sent. Example: `-100xxxxxxxxx`
-
-### Highly Suggested (but not Mandatory)
 - **MONGODB_URI:** If you want to keep customized data, consider setting up a [MongoDB](https://cloud.mongodb.com/) database.
   Example: `"mongodb+srv://your-username:your-password@your-cluster.mongodb.net/your-database-name"`
 
