@@ -147,3 +147,6 @@ Things go wrong sometimes, and we get it. If you find yourself facing unexpected
     <img src="https://img.shields.io/github/forks/nabilanavab/FileGuardianBot?label=Fork&style=social">
   </a>  
 </div>
+
+
+[THANK YOU](https://github.com/someoneonearthwholovestg/nan)
